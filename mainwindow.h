@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QWidget>
+#include "gameboard.h"
+#include "rankingtable.h"
+#include "userswidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +23,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    GameBoard board;
+    rankingTable rank;
+    usersWidget userL, userR;
 };
 #endif // MAINWINDOW_H

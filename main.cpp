@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GameBoard w;
+    MainWindow w;
     w.setWindowTitle("Connect4");
 
     // Usar la biblioteca Connec4Lib

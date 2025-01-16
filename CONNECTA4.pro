@@ -16,11 +16,15 @@ INCLUDEPATH += $$PWD/lib/
 SOURCES += \
     gameboard.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    rankingtable.cpp \
+    userswidget.cpp
 
 HEADERS += \
     gameboard.h \
-    mainwindow.h
+    mainwindow.h \
+    rankingtable.h \
+    userswidget.h
 
 FORMS += \
     gameboard.ui \
