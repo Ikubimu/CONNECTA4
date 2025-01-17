@@ -7,6 +7,7 @@
 #include "rankingtable.h"
 #include "userswidget.h"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;

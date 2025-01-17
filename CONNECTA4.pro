@@ -18,12 +18,14 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     rankingtable.cpp \
+    rankingtablemodel.cpp \
     userswidget.cpp
 
 HEADERS += \
     gameboard.h \
     mainwindow.h \
     rankingtable.h \
+    rankingtablemodel.h \
     userswidget.h
 
 FORMS += \
