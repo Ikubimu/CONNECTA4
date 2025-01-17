@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     layoutV->addLayout(layoutH, 1);
     layoutV->addWidget(&board,4);
-    layout->addLayout(layoutV, 4);
+    layout->addLayout(layoutV, 3);
     layout->addWidget(&rank, 1);
 
 
