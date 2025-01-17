@@ -6,6 +6,7 @@
 #include "gameboard.h"
 #include "rankingtable.h"
 #include "userswidget.h"
+#include "settinguser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,10 +22,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+    void resizeEvent(QResizeEvent *event) override; // Declaración del resizeEvent
+
 private:
     Ui::MainWindow *ui;
     GameBoard board;
     rankingTable rank;
     usersWidget userL, userR;
+    SettingsUser settingsWidget;
 };
 #endif // MAINWINDOW_H
