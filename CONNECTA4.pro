@@ -17,6 +17,7 @@ QT += sql
 
 SOURCES += \
     gameboard.cpp \
+    gamehistory.cpp \
     main.cpp \
     mainwindow.cpp \
     rankingtable.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 
 HEADERS += \
     gameboard.h \
+    gamehistory.h \
     mainwindow.h \
     rankingtable.h \
     rankingtablemodel.h \
@@ -32,6 +34,7 @@ HEADERS += \
 
 FORMS += \
     gameboard.ui \
+    gamehistory.ui \
     mainwindow.ui
 
 # Default rules for deployment.

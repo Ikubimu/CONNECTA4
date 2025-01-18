@@ -6,6 +6,7 @@
 #include "gameboard.h"
 #include "rankingtable.h"
 #include "userswidget.h"
+#include "gamehistory.h"
 
 
 QT_BEGIN_NAMESPACE
