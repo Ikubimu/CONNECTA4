@@ -8,6 +8,7 @@
 #include <QCheckBox>
 #include <QTableView>
 #include <QPushButton>
+#include "gamehistorytablemodel.h"
 
 namespace Ui {
 class gameHistory;
@@ -29,6 +30,7 @@ private:
     QCheckBox CheckWin, CheckLost;
     QPushButton SearchButton;
     QTableView HistoryTable;
+    gameHistoryTableModel model;
 };
 
 #endif // GAMEHISTORY_H

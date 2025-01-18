@@ -18,6 +18,7 @@ QT += sql
 SOURCES += \
     gameboard.cpp \
     gamehistory.cpp \
+    gamehistorytablemodel.cpp \
     main.cpp \
     mainwindow.cpp \
     rankingtable.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     gameboard.h \
     gamehistory.h \
+    gamehistorytablemodel.h \
     mainwindow.h \
     rankingtable.h \
     rankingtablemodel.h \

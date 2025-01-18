@@ -20,6 +20,13 @@ gameHistory::gameHistory(QWidget *parent)
     SecondDate.setCalendarPopup(true);
     SecondDate.setDate(QDate::currentDate());
 
+    HistoryTable.setModel(&model);
+
+    getNickName.setPlaceholderText(QString("NickName"));
+    CheckWin.setText("Won");
+    CheckLost.setText("Lost");
+    SearchButton.setText(QString("Search"));
+
     layoutHCheck->addWidget(&CheckWin);
     layoutHCheck->addWidget(&CheckLost);
 
