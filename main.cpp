@@ -15,10 +15,7 @@ int main(int argc, char *argv[])
     Connect4& game = Connect4::getInstance();
 
 
-    Player* player = game.registerPlayer("Player1", "player1@example.com", "Password123!", QDate(1990, 1, 1), 100);
-    if (player) {
-        qDebug() << "Jugador registrado:" << player->getNickName();
-    }
+
     w.show();
     return a.exec();
 }

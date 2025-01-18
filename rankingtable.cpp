@@ -40,9 +40,8 @@ void rankingTable::onCellClicked(const QModelIndex &index) {
     int row = index.row();
     int column = index.column();
     Player* user = model->getPlayer(row);
-    QList<Round*> rounds = model->getPlayerRounds(user->getNickName());
 
-    rankingUserData *w = new rankingUserData(user->getNickName(), rounds);
+    rankingUserData *w = new rankingUserData(user);
     w->show();
     qDebug()<<"Row: "<<row<<" Column: "<<column;
 

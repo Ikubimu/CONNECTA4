@@ -3,19 +3,24 @@
 #include <QPainter>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QImage>
 
-rankingUserData::rankingUserData(QString NickName, QList<Round*> partidas, QWidget *parent)
+rankingUserData::rankingUserData(Player* user, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::rankingUserData)
-    , NickName(NickName)
+    , user(user)
 {
     ui->setupUi(this);
-    NickNameLabel.setText(NickName);
+    QPixmap pixmap = QPixmap::fromImage(user->getAvatar());
+    pixmap = pixmap.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    NickNameLabel.setText(user->getNickName());
+    ImageLabel.setPixmap(pixmap);
 
     QHBoxLayout *layout = new QHBoxLayout(this);
     QVBoxLayout *layoutV = new QVBoxLayout(this);
 
-    layout->addStretch(1);
+
+    layout->addWidget(&ImageLabel,1);
     layout->addWidget(&NickNameLabel,1);
     this->setLayout(layout);
 }

@@ -1,6 +1,7 @@
 #include "rankingtablemodel.h"
 #include <Qtimer>
 #include <QPixmap>
+#include <QImage>
 
 
 
@@ -9,12 +10,7 @@ rankingTableModel::rankingTableModel(QObject *parent)
 {
     db = &(Connect4DAO::getInstance());
     Connect4& DB_Instance = Connect4::getInstance();
-    DB_Instance.registerPlayer("Player2", "player1@example.com", "Password123!", QDate(1990, 1, 1), 200);
-    DB_Instance.registerPlayer("Player3", "player1@example.com", "Password123!", QDate(1990, 1, 1), 100);
-
-    addUser(DB_Instance.getPlayer("Player1"));
-    addUser(DB_Instance.getPlayer("Player2"));
-    addUser(DB_Instance.getPlayer("Player3"));
+    Player* p1 = DB_Instance.getPlayer("Player1");
     users=db->getRanking();
     for(int i=0; i<users.size(); i++)
     {
@@ -91,19 +87,26 @@ QVariant rankingTableModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
 
-
+    Player* player = users.at(index.row());
     if (role == Qt::DisplayRole) {
 
-        Player* player = users.at(index.row());
+
         switch (index.column()) {
-        case IMG:
-            return QString::number(index.row() + 1);
         case NAME:
             return player->getNickName();
         case POINTS:
             return QString::number(player->getPoints());
         default:
             return QVariant();
+        }
+    }
+    if(role==Qt::DecorationRole)
+    {
+        if(index.column() == IMG)
+        {
+            QImage foto = player->getAvatar();
+            QPixmap pixmap = QPixmap::fromImage(foto);
+            return pixmap.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
     }
 
@@ -118,7 +121,7 @@ QVariant rankingTableModel::headerData(int section, Qt::Orientation orientation,
     if (orientation == Qt::Horizontal) {
         switch (section) {
         case IMG:
-            return QString("Pos");
+            return QString("");
         case NAME:
             return QString("Name");
         case POINTS:

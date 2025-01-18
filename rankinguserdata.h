@@ -15,15 +15,15 @@ class rankingUserData : public QWidget
     Q_OBJECT
 
 public:
-    explicit rankingUserData(QString NickName, QList<Round*> partidas, QWidget *parent = nullptr);
+    explicit rankingUserData(Player* user, QWidget *parent = nullptr);
     ~rankingUserData();
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
     Ui::rankingUserData *ui;
-    QString NickName;
-    QLabel NickNameLabel;
+    Player* user;
+    QLabel NickNameLabel, ImageLabel;
 
 };
 
