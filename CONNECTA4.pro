@@ -21,6 +21,7 @@ SOURCES += \
     mainwindow.cpp \
     rankingtable.cpp \
     rankingtablemodel.cpp \
+    rankinguserdata.cpp \
     userswidget.cpp
 
 HEADERS += \
@@ -28,11 +29,13 @@ HEADERS += \
     mainwindow.h \
     rankingtable.h \
     rankingtablemodel.h \
+    rankinguserdata.h \
     userswidget.h
 
 FORMS += \
     gameboard.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    rankinguserdata.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

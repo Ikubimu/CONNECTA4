@@ -21,6 +21,8 @@ public:
 
     void addUser(const Player* user);
     void set_lineEdit(QLineEdit* searchLine);
+    Player* getPlayer(int row);
+    QList<Round*> getPlayerRounds(QString NickName);
 
 private:
     Connect4DAO* db = {nullptr}; //pointer to database
@@ -30,7 +32,7 @@ private:
 
     enum Colum
     {
-        RANK=0,
+        IMG=0,
         NAME,
         POINTS,
         COLCOUNT

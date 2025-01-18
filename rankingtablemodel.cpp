@@ -1,6 +1,6 @@
 #include "rankingtablemodel.h"
 #include <Qtimer>
-#include <QMessageBox>
+#include <QPixmap>
 
 
 
@@ -96,7 +96,7 @@ QVariant rankingTableModel::data(const QModelIndex &index, int role) const
 
         Player* player = users.at(index.row());
         switch (index.column()) {
-        case RANK:
+        case IMG:
             return QString::number(index.row() + 1);
         case NAME:
             return player->getNickName();
@@ -117,7 +117,7 @@ QVariant rankingTableModel::headerData(int section, Qt::Orientation orientation,
 
     if (orientation == Qt::Horizontal) {
         switch (section) {
-        case RANK:
+        case IMG:
             return QString("Pos");
         case NAME:
             return QString("Name");
@@ -151,6 +151,17 @@ void rankingTableModel::addUser(const Player* user)
 void rankingTableModel::set_lineEdit(QLineEdit* searchLine)
 {
     this->searchLine = searchLine;
+}
+
+
+Player* rankingTableModel::getPlayer(int row)
+{
+    return users.at(row);
+}
+
+QList<Round*> rankingTableModel::getPlayerRounds(QString NickName)
+{
+    return db->getRoundsForPlayer(NickName);
 }
 
 

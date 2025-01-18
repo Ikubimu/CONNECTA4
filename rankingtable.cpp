@@ -1,4 +1,5 @@
 #include "rankingtable.h"
+#include "rankinguserdata.h"
 #include <QMouseEvent>
 #include <QPainter>
 #include <QtMath>
@@ -38,6 +39,11 @@ void rankingTable::addUser(const Player* user)
 void rankingTable::onCellClicked(const QModelIndex &index) {
     int row = index.row();
     int column = index.column();
+    Player* user = model->getPlayer(row);
+    QList<Round*> rounds = model->getPlayerRounds(user->getNickName());
+
+    rankingUserData *w = new rankingUserData(user->getNickName(), rounds);
+    w->show();
     qDebug()<<"Row: "<<row<<" Column: "<<column;
 
 }
