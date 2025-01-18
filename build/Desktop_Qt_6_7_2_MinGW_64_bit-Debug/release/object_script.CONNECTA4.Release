@@ -1,0 +1,13 @@
+release/Login.o
+release/Register.o
+release/gameboard.o
+release/main.o
+release/mainwindow.o
+release/rankingtable.o
+release/userswidget.o
+release/moc_Login.o
+release/moc_Register.o
+release/moc_gameboard.o
+release/moc_mainwindow.o
+release/moc_rankingtable.o
+release/moc_userswidget.o

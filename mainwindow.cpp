@@ -7,15 +7,17 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
+    ui->setupUi(this); 
     QWidget *centralWidget = new QWidget(this);
-
+    openLoginButton = new QPushButton("Abrir LoginPage",this);
+    connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
     // Crear un layout vertical
     QHBoxLayout *layout = new QHBoxLayout(centralWidget);
     QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
     QHBoxLayout *layoutH = new QHBoxLayout(centralWidget);
 
+
+    layout->addWidget(openLoginButton);
     layout->addStretch(1);
 
     layoutH->addStretch(1);
@@ -34,10 +36,36 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Establecer el widget central
     this->setCentralWidget(centralWidget);
+    //añadir al robot (no es un usuario como tal pero vamos a contabilizarlo de esta manera para poder trabajar la base de datos mas facil)
+    // Usar la biblioteca Connec4Lib
+    Connect4& game = Connect4::getInstance();
+    Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
+    players_playing[1] = machine_player;
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::openLoginPage()
+{
+    LoginPage loginDialog(nullptr,players_playing);
+    connect(&loginDialog, &LoginPage::Login_succesful, this, &MainWindow::handleLoginSuccess);
+    connect(&loginDialog, &LoginPage::requestRegisterPage, this, &MainWindow::openRegisterPage);
+    loginDialog.exec();
+}
+
+
+void MainWindow::openRegisterPage(){
+    RegisterPage RegisterDialog;
+    //conectada a la misma funcion ya que al final para el mainwindows sigue siendo que alguien sea loggeado
+    //sea por register o por loggin
+    connect(&RegisterDialog, &RegisterPage::Register_succesful, this, &MainWindow::handleLoginSuccess);
+    RegisterDialog.exec();
+}
+
+void MainWindow::handleLoginSuccess(Player *player){
+    qDebug() << "Register was successful!" <<player->getNickName()<<"  "<<player->getPassword();
 }
