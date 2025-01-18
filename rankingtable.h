@@ -20,8 +20,6 @@ public:
         QLineEdit* searchLine{nullptr};
 
 
-        void onCellClicked(const QModelIndex &index);
-
 };
 
 #endif // RANKINGTABLE_H

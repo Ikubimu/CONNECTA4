@@ -1,5 +1,4 @@
 #include "rankingtable.h"
-#include "rankinguserdata.h"
 #include <QMouseEvent>
 #include <QPainter>
 #include <QtMath>
@@ -25,8 +24,6 @@ rankingTable::rankingTable(QWidget *parent)
     this->resizeColumnsToContents();
     QRect geom = geometry();
     this->setFixedHeight(geom.height()*SIZE_H);
-
-    connect(this, &rankingTable::clicked, this, &rankingTable::onCellClicked);
 }
 
 
@@ -36,14 +33,4 @@ void rankingTable::addUser(const Player* user)
 }
 
 
-void rankingTable::onCellClicked(const QModelIndex &index) {
-    int row = index.row();
-    int column = index.column();
-    Player* user = model->getPlayer(row);
-
-    rankingUserData *w = new rankingUserData(user);
-    w->show();
-    qDebug()<<"Row: "<<row<<" Column: "<<column;
-
-}
 
