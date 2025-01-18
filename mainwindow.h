@@ -27,5 +27,10 @@ private:
     GameBoard board;
     rankingTable rank;
     usersWidget userL, userR;
+    QWidget* centralWidget;
+
+
+    QWidget* buildMainWidget();
+    void catchSignal();
 };
 #endif // MAINWINDOW_H

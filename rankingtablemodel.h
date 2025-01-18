@@ -3,7 +3,8 @@
 
 #include <QAbstractTableModel>
 #include "lib/connect4.h"
-#include <vector>
+#include "lib/connect4dao.h"
+#include <QLineEdit>
 
 class rankingTableModel : public QAbstractTableModel
 {
@@ -18,11 +19,14 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
 
-    void addUser(Player* user);
+    void addUser(const Player* user);
+    void set_lineEdit(QLineEdit* searchLine);
 
 private:
-    Connect4* db = {nullptr}; //pointer to database
-    std::vector<Player*> users;
+    Connect4DAO* db = {nullptr}; //pointer to database
+    QLineEdit* searchLine;
+    QList<Player*> users;
+    QString prev_text="";
 
     enum Colum
     {
@@ -31,6 +35,9 @@ private:
         POINTS,
         COLCOUNT
     };
+
+    void update_users();
+
 };
 
 #endif // RANKINGTABLEMODEL_H

@@ -13,6 +13,8 @@ LIBS += -L$$PWD/lib -lConnect4Lib
 # Ruta relativa para encontrar los archivos de cabecera
 INCLUDEPATH += $$PWD/lib/
 
+QT += sql
+
 SOURCES += \
     gameboard.cpp \
     main.cpp \
