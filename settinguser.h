@@ -19,7 +19,6 @@ public:
 private slots:
     void saveSettings();  // Guardar las configuraciones
     void changeLanguage(int index);  // Cambiar el idioma seleccionado
-    void toggleDarkMode(bool checked);  // Activar/desactivar modo oscuro
 
 private:
     QComboBox *languageComboBox;  // ComboBox para seleccionar el idioma
@@ -29,6 +28,7 @@ private:
 
     QLabel *languageLabel;        // Etiqueta para el combo de idioma
     QLabel *darkModeLabel;        // Etiqueta para el modo oscuro
+    QPalette standardPallete;
 };
 
 #endif // SETTINGSUSER_H

@@ -8,6 +8,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , settingsWidget(this)
 {
     ui->setupUi(this);
 
@@ -15,46 +16,38 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget *centralWidget = new QWidget(this);
 
     // Crear layouts principales
-    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-    QHBoxLayout *topLayout = new QHBoxLayout();
-    QHBoxLayout *bottomLayout = new QHBoxLayout();
+    QHBoxLayout *layout = new QHBoxLayout(centralWidget);
+    QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
+    QVBoxLayout *layoutVLeft = new QVBoxLayout(centralWidget);
+    QHBoxLayout *layoutH = new QHBoxLayout(centralWidget);
 
-    // Configurar el layout superior
-    topLayout->addStretch(1);
-    topLayout->addWidget(&userL, 1);
-    topLayout->addWidget(&userR, 1);
-    topLayout->addStretch(1);
-
-    // Configurar el tablero en el centro
-    mainLayout->addLayout(topLayout, 1);
-    mainLayout->addWidget(&board, 4);
-
-    // Configurar el botón de ajustes en la parte inferior izquierda
     QPushButton *settingsButton = new QPushButton("Abrir Ajustes", this);
     connect(settingsButton, &QPushButton::clicked, [this]() {
         settingsWidget.setVisible(!settingsWidget.isVisible());
+        settingsWidget.setGeometry(this->pos().x() + width()*0.1, height()*0.75, 200, 200);
     });
+    settingsWidget.setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
-    bottomLayout->addWidget(settingsButton, 0, Qt::AlignLeft);
-    bottomLayout->addStretch(1);
+    layoutVLeft->addStretch(2);
+    layoutVLeft->addWidget(settingsButton, 1, Qt::AlignLeft);
 
-    mainLayout->addLayout(bottomLayout, 0);
+    layoutH->addStretch(1);
+    layoutH->addWidget(&userL, 1);
+    layoutH->addWidget(&userR, 1);
+    layoutH->addStretch(1);
 
-    // Configurar el widget de ajustes flotante
-    settingsWidget.setParent(this); // Configurar el padre como la ventana principal
-    settingsWidget.setVisible(false);
-    settingsWidget.setGeometry(20, height() - 200, 250, 150); // Posición inicial en la esquina inferior izquierda
+    layoutV->addLayout(layoutH, 1);
+    layoutV->addWidget(&board,4);
 
-    // Establecer un color de fondo sólido para el widget de ajustes
-    QPalette palette = settingsWidget.palette();
-    palette.setColor(QPalette::Window, Qt::black); // Usar QPalette::Window en lugar de QPalette::Background
-    settingsWidget.setAutoFillBackground(true);
-    settingsWidget.setPalette(palette);
+    layout->addLayout(layoutVLeft, 1);
+    layout->addLayout(layoutV, 3);
+    layout->addWidget(&rank, 1);
+
+    // Configurar el tablero en el centro
+    centralWidget->setLayout(layout);
+    // Configurar el botón de ajustes en la parte inferior izquierda
 
 
-
-    // Establecer el widget central
-    centralWidget->setLayout(mainLayout);
     this->setCentralWidget(centralWidget);
 }
 
@@ -63,7 +56,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     QMainWindow::resizeEvent(event); // Llamar al evento base
 
     // Recalcular la posición del widget flotante al cambiar el tamaño de la ventana
-    settingsWidget.move(40, height() - settingsWidget.height() - 50);
+    settingsWidget.move(this->pos().x() + width()*0.1, height()*0.75);
 }
 
 MainWindow::~MainWindow()

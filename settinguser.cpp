@@ -28,9 +28,20 @@ SettingsUser::SettingsUser(QWidget *parent)
     layout->addWidget(darkModeCheckBox);
     layout->addWidget(saveButton);
 
+    QRect geom = geometry();
+
+    this->setVisible(false);
+    this->setGeometry(parent->pos().x(), parent->pos().y(), 250, 150); // Posición inicial en la esquina inferior izquierda
+
+    // Establecer un color de fondo sólido para el widget de ajustes
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Window, Qt::white); // Usar QPalette::Window en lugar de QPalette::Background
+    this->setAutoFillBackground(true);
+    this->setPalette(palette);
+
+
     // Conectar los botones con las funciones correspondientes
     connect(languageComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeLanguage(int)));
-    connect(darkModeCheckBox, SIGNAL(toggled(bool)), this, SLOT(toggleDarkMode(bool)));
     connect(saveButton, &QPushButton::clicked, this, &SettingsUser::saveSettings);
 }
 
@@ -47,6 +58,28 @@ void SettingsUser::saveSettings()
 
     qDebug() << "Language selected: " << selectedLanguage;
     qDebug() << "Dark Mode: " << (isDarkMode ? "Enabled" : "Disabled");
+
+    // Activar o desactivar el modo oscuro
+    if (isDarkMode) {
+        qApp->setStyle(QStyleFactory::create("Fusion"));
+        QPalette darkPalette;
+        darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::WindowText, Qt::white);
+        darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));
+        darkPalette.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
+        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+        darkPalette.setColor(QPalette::Text, Qt::white);
+        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::ButtonText, Qt::white);
+        darkPalette.setColor(QPalette::Highlight, QColor(0, 120, 215));
+        darkPalette.setColor(QPalette::HighlightedText, Qt::white);
+        qApp->setPalette(darkPalette);
+    } else {
+
+        qApp->setStyle(QStyleFactory::create("Windows"));
+        qApp->setPalette(qApp->style()->standardPalette());
+    }
 
     // Mensaje de confirmación
     QMessageBox::information(this, "Settings Saved", "Your settings have been saved successfully.");
@@ -68,28 +101,4 @@ void SettingsUser::changeLanguage(int index)
     }
 
     QApplication::installTranslator(translator);
-}
-
-void SettingsUser::toggleDarkMode(bool checked)
-{
-    // Activar o desactivar el modo oscuro
-    if (checked) {
-        qApp->setStyle(QStyleFactory::create("Fusion"));
-        QPalette darkPalette;
-        darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
-        darkPalette.setColor(QPalette::WindowText, Qt::white);
-        darkPalette.setColor(QPalette::Base, QColor(42, 42, 42));
-        darkPalette.setColor(QPalette::AlternateBase, QColor(66, 66, 66));
-        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
-        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
-        darkPalette.setColor(QPalette::Text, Qt::white);
-        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
-        darkPalette.setColor(QPalette::ButtonText, Qt::white);
-        darkPalette.setColor(QPalette::Highlight, QColor(0, 120, 215));
-        darkPalette.setColor(QPalette::HighlightedText, Qt::white);
-        qApp->setPalette(darkPalette);
-    } else {
-        qApp->setStyle(QStyleFactory::create("Windows"));
-        qApp->setPalette(qApp->style()->standardPalette());
-    }
 }
