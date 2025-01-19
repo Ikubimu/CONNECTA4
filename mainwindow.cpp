@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Usar la biblioteca Connec4Lib
     Connect4& game = Connect4::getInstance();
     Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
+    Player* p1 = game.registerPlayer("oscar1", "oscar@oscar.com", "Password123!", QDate(1990, 1, 1), 0);
     players_playing[1] = machine_player;
 
 }
@@ -54,6 +55,7 @@ void MainWindow::openLoginPage()
     LoginPage loginDialog(nullptr,players_playing);
     connect(&loginDialog, &LoginPage::Login_succesful, this, &MainWindow::handleLoginSuccess);
     connect(&loginDialog, &LoginPage::requestRegisterPage, this, &MainWindow::openRegisterPage);
+    connect(&loginDialog,&LoginPage::requestForgotPasswordPage,this,&MainWindow::openForgotPasswordPage);
     loginDialog.exec();
 }
 
@@ -68,4 +70,9 @@ void MainWindow::openRegisterPage(){
 
 void MainWindow::handleLoginSuccess(Player *player){
     qDebug() << "Register was successful!" <<player->getNickName()<<"  "<<player->getPassword();
+}
+void MainWindow::openForgotPasswordPage(){
+    ForgotPasswordPage ForgotPasswordDialog(nullptr,players_playing);
+    connect(&ForgotPasswordDialog,&ForgotPasswordPage::Login_succesful,this,&MainWindow::handleLoginSuccess);
+    ForgotPasswordDialog.exec();
 }

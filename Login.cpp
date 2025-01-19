@@ -10,11 +10,11 @@ LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(paren
 
     loginButton = new QPushButton("Iniciar sesión", this);
     RegisterButton = new QPushButton("Registrar una nueva cuenta", this);
-
+    ForgetPasswordButton = new QPushButton("¿Olvidaste la contraseña?",this);
     // Conectar los botones
     connect(loginButton, &QPushButton::clicked, this, &LoginPage::handleLogin);
     connect(RegisterButton, &QPushButton::clicked, this, &LoginPage::change_to_register);
-
+    connect(ForgetPasswordButton,&QPushButton::clicked,this,&LoginPage::change_to_forgot_password);
     // Crear el layout
     layout = new QGridLayout(this);
     layout->addWidget(usernameLabel,0,0);
@@ -22,7 +22,8 @@ LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(paren
     layout->addWidget(passwordLabel,1,0);
     layout->addWidget(passwordField,1,1);
     layout->addWidget(loginButton,4,0,1,2);
-    layout->addWidget(RegisterButton,5,0,1,2);
+    layout ->addWidget(ForgetPasswordButton,5,0,1,2);
+    layout->addWidget(RegisterButton,6,0,1,2);
 
     //add players so after you can check if the user has already login
     Players[0] = players_playing[0];
@@ -84,7 +85,8 @@ void LoginPage::handleLogin(){
             passwordField->setStyleSheet("border: 2px solid red;"); // Resaltar en rojo
         }
         layout->addWidget(loginButton,4,0,1,3);
-        layout->addWidget(RegisterButton,5,0,1,3);
+        layout->addWidget(ForgetPasswordButton,5,0,1,3);
+        layout->addWidget(RegisterButton,6,0,1,3);
         return;
     }
     // Todo valido proceder con el login
@@ -104,7 +106,8 @@ void LoginPage::handleLogin(){
 void LoginPage::change_to_register(){
     this->close();
     emit requestRegisterPage();
-
-
 }
-
+void LoginPage::change_to_forgot_password(){
+    this->close();
+    emit requestForgotPasswordPage();
+}

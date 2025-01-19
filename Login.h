@@ -20,11 +20,13 @@ public:
 signals:
     void Login_succesful(Player* player);
     void requestRegisterPage();
+    void requestForgotPasswordPage();
 private:
     //method to check the login
     void handleLogin();
     //method to change from the windows to the Register_Window
     void change_to_register();
+    void change_to_forgot_password();
     QGridLayout *layout;
     QLineEdit *usernameField;
     QLineEdit *passwordField;

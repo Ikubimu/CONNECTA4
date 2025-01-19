@@ -14,6 +14,7 @@ LIBS += -L$$PWD/lib -lConnect4Lib
 INCLUDEPATH += $$PWD/lib/
 
 SOURCES += \
+    Forgot_Password.cpp \
     Login.cpp \
     Register.cpp \
     gameboard.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
     userswidget.cpp
 
 HEADERS += \
+    Forgot_Password.h \
     Login.h \
     Register.h \
     gameboard.h \

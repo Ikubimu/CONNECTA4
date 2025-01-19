@@ -82,7 +82,7 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
 
                 update();
 
-                // Verificar si el movimiento actual gana el juego
+                //Verificar si el movimiento actual gana el juego
                 if(checkWin(row, column)){
 
                     QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));

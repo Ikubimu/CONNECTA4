@@ -7,7 +7,7 @@
 #include "rankingtable.h"
 #include "userswidget.h"
 #include "Login.h"
-
+#include "Forgot_Password.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -27,10 +27,10 @@ private:
     GameBoard board;
     rankingTable rank;
     usersWidget userL, userR;
-    LoginPage *loginPage;
     QPushButton *openLoginButton;
     void openLoginPage();
     void openRegisterPage();
+    void openForgotPasswordPage();
     void handleLoginSuccess(Player* Player);
     void handleRegisterSuccess(Player* Player);
     Player* players_playing[2]; // will be initialized to nullptr at the beginning

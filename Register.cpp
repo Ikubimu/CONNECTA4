@@ -198,9 +198,9 @@ void RegisterPage::handleRegister(){
             registerLayout->addWidget(birthdayErrorLabel, 4, 2);
             BirthdayField->setStyleSheet("border: 2px solid red;");
         }
-        return;
         //adaptar tamaño del boton
         registerLayout->addWidget(RegisterButton,7,0,1,3);
+        return;
     }
     if(existUsername){
       QMessageBox::warning(this, "Error", "Ese usuario ya existe");
