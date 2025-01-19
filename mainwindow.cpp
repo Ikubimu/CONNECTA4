@@ -3,10 +3,13 @@
 #include "lib/connect4.h"
 
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , settingsWidget(this)
 {
     ui->setupUi(this); 
     QWidget *centralWidget = new QWidget(this);
@@ -15,11 +18,20 @@ MainWindow::MainWindow(QWidget *parent)
     // Crear un layout vertical
     QHBoxLayout *layout = new QHBoxLayout(centralWidget);
     QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
+    QVBoxLayout *layoutVLeft = new QVBoxLayout(centralWidget);
     QHBoxLayout *layoutH = new QHBoxLayout(centralWidget);
 
 
-    layout->addWidget(openLoginButton);
-    layout->addStretch(1);
+    QPushButton *settingsButton = new QPushButton("Abrir Ajustes", this);
+    connect(settingsButton, &QPushButton::clicked, [this]() {
+        settingsWidget.setVisible(!settingsWidget.isVisible());
+        settingsWidget.setGeometry(this->pos().x() + width()*0.1, height()*0.75, 200, 200);
+    });
+    settingsWidget.setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+
+    layoutVLeft->addStretch(2);
+    layoutVLeft->addWidget(openLoginButton);
+    layoutVLeft->addWidget(settingsButton, 1, Qt::AlignLeft);
 
     layoutH->addStretch(1);
     layoutH->addWidget(&userL, 1);
@@ -28,14 +40,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     layoutV->addLayout(layoutH, 1);
     layoutV->addWidget(&board,4);
+
+    layout->addLayout(layoutVLeft, 1);
     layout->addLayout(layoutV, 3);
     layout->addWidget(&rank, 1);
 
-
-    // Establecer el layout como el layout principal del widget central
+    // Configurar el tablero en el centro
     centralWidget->setLayout(layout);
+    // Configurar el botón de ajustes en la parte inferior izquierda
 
-    // Establecer el widget central
+
     this->setCentralWidget(centralWidget);
     //añadir al robot (no es un usuario como tal pero vamos a contabilizarlo de esta manera para poder trabajar la base de datos mas facil)
     // Usar la biblioteca Connec4Lib
@@ -43,7 +57,14 @@ MainWindow::MainWindow(QWidget *parent)
     Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
     Player* p1 = game.registerPlayer("oscar1", "oscar@oscar.com", "Password123!", QDate(1990, 1, 1), 0);
     players_playing[1] = machine_player;
+}
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event); // Llamar al evento base
+
+    // Recalcular la posición del widget flotante al cambiar el tamaño de la ventana
+    settingsWidget.move(this->pos().x() + width()*0.1, height()*0.75);
 }
 
 MainWindow::~MainWindow()

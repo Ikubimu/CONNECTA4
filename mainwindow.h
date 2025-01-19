@@ -10,6 +10,7 @@
 #include "Forgot_Password.h"
 #include "gamehistory.h"
 
+#include "settinguser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,6 +25,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override; // Declaración del resizeEvent
 
 private:
     Ui::MainWindow *ui;
@@ -42,5 +46,6 @@ private:
 
     QWidget* buildMainWidget();
     void catchSignal();
+    SettingsUser settingsWidget;
 };
 #endif // MAINWINDOW_H

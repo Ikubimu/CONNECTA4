@@ -25,6 +25,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     rankingtable.cpp \
+    settinguser.cpp \
     rankingtablemodel.cpp \
     userswidget.cpp
 
@@ -37,6 +38,7 @@ HEADERS += \
     gamehistorytablemodel.h \
     mainwindow.h \
     rankingtable.h \
+    settinguser.h \
     rankingtablemodel.h \
     userswidget.h
 
