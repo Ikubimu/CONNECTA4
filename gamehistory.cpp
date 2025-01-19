@@ -16,9 +16,14 @@ gameHistory::gameHistory(QWidget *parent)
 
     FirstDate.setCalendarPopup(true); //Se va a mostrar el calendario como ventana emergente
     FirstDate.setDate(QDate::currentDate());
+    FirstDate.setMaximumDate(QDate::currentDate());
 
     SecondDate.setCalendarPopup(true);
     SecondDate.setDate(QDate::currentDate());
+    SecondDate.setDateRange(QDate::currentDate(), QDate::currentDate());
+
+    connect(&FirstDate, &QDateEdit::dateChanged, this, &gameHistory::dateEditedCallback);
+    connect(&SecondDate, &QDateEdit::dateChanged, this, &gameHistory::dateEditedCallback);
 
     HistoryTable.setModel(&model);
 
@@ -95,9 +100,6 @@ void gameHistory::textEditedCallback()
 
         CheckLost.setChecked(false);
         CheckLost.setEnabled(false);
-
-
-
     }
     else
     {
@@ -105,4 +107,10 @@ void gameHistory::textEditedCallback()
         CheckWin.setEnabled(true);
         CheckLost.setEnabled(true);
     }
+}
+
+void gameHistory::dateEditedCallback()
+{
+    FirstDate.setMaximumDate(SecondDate.date());
+    SecondDate.setDateRange(FirstDate.date(), QDate::currentDate());
 }

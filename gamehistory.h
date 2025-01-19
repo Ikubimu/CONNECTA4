@@ -37,6 +37,7 @@ private:
 
     void SearchButtonCallback();
     void textEditedCallback();
+    void dateEditedCallback();
 };
 
 #endif // GAMEHISTORY_H
