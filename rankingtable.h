@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include "rankingtablemodel.h"
 
-class rankingTable : public  QTableView
+class rankingTable : public QWidget
 {
     Q_OBJECT
 public:
@@ -16,8 +16,9 @@ public:
 
     private:
         Connect4 *db{nullptr};
-        rankingTableModel* model{nullptr};
-        QLineEdit* searchLine{nullptr};
+        QTableView rankingView;
+        rankingTableModel model;
+        QLineEdit searchLine;
 
 
 };

@@ -8,20 +8,18 @@
 #define SIZE_H 0.6
 
 rankingTable::rankingTable(QWidget *parent)
-    : QTableView(parent)
+    :  QWidget(parent)
 {
-    model = new rankingTableModel();
-    this->setModel(model);
-    searchLine = new QLineEdit(this);
+    rankingView.setModel(&model);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addSpacing(500);
-    layout->addWidget(searchLine);
+    layout->addWidget(&searchLine);
+    layout->addWidget(&rankingView);
 
     this->setLayout(layout);
 
-    model->set_lineEdit(searchLine);
-    this->resizeColumnsToContents();
+    model.set_lineEdit(&searchLine);
+    rankingView.resizeColumnsToContents();
     QRect geom = geometry();
     this->setFixedHeight(geom.height()*SIZE_H);
 }
@@ -29,7 +27,7 @@ rankingTable::rankingTable(QWidget *parent)
 
 void rankingTable::addUser(const Player* user)
 {
-    model->addUser(user);
+    model.addUser(user);
 }
 
 
