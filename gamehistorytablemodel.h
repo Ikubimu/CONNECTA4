@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QList>
-#include "lib/connect4.h"
+#include "lib/connect4dao.h"
 
 class gameHistoryTableModel : public QAbstractTableModel
 {
@@ -17,8 +17,19 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
 
+    enum searchFilter
+    {
+        ALL=0,
+        WON,
+        LOST
+    };
+
+    void updateData(QString name, QDate firstDate, QDate secondDate, searchFilter filter);
+
+
+
 private:
-    Connect4 *db{nullptr};
+    Connect4DAO *db{nullptr};
     QList<Round*> rounds;
 
     enum Colum

@@ -22,10 +22,16 @@ gameHistory::gameHistory(QWidget *parent)
 
     HistoryTable.setModel(&model);
 
-    getNickName.setPlaceholderText(QString("NickName"));
+    getNickName.setPlaceholderText(QString("NickName (Optional)"));
+    connect(&getNickName, &QLineEdit::editingFinished, this, &gameHistory::textEditedCallback);
+
     CheckWin.setText("Won");
+    CheckWin.setEnabled(false);
     CheckLost.setText("Lost");
+    CheckLost.setEnabled(false);
+
     SearchButton.setText(QString("Search"));
+    connect(&SearchButton, &QPushButton::clicked, this, &gameHistory::SearchButtonCallback);
 
     layoutHCheck->addWidget(&CheckWin);
     layoutHCheck->addWidget(&CheckLost);
@@ -33,8 +39,8 @@ gameHistory::gameHistory(QWidget *parent)
     layoutHDate->addWidget(&FirstDate);
     layoutHDate->addWidget(&SecondDate);
 
-    layout->addWidget(&getNickName);
     layout->addLayout(layoutHDate);
+    layout->addWidget(&getNickName);
     layout->addLayout(layoutHCheck);
     layout->addWidget(&SearchButton);
     layout->addWidget(&HistoryTable);
@@ -45,4 +51,39 @@ gameHistory::gameHistory(QWidget *parent)
 gameHistory::~gameHistory()
 {
     delete ui;
+}
+
+void gameHistory::SearchButtonCallback()
+{
+    gameHistoryTableModel::searchFilter state;
+    if(CheckWin.isChecked())
+    {
+        state = gameHistoryTableModel::WON;
+    }
+    else if(CheckLost.isChecked())
+    {
+        state = gameHistoryTableModel::LOST;
+    }
+    else
+    {
+        state = gameHistoryTableModel::ALL;
+    }
+    QString name = getNickName.text();
+    QDate first = FirstDate.date();
+    QDate second = SecondDate.date();
+    model.updateData(name, first, second, state);
+}
+
+void gameHistory::textEditedCallback()
+{
+    if(getNickName.text().isEmpty())
+    {
+        CheckWin.setEnabled(false);
+        CheckLost.setEnabled(false);
+    }
+    else
+    {
+        CheckWin.setEnabled(true);
+        CheckLost.setEnabled(true);
+    }
 }

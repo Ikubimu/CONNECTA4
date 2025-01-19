@@ -31,6 +31,10 @@ private:
     QPushButton SearchButton;
     QTableView HistoryTable;
     gameHistoryTableModel model;
+
+
+    void SearchButtonCallback();
+    void textEditedCallback();
 };
 
 #endif // GAMEHISTORY_H
