@@ -29,12 +29,21 @@ gameHistory::gameHistory(QWidget *parent)
     CheckWin.setEnabled(false);
     CheckLost.setText("Lost");
     CheckLost.setEnabled(false);
+    CheckAll.setText("All");
+    CheckAll.setChecked(true);
+    CheckAll.setEnabled(false);
+
+    checks.addButton(&CheckAll);
+    checks.addButton(&CheckWin);
+    checks.addButton(&CheckLost);
+    checks.setExclusive(true);
 
     SearchButton.setText(QString("Search"));
     connect(&SearchButton, &QPushButton::clicked, this, &gameHistory::SearchButtonCallback);
 
     layoutHCheck->addWidget(&CheckWin);
     layoutHCheck->addWidget(&CheckLost);
+    layoutHCheck->addWidget(&CheckAll);
 
     layoutHDate->addWidget(&FirstDate);
     layoutHDate->addWidget(&SecondDate);
@@ -78,11 +87,21 @@ void gameHistory::textEditedCallback()
 {
     if(getNickName.text().isEmpty())
     {
+        CheckAll.setChecked(true);
+        CheckAll.setEnabled(false);
+
+        CheckWin.setChecked(false);
         CheckWin.setEnabled(false);
+
+        CheckLost.setChecked(false);
         CheckLost.setEnabled(false);
+
+
+
     }
     else
     {
+        CheckAll.setEnabled(true);
         CheckWin.setEnabled(true);
         CheckLost.setEnabled(true);
     }

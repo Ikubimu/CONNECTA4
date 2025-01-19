@@ -5,6 +5,7 @@
 #include <QCalendarWidget>
 #include <QDateEdit>
 #include <QLineEdit>
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QTableView>
 #include <QPushButton>
@@ -27,7 +28,8 @@ private:
 
     QLineEdit getNickName;
     QDateEdit FirstDate, SecondDate;
-    QCheckBox CheckWin, CheckLost;
+    QButtonGroup checks;
+    QCheckBox CheckWin, CheckLost, CheckAll;
     QPushButton SearchButton;
     QTableView HistoryTable;
     gameHistoryTableModel model;
