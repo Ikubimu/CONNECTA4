@@ -8,6 +8,9 @@
 #include "userswidget.h"
 #include "Login.h"
 #include "Forgot_Password.h"
+#include "gamehistory.h"
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -34,5 +37,10 @@ private:
     void handleLoginSuccess(Player* Player);
     void handleRegisterSuccess(Player* Player);
     Player* players_playing[2]; // will be initialized to nullptr at the beginning
+    QWidget* centralWidget;
+
+
+    QWidget* buildMainWidget();
+    void catchSignal();
 };
 #endif // MAINWINDOW_H

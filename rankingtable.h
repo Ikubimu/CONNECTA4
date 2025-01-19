@@ -2,16 +2,25 @@
 #define RANKINGTABLE_H
 #include <QWidget>
 #include <vector>
+#include <QTableView>
+#include <QMouseEvent>
+#include <QLineEdit>
+#include "rankingtablemodel.h"
 
-class rankingTable : public  QWidget
+class rankingTable : public QWidget
 {
     Q_OBJECT
 public:
     rankingTable(QWidget *parent = nullptr);
+    void addUser(const Player* user);
+
+    private:
+        Connect4 *db{nullptr};
+        QTableView rankingView;
+        rankingTableModel model;
+        QLineEdit searchLine;
 
 
-    protected:
-        void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // RANKINGTABLE_H

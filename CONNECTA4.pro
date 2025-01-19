@@ -13,14 +13,19 @@ LIBS += -L$$PWD/lib -lConnect4Lib
 # Ruta relativa para encontrar los archivos de cabecera
 INCLUDEPATH += $$PWD/lib/
 
+QT += sql
+
 SOURCES += \
     Forgot_Password.cpp \
     Login.cpp \
     Register.cpp \
     gameboard.cpp \
+    gamehistory.cpp \
+    gamehistorytablemodel.cpp \
     main.cpp \
     mainwindow.cpp \
     rankingtable.cpp \
+    rankingtablemodel.cpp \
     userswidget.cpp
 
 HEADERS += \
@@ -28,12 +33,16 @@ HEADERS += \
     Login.h \
     Register.h \
     gameboard.h \
+    gamehistory.h \
+    gamehistorytablemodel.h \
     mainwindow.h \
     rankingtable.h \
+    rankingtablemodel.h \
     userswidget.h
 
 FORMS += \
     gameboard.ui \
+    gamehistory.ui \
     mainwindow.ui
 
 # Default rules for deployment.

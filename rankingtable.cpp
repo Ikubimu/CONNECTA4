@@ -2,30 +2,33 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QtMath>
+#include <QVBoxLayout>
 
 #define SIZE_W 0.9
 #define SIZE_H 0.6
 
 rankingTable::rankingTable(QWidget *parent)
+    :  QWidget(parent)
 {
+    rankingView.setModel(&model);
 
-}
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->addWidget(&searchLine);
+    layout->addWidget(&rankingView);
 
-void rankingTable::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event);
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing, true);
+    this->setLayout(layout);
 
-    painter.setBrush(Qt::gray);
-
+    model.set_lineEdit(&searchLine);
+    rankingView.resizeColumnsToContents();
     QRect geom = geometry();
-
-
-    int size_h = geom.height()*SIZE_H;
-    int size_w = geom.width()*SIZE_W;
-    int x0 = geom.width()/2 - size_w/2;
-    int y0 = geom.height()/2 - size_h/2;
-    painter.drawRect(x0,y0,size_w,size_h);
-
+    this->setFixedHeight(geom.height()*SIZE_H);
 }
+
+
+void rankingTable::addUser(const Player* user)
+{
+    model.addUser(user);
+}
+
+
+
