@@ -6,6 +6,7 @@ release/main.o
 release/mainwindow.o
 release/rankingtable.o
 release/userswidget.o
+release/qrc_resources.o
 release/moc_Forgot_Password.o
 release/moc_Login.o
 release/moc_Register.o
