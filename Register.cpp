@@ -1,56 +1,107 @@
 #include "Register.h"
 #include "QRegularExpression"
-RegisterPage::RegisterPage(QWidget *parent):QDialog(parent){
-    //nickname
-    QLabel *usernameLabel = new QLabel("Nickname:",this);
+
+RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
+    //create all the QLineEdits
+    //username
     usernameField = new QLineEdit(this);
-    //password
-    QLabel *passwordLabel = new QLabel("Password:",this);
+    usernameField->setPlaceholderText("usuario");
+    usernameField->setMinimumWidth(200);
+    // password
     passwordField = new QLineEdit(this);
-    passwordField -> setEchoMode(QLineEdit::Password);
-    //repeat password for safety
-    QLabel *repeatpasswordLabel = new QLabel("Repeat Password:",this);
+    passwordField->setPlaceholderText("contraseña");
+    passwordField->setEchoMode(QLineEdit::Password);
+    passwordField->setMinimumWidth(200);
+    // repeat password for safety
     repeatpasswordField = new QLineEdit(this);
-    repeatpasswordField -> setEchoMode(QLineEdit::Password);
-    //email
-    QLabel *emailLabel = new QLabel("Email:", this);
+    repeatpasswordField->setPlaceholderText("Confirme la contraseña");
+    repeatpasswordField->setEchoMode(QLineEdit::Password);
+    repeatpasswordField->setMinimumWidth(200);
+    // email
     emailField = new QLineEdit(this);
-    //birthday
+    emailField->setPlaceholderText("Email");
+    emailField->setMinimumWidth(200);
+    // birthday
     QLabel *birthdayLabel = new QLabel("Birthday:", this);
     BirthdayField = new QDateEdit(this);
-    BirthdayField->setCalendarPopup(true); //Se va a mostrar el calendario como ventana emergente
-    BirthdayField->setDate(QDate::currentDate()); //se comienza por la fecha del current date
-
+    BirthdayField->setCalendarPopup(true);
+    BirthdayField->setDate(QDate::currentDate());
+    BirthdayField->setMinimumWidth(200);
     QCalendarWidget *calendar = BirthdayField->calendarWidget();
     calendar->setStyleSheet(
-        "QCalendarWidget QWidget { font-size: 14px; } " // Ajusta el tamaño de texto general
-        "QCalendarWidget QAbstractItemView:enabled { font-size: 14px; padding: 10px; }" // Espaciado de los días
-        "QCalendarWidget QToolButton { font-size: 16px; height: 30px; width: 80px; } " // Tamaño de los botones
-        "QCalendarWidget QToolButton#qt_calendar_yearbutton { min-width: 100px; }" // Aumentar ancho del botón del año
-        "QCalendarWidget QSpinBox { font-size: 16px; min-width: 100px; padding: 5px; } " // Ajustar el campo de edición de año
-        "QCalendarWidget QMenu { font-size: 18px; padding: 10px; }" // Tamaño del menú desplegable
+        "QCalendarWidget QWidget { font-size: 14px; } "
+        "QCalendarWidget QAbstractItemView:enabled { font-size: 14px; padding: 10px; }"
+        "QCalendarWidget QToolButton { font-size: 16px; height: 30px; width: 80px; } "
+        "QCalendarWidget QToolButton#qt_calendar_yearbutton { min-width: 100px; }"
+        "QCalendarWidget QSpinBox { font-size: 16px; min-width: 100px; padding: 5px; } "
+        "QCalendarWidget QMenu { font-size: 18px; padding: 10px; }"
         );
-    //boton para registrarse
-    RegisterButton = new QPushButton("Register",this);
-    connect(RegisterButton,&QPushButton::clicked,this,&RegisterPage::handleRegister);
+    // Avatar selection
+    avatarComboBox = new QComboBox(this);
+    avatarComboBox->setIconSize(QSize(100, 100));
+    avatarComboBox->setFixedWidth(150);
+    avatarComboBox->setMaxVisibleItems(3);
+    // Load predefined avatars
+    QStringList avatarPaths = {":/fotos_avatar/foto1.png", ":/fotos_avatar/foto2.png",
+                               ":/fotos_avatar/foto3.png", ":/fotos_avatar/foto4.png",
+                               ":/fotos_avatar/foto5.png", ":/fotos_avatar/foto6.png"};
+    for (const QString &path : avatarPaths) {
+        QPixmap pixmap(path);
+        if (!pixmap.isNull()) {
+            avatarComboBox->addItem(QIcon(pixmap), "");
+        }
+    }
 
-    registerLayout = new QGridLayout(this);
-    //crear el diseño
-    registerLayout->addWidget(usernameLabel,0,0);
-    registerLayout->addWidget(usernameField,0,1);
-    registerLayout->addWidget(passwordLabel,1,0);
-    registerLayout->addWidget(passwordField,1,1);
-    registerLayout->addWidget(repeatpasswordLabel,2,0);
-    registerLayout->addWidget(repeatpasswordField,2,1);
-    registerLayout->addWidget(emailLabel,3,0);
-    registerLayout->addWidget(emailField,3,1);
-    registerLayout->addWidget(birthdayLabel,4,0);
-    registerLayout->addWidget(BirthdayField,4,1);
-    registerLayout->addWidget(RegisterButton,7,0,1,2);
-    setLayout(registerLayout);
+    // Button for custom image selection
+    QPushButton *selectImageButton = new QPushButton("Elegir foto del ordenador ", this);
+    selectImageButton->setFixedWidth(avatarComboBox->width());
+    connect(selectImageButton, &QPushButton::clicked, this, &RegisterPage::selectImageFromFile);
+
+    // Register button
+    RegisterButton = new QPushButton("Register", this);
+    connect(RegisterButton, &QPushButton::clicked, this, &RegisterPage::handleRegister);
+
+    // Layouts
+    mainLayout = new QVBoxLayout(this);
+    formLayout = new QGridLayout();
+    // Avatar layout (vertical for avatar and button)
+    QVBoxLayout *avatarLayout = new QVBoxLayout();
+    avatarLayout->addWidget(avatarComboBox);
+    avatarLayout->addWidget(selectImageButton);
+    // Add fields to form layout
+    formLayout->addWidget(usernameField, 0, 1);
+    formLayout->addWidget(passwordField, 1, 1);
+    formLayout->addWidget(repeatpasswordField, 2, 1);
+    formLayout->addWidget(emailField, 4, 1);
+    formLayout->addWidget(birthdayLabel, 5, 0);
+    formLayout->addWidget(BirthdayField, 5, 1);
+
+    mainLayout->addLayout(avatarLayout);
+    mainLayout ->addLayout(formLayout);
+
+    // Add Register button at the bottom of the form
+    mainLayout->addWidget(RegisterButton);
+
+    setLayout(mainLayout);
     setWindowTitle("Register Page");
-    resize(800,800);
+    resize(400, 500);
 }
+
+void RegisterPage::selectImageFromFile() {
+    // Open file dialog to select an image
+    QString filePath = QFileDialog::getOpenFileName(this, "Select Avatar", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.bmp)");
+    if (!filePath.isEmpty()) {
+        QPixmap pixmap(filePath);
+        if (!pixmap.isNull()) {
+            // Add the selected image to the ComboBox and select it
+            avatarComboBox->addItem(QIcon(pixmap), "");
+            avatarComboBox->setCurrentIndex(avatarComboBox->count() - 1);
+        } else {
+            QMessageBox::warning(this, "Error", "Failed to load the selected image.");
+        }
+    }
+}
+
 
 bool RegisterPage::check_birthday(int day,int month,int year){
     time_t now = time(0);
@@ -157,7 +208,7 @@ void RegisterPage::handleRegister(){
             }
             usernameErrorLabel = new QLabel(usernameErrors, this);
 
-            registerLayout->addWidget(usernameErrorLabel, 0, 2);
+            formLayout->addWidget(usernameErrorLabel, 0, 2);
             usernameErrorLabel->setStyleSheet("color: red; font-size: 12px;");
             usernameField->setStyleSheet("border: 2px solid red;");
         }
@@ -171,7 +222,8 @@ void RegisterPage::handleRegister(){
 
             passwordErrorLabel = new QLabel(passwordErrors, this);
             passwordErrorLabel->setStyleSheet("color: red; font-size: 12px;");
-            registerLayout->addWidget(passwordErrorLabel, 1, 2);
+            passwordErrorLabel->setWordWrap(true);
+            formLayout->addWidget(passwordErrorLabel, 1, 2);
             passwordField->setStyleSheet("border: 2px solid red;");
         }
 
@@ -179,7 +231,7 @@ void RegisterPage::handleRegister(){
             QString repeatPasswordErrors = "Las contraseñas no coinciden.\n";
             repeatPasswordErrorLabel = new QLabel(repeatPasswordErrors, this);
             repeatPasswordErrorLabel->setStyleSheet("color: red; font-size: 12px;");
-            registerLayout->addWidget(repeatPasswordErrorLabel, 2, 2);
+            formLayout->addWidget(repeatPasswordErrorLabel, 2, 2);
             repeatpasswordField->setStyleSheet("border: 2px solid red;");
         }
 
@@ -187,7 +239,7 @@ void RegisterPage::handleRegister(){
             QString emailErrors = "El correo electrónico no es válido.\n";
             emailErrorLabel = new QLabel(emailErrors, this);
             emailErrorLabel->setStyleSheet("color: red; font-size: 12px;");
-            registerLayout->addWidget(emailErrorLabel, 3, 2);
+            formLayout->addWidget(emailErrorLabel, 3, 2);
             emailField->setStyleSheet("border: 2px solid red;");
         }
 
@@ -195,11 +247,11 @@ void RegisterPage::handleRegister(){
             QString birthdayErrors = "Debes de tener más de 12 años para poder registrarte.\n";
             birthdayErrorLabel = new QLabel(birthdayErrors, this);
             birthdayErrorLabel->setStyleSheet("color: red; font-size: 12px;");
-            registerLayout->addWidget(birthdayErrorLabel, 4, 2);
+            birthdayErrorLabel->setWordWrap(true);
+            formLayout->addWidget(birthdayErrorLabel, 4, 2);
             BirthdayField->setStyleSheet("border: 2px solid red;");
         }
         //adaptar tamaño del boton
-        registerLayout->addWidget(RegisterButton,7,0,1,3);
         return;
     }
     if(existUsername){
@@ -207,7 +259,7 @@ void RegisterPage::handleRegister(){
         return;
     }
     //Registramos el usuario si todo es valido
-    Player* user_player = db.registerPlayer(username, email, password, Birthday, 0);
+    Player* user_player = db.registerPlayer(username, email, password, Birthday, 0,avatarImage);
     if (user_player != nullptr) {
         emit Register_succesful(user_player);
         accept();
@@ -217,4 +269,5 @@ void RegisterPage::handleRegister(){
         accept();
     }
 }
+
 
