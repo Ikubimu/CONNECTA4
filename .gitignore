@@ -1,3 +1,19 @@
-
-
+# Ignorar directorios de build y debug
 build/
+debug/
+*.o
+*.a
+*.so
+*.dll
+*.exe
+
+# Ignorar archivos temporales o del sistema
+*.db
+*.idx
+*.log
+*.swp
+
+# Ignorar archivos generados por Qt Creator
+*.pro.user
+*.pro.user.*
+*.qmake.stash
