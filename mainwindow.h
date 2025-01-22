@@ -28,6 +28,7 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event) override; // Declaración del resizeEvent
+    void updateSettingsWidgetPosition();
 
 private:
     Ui::MainWindow *ui;
