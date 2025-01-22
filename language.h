@@ -1,20 +1,28 @@
 #ifndef LANGUAGE_H
 #define LANGUAGE_H
+
+#include <QObject>
 #include <QString>
 
-namespace Labels{
-    QString Password{};
-    QString Username{};
-    QString Caca{};
+namespace Labels {
+    inline QString Password;
+    inline QString Username;
+    inline QString Caca;
 };
 
-class Language
+class Language : public QObject
 {
+    Q_OBJECT
 public:
-    static void change_to_spanish();
-    static void change_to_english();
-protected:
-    Language();
+    static Language& instance(); // Singleton
+    void change_to_spanish();
+    void change_to_english();
+
+signals:
+    void languageChanged(); //señal para cuando cambiemos el idioma
+
+private:
+    explicit Language(QObject* parent = nullptr);
 };
 
 #endif // LANGUAGE_H

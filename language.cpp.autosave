@@ -1,0 +1,26 @@
+#include "language.h"
+
+Language::Language(QObject* parent): QObject(parent){}
+Language& Language::instance(){
+    static Language instance;
+    return instance;
+}
+void Language::change_to_spanish(){
+    
+    
+    emit languageChanged;
+}
+void Languagchange_to_english(){
+    Labels::Password = "Passord";
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+    Labels::
+}
