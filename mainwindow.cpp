@@ -34,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     layoutVLeft->addWidget(settingsButton, 1, Qt::AlignLeft);
 
     layoutH->addStretch(1);
-    layoutH->addWidget(&userL, 1);
-    layoutH->addWidget(&userR, 1);
+    //layoutH->addWidget(&userL, 1);
+    //layoutH->addWidget(&userR, 1);
     layoutH->addStretch(1);
 
     layoutV->addLayout(layoutH, 1);

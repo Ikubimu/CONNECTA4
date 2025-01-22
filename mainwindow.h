@@ -5,7 +5,7 @@
 #include <QWidget>
 #include "gameboard.h"
 #include "rankingtable.h"
-#include "userswidget.h"
+//#include "userswidget.h"
 #include "Login.h"
 #include "Forgot_Password.h"
 #include "gamehistory.h"
@@ -33,7 +33,7 @@ private:
     Ui::MainWindow *ui;
     GameBoard board;
     rankingTable rank;
-    usersWidget userL, userR;
+  //  usersWidget *userL, *userR;
     QPushButton *openLoginButton;
     void openLoginPage();
     void openRegisterPage();

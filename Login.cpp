@@ -4,7 +4,7 @@ LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(paren
     QLabel *usernameLabel = new QLabel("Nombre de usuario:", this);
     usernameField = new QLineEdit(this);
 
-    QLabel *passwordLabel = new QLabel("Contraseña:", this);
+    QLabel *passwordLabel = new QLabel("Password", this);
     passwordField = new QLineEdit(this);
     passwordField->setEchoMode(QLineEdit::Password); // Ocultar la contraseña
 

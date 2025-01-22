@@ -6,5 +6,7 @@
         <file>fotos_avatar/foto4.png</file>
         <file>fotos_avatar/foto5.png</file>
         <file>fotos_avatar/foto6.png</file>
+        <file>fotos_avatar/robot.jpg</file>
+        <file>fotos_avatar/noUserImage.jpg</file>
     </qresource>
 </RCC>
