@@ -1,11 +1,12 @@
 #include "userswidget.h"
-#define SIZE_REL 0.9
-
-usersWidget::usersWidget(QWidget *parent,Player *players[2]): QWidget(parent){
+#define CIRCLE 50
+usersWidget::usersWidget(QWidget *parent): QWidget(parent),actual(No_players){
     actual = actual_situation::No_players;
-    players_playing[0] = players[0];
-    players_playing[1] = players[1];
-    robot = players[1];
+    players_playing[0] = nullptr;
+    Connect4& game = Connect4::getInstance();
+    robot = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
+    players_playing[1] = robot;
+
     //Initialize all the elements depends of the situation we will use them or not
     whoStarts = new QComboBox(this);
     whoStarts ->addItem("Jugador 1");
@@ -29,48 +30,56 @@ usersWidget::usersWidget(QWidget *parent,Player *players[2]): QWidget(parent){
     connect(leftEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
     connect(leftButtonLogin, &QPushButton::clicked, this, &usersWidget::openLoginPage);
     connect(leftlog_out, &QPushButton::clicked, this, &usersWidget::log_out);
-
-//Para que salga circular  la imagen  buscado en internet
-    AvatarLeft = QImage(":/fotos_avatar/noUserImage.jpg");
-    AvatarRight = QImage(":/fotos_avatar/robot.jpg");
-
-    QLabel *leftAvatarLabel = new QLabel(this);
-    QLabel *rightAvatarLabel = new QLabel(this);
-
-    leftAvatarLabel->setPixmap(createCircularPixmap(AvatarLeft));
-    rightAvatarLabel->setPixmap(createCircularPixmap(AvatarRight));
-
-
-
-    mainWidget = new QHBoxLayout(this);
-    left_widget = new QVBoxLayout();
-    right_widget = new QVBoxLayout();
-    QVBoxLayout *middle = new QVBoxLayout(); // no lo añado dentro de la clase debido a que una vez creado no variara
-
-    middle->addWidget(new QLabel(" VS ",this));
+    //initialize middle layout
+    middle = new QVBoxLayout(this);
+    middle->addWidget(new QLabel("    VS   ",this));
     middle->addWidget(whoStarts);
 
-    left_widget->addWidget(leftAvatarLabel);
-    left_widget->addWidget(leftButtonLogin);
+    stackedWidget = new QStackedWidget(this);
+    setupWidgets();
+    updateWidget(No_players);
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(stackedWidget);
+    setLayout(mainLayout);
 
-    right_widget->addWidget(rightAvatarLabel);
-    right_widget->addWidget(new QLabel("Robot"));
-    right_widget->addWidget(Difficulty_Level_Robot);
-
-    mainWidget->addLayout(left_widget);
-    mainWidget->addLayout(middle);
-    mainWidget->addLayout(right_widget);
 }
 
-void usersWidget::openLoginPage()
-{
-    LoginPage loginDialog(nullptr,players_playing);
-    connect(&loginDialog, &LoginPage::Login_succesful, this, &usersWidget::handleLoginSuccess);
-    connect(&loginDialog, &LoginPage::requestRegisterPage, this, &usersWidget::openRegisterPage);
-    connect(&loginDialog,&LoginPage::requestForgotPasswordPage,this,&usersWidget::openForgotPasswordPage);
-    loginDialog.exec();
-}
 
+void usersWidget::setupWidgets(){
+    setupNoPlayersWidget();
+    setupOnePlayerWidget();
+    setupTwoPlayersWidget();
+
+    //añadir las paginas
+    stackedWidget->addWidget(noPlayersWidget);
+    stackedWidget->addWidget(onePlayerWidget);
+    stackedWidget->addWidget(twoPlayersWidget);
+}
+void usersWidget::updateWidget(actual_situation x){
+    actual = x;
+    switch (x) {
+        case No_players:
+            stackedWidget->setCurrentWidget(noPlayersWidget);
+            break;
+        case One_player:
+            if (players_playing[0]) {
+                AvatarLeft = players_playing[0]->getAvatar();
+                leftAvatarLabel->setPixmap(createCircularPixmap(AvatarLeft));
+                leftAvatarLabel->show();
+            }
+            stackedWidget->setCurrentWidget(onePlayerWidget);
+            break;
+        case Two_players:
+            if (players_playing[0] && players_playing[1]) {
+                AvatarLeft = players_playing[0]->getAvatar();
+                AvatarRight = players_playing[1]->getAvatar();
+                leftAvatarLabel->setPixmap(createCircularPixmap(AvatarLeft));
+                rightAvatarLabel->setPixmap(createCircularPixmap(AvatarRight));
+            }
+            stackedWidget->setCurrentWidget(twoPlayersWidget);
+            break;
+    }
+}
 start_player usersWidget::get_who_starts(){
     int index = whoStarts->currentIndex();
     switch (index){
@@ -80,15 +89,23 @@ start_player usersWidget::get_who_starts(){
     }
     return start_player::random;
 }
+void usersWidget::openLoginPage()
+{
+    LoginPage loginDialog(nullptr,players_playing);
+    connect(&loginDialog, &LoginPage::Login_succesful, this, &usersWidget::handleLoginSuccess);
+    connect(&loginDialog, &LoginPage::requestRegisterPage, this, &usersWidget::openRegisterPage);
+    connect(&loginDialog,&LoginPage::requestForgotPasswordPage,this,&usersWidget::openForgotPasswordPage);
+    loginDialog.exec();
+}
 QPixmap usersWidget::createCircularPixmap(const QImage &image)
 {
-    QPixmap pixmap = QPixmap::fromImage(image).scaled(100, 100, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-    QBitmap mask(100, 100);
+    QPixmap pixmap = QPixmap::fromImage(image).scaled(CIRCLE, CIRCLE, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QBitmap mask(CIRCLE, CIRCLE);
     mask.fill(Qt::color0);
     QPainter painter(&mask);
     painter.setBrush(Qt::color1);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.drawEllipse(0, 0, 100, 100);
+    painter.drawEllipse(0, 0, CIRCLE, CIRCLE);
     painter.end();
     pixmap.setMask(mask);
     return pixmap;
@@ -113,9 +130,7 @@ void usersWidget::handleLoginSuccess(Player *player){
         updateWidget(actual);
     }
 }
-void usersWidget::updateWidget(actual_situation x){
 
-}
 void usersWidget::openForgotPasswordPage(){
     ForgotPasswordPage ForgotPasswordDialog(nullptr,players_playing);
     connect(&ForgotPasswordDialog,&ForgotPasswordPage::Login_succesful,this,&usersWidget::handleLoginSuccess);
@@ -154,6 +169,106 @@ void usersWidget::log_out(){
         }
     }else if (buttonSender == rightlog_out) {
         actual = actual_situation::One_player;
-        updateWidget(One_player);
+        updateWidget(actual);
     }
+}
+
+int usersWidget::get_players(Player* players[2]){
+    if(players_playing[1] == nullptr){
+        return 0;
+    }
+    players[0] = players_playing[0];
+    players[1] = players_playing[1];
+    return (players_playing[1] == robot) ? 1 : 2;
+}
+void usersWidget::setupNoPlayersWidget(){
+    noPlayersWidget = new QWidget(this);
+
+    QVBoxLayout* leftLayout = new QVBoxLayout();
+    leftAvatarLabel = new QLabel();
+    AvatarLeft = QImage(":/fotos_avatar/noUserImage.jpg");
+    leftAvatarLabel->setPixmap(createCircularPixmap(AvatarLeft));
+    leftLayout->addWidget(leftAvatarLabel);
+    leftLayout->addWidget(leftButtonLogin);
+
+    QVBoxLayout* rightLayout = new QVBoxLayout();
+    rightAvatarLabel = new QLabel();
+    AvatarRight = QImage(":/fotos_avatar/robot.png");
+    rightAvatarLabel->setPixmap(createCircularPixmap(AvatarRight));
+    rightLayout->addWidget(rightAvatarLabel);
+
+    rightLayout->addWidget(new QLabel("Robot"));
+    rightLayout->addWidget(Difficulty_Level_Robot);
+
+    QWidget* middleContainer = new QWidget(this);
+    middleContainer->setLayout(middle);
+    middleContainer->setFixedWidth(100);
+    middle->setAlignment(Qt::AlignCenter);
+
+    // Layout principal horizontal
+    QHBoxLayout* mainLayout = new QHBoxLayout(noPlayersWidget);
+    mainLayout->addLayout(leftLayout);
+    mainLayout->addWidget(middleContainer);
+    mainLayout->addLayout(rightLayout);
+
+    mainLayout->setStretch(0, 2);
+    mainLayout->setStretch(1, 1);
+    mainLayout->setStretch(2, 2);
+
+
+}
+void usersWidget::setupOnePlayerWidget(){
+    onePlayerWidget = new QWidget(this);
+
+    QVBoxLayout* leftLayout = new QVBoxLayout();
+    leftAvatarLabel = new QLabel();
+    leftLayout->addWidget(leftAvatarLabel);
+
+    leftLayout->addWidget(leftEditprofile);
+    leftLayout->addWidget(leftlog_out);
+
+    QVBoxLayout* rightLayout = new QVBoxLayout();
+    rightAvatarLabel = new QLabel();
+    AvatarRight = QImage(":/fotos_avatar/robot.png");
+    rightAvatarLabel->setPixmap(createCircularPixmap(AvatarRight));
+    rightLayout->addWidget(rightAvatarLabel);
+
+    rightLayout->addWidget(new QLabel("Robot"));
+    rightLayout->addWidget(rightButtonLogin);
+    rightLayout->addWidget(Difficulty_Level_Robot);
+
+
+    QHBoxLayout* mainLayout = new QHBoxLayout(onePlayerWidget);
+    mainLayout->setStretch(0, 2);
+    mainLayout->setStretch(1, 1);
+    mainLayout->setStretch(2, 2);
+    mainLayout->addLayout(leftLayout);
+    mainLayout->addLayout(middle);
+    mainLayout->addLayout(rightLayout);
+
+}
+void usersWidget::setupTwoPlayersWidget(){
+    twoPlayersWidget = new QWidget(this);
+
+    QVBoxLayout* leftLayout = new QVBoxLayout();
+    leftAvatarLabel = new QLabel();
+    leftLayout->addWidget(leftAvatarLabel);
+
+    leftLayout->addWidget(leftEditprofile);
+    leftLayout->addWidget(leftlog_out);
+
+    QVBoxLayout* rightLayout = new QVBoxLayout();
+    rightAvatarLabel = new QLabel();
+    rightLayout->addWidget(rightAvatarLabel);
+
+    rightLayout->addWidget(rightEditprofile);
+    rightLayout->addWidget(rightlog_out);
+
+    QHBoxLayout* mainLayout = new QHBoxLayout(twoPlayersWidget);
+    mainLayout->addLayout(leftLayout);
+    mainLayout->addLayout(middle);
+    mainLayout->addLayout(rightLayout);
+    mainLayout->setStretch(0, 2);
+    mainLayout->setStretch(1, 1);
+    mainLayout->setStretch(2, 2);
 }

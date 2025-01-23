@@ -5,12 +5,16 @@
 #include <QWidget>
 #include "gameboard.h"
 #include "rankingtable.h"
-//#include "userswidget.h"
+#include "userswidget.h"
 #include "Login.h"
 #include "Forgot_Password.h"
 #include "gamehistory.h"
-
+#include "ui_mainwindow.h"
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
 #include "settinguser.h"
+#include "lib/connect4.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -33,7 +37,7 @@ private:
     Ui::MainWindow *ui;
     GameBoard board;
     rankingTable rank;
-  //  usersWidget *userL, *userR;
+    usersWidget *users;
     QPushButton *openLoginButton;
     void openLoginPage();
     void openRegisterPage();

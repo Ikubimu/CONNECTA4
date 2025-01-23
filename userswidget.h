@@ -7,45 +7,57 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QImage>
+#include <QStackedWidget>
 #include <QPainter>
 #include "Register.h"
 #include "Login.h"
 #include "Forgot_Password.h"
 #include "lib/connect4.h"
+
 enum start_player{
     first_player,
     second_player,
     random
+};
+enum actual_situation{
+    No_players,
+    One_player,
+    Two_players,
 };
 class usersWidget : public  QWidget
 {
     Q_OBJECT
 public:
     usersWidget(QWidget *parent = nullptr);
-
+    start_player get_who_starts();
+    int get_players(Player* players[2]);
 private:
-    enum actual_situation{
-        No_players,
-        One_player,
-        Two_players,
-    };
+
     actual_situation actual;
     Player  *players_playing[2];
     Player *robot;
+
     QComboBox *whoStarts;
     QComboBox *Difficulty_Level_Robot;
+
     QImage AvatarRight;
     QImage AvatarLeft;
+
+    QLabel *rightAvatarLabel;
+    QLabel *leftAvatarLabel;
     QPushButton *rightButtonLogin;
     QPushButton *rightEditprofile;
     QPushButton *rightlog_out;
     QPushButton *leftButtonLogin;
     QPushButton *leftEditprofile;
     QPushButton *leftlog_out;
-    QHBoxLayout *mainWidget;
-    QVBoxLayout *left_widget;
-    QVBoxLayout *right_widget;
-    start_player get_who_starts();
+
+    QStackedWidget *stackedWidget;
+    QWidget *noPlayersWidget;
+    QWidget *onePlayerWidget;
+    QWidget *twoPlayersWidget;
+
+    QVBoxLayout *middle;
     void openLoginPage();
     void openRegisterPage();
     void handleLoginSuccess(Player *player);
@@ -53,6 +65,10 @@ private:
     void openConfigureProfile();
     void log_out();
     void updateWidget(actual_situation x);
+    void setupWidgets();
+    void setupNoPlayersWidget();
+    void setupOnePlayerWidget();
+    void setupTwoPlayersWidget();
     QPixmap createCircularPixmap(const QImage &image); // hecho con IA
 
 };

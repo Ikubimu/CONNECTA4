@@ -1,11 +1,5 @@
+
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "lib/connect4.h"
-
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -13,8 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this); 
     QWidget *centralWidget = new QWidget(this);
-    openLoginButton = new QPushButton("Abrir LoginPage",this);
-    connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
+    users = new usersWidget(this);
+    //openLoginButton = new QPushButton("Abrir LoginPage",this);
+    //connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
     // Crear un layout vertical
     QHBoxLayout *layout = new QHBoxLayout(centralWidget);
     QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
@@ -30,12 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     settingsWidget.setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
     layoutVLeft->addStretch(2);
-    layoutVLeft->addWidget(openLoginButton);
+    //layoutVLeft->addWidget(openLoginButton);
     layoutVLeft->addWidget(settingsButton, 1, Qt::AlignLeft);
 
     layoutH->addStretch(1);
-    //layoutH->addWidget(&userL, 1);
-    //layoutH->addWidget(&userR, 1);
+    layoutH->addWidget(users, 4);
     layoutH->addStretch(1);
 
     layoutV->addLayout(layoutH, 1);
@@ -53,10 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->setCentralWidget(centralWidget);
     //añadir al robot (no es un usuario como tal pero vamos a contabilizarlo de esta manera para poder trabajar la base de datos mas facil)
     // Usar la biblioteca Connec4Lib
-    Connect4& game = Connect4::getInstance();
-    Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
-    Player* p1 = game.registerPlayer("oscar1", "oscar@oscar.com", "Password123!", QDate(1990, 1, 1), 0);
-    players_playing[1] = machine_player;
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -71,7 +61,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+/*
 void MainWindow::openLoginPage()
 {
     LoginPage loginDialog(nullptr,players_playing);
@@ -98,3 +88,4 @@ void MainWindow::openForgotPasswordPage(){
     connect(&ForgotPasswordDialog,&ForgotPasswordPage::Login_succesful,this,&MainWindow::handleLoginSuccess);
     ForgotPasswordDialog.exec();
 }
+*/
