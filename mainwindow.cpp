@@ -54,7 +54,11 @@ MainWindow::MainWindow(QWidget *parent)
     Connect4& game = Connect4::getInstance();
     Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
     Player* p1 = game.registerPlayer("oscar1", "oscar@oscar.com", "Password123!", QDate(1990, 1, 1), 0);
+    players_playing[0] = p1;
     players_playing[1] = machine_player;
+
+    //conectamos mainwindows con la señal de victoria de gameboard
+    connect(&board, &GameBoard::emit_result, this, &MainWindow::receive_result);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -136,4 +140,23 @@ void MainWindow::change_language_signal(int idioma){
 
 
 
+}
+
+
+
+void MainWindow::receive_result(GameBoard::results data)
+{
+    switch(data)
+    {
+    case GameBoard::win:
+        players_playing[0]->addPoints(30);
+        break;
+    case GameBoard::draw:
+        players_playing[0]->addPoints(10);
+        players_playing[1]->addPoints(10);
+        break;
+    case GameBoard::lost:
+        players_playing[1]->addPoints(30);
+        break;
+    }
 }

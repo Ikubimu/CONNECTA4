@@ -37,20 +37,21 @@ private:
     rankingTable rank;
     usersWidget userL, userR;
     QPushButton *openLoginButton;
+    Player* players_playing[2]; // will be initialized to nullptr at the beginning
+    SettingsUser settingsWidget;
+
     void openLoginPage();
     void openRegisterPage();
     void openForgotPasswordPage();
     void handleLoginSuccess(Player* Player);
     void handleRegisterSuccess(Player* Player);
-    Player* players_playing[2]; // will be initialized to nullptr at the beginning
-    QWidget* centralWidget;
-
 
     QWidget* buildMainWidget();
     QPushButton *settingsButton;
     void catchSignal();
-    SettingsUser settingsWidget;
+
 private slots:
+    void receive_result(GameBoard::results data);
     void change_language_signal(int idioma);
 };
 
