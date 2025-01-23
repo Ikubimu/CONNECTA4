@@ -5,6 +5,7 @@ usersWidget::usersWidget(QWidget *parent,Player *players[2]): QWidget(parent){
     actual = actual_situation::No_players;
     players_playing[0] = players[0];
     players_playing[1] = players[1];
+    robot = players[1];
     //Initialize all the elements depends of the situation we will use them or not
     whoStarts = new QComboBox(this);
     whoStarts ->addItem("Jugador 1");
@@ -15,13 +16,19 @@ usersWidget::usersWidget(QWidget *parent,Player *players[2]): QWidget(parent){
     Difficulty_Level_Robot->addItem("Facil");
     Difficulty_Level_Robot->addItem("Dificil");
 
-    rightButtonLogin = new QPushButton("Iniciar Sesion", this);
+    rightButtonLogin = new QPushButton("Jugar con un amigo", this);
     rightEditprofile = new QPushButton("Editar el Perfil", this);
     rightlog_out = new QPushButton("Cerrar Sesión", this);
+    connect(rightButtonLogin, &QPushButton::clicked, this, &usersWidget::openLoginPage);
+    connect(rightEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
+    connect(rightlog_out, &QPushButton::clicked, this, &usersWidget::log_out);
 
     leftButtonLogin = new QPushButton("Iniciar Sesión", this);
     leftEditprofile = new QPushButton("Editar Perfil", this);
     leftlog_out = new QPushButton("Cerrar sesion", this);
+    connect(leftEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
+    connect(leftButtonLogin, &QPushButton::clicked, this, &usersWidget::openLoginPage);
+    connect(leftlog_out, &QPushButton::clicked, this, &usersWidget::log_out);
 
 //Para que salga circular  la imagen  buscado en internet
     AvatarLeft = QImage(":/fotos_avatar/noUserImage.jpg");
@@ -45,13 +52,10 @@ usersWidget::usersWidget(QWidget *parent,Player *players[2]): QWidget(parent){
 
     left_widget->addWidget(leftAvatarLabel);
     left_widget->addWidget(leftButtonLogin);
-    left_widget->addWidget(leftEditprofile);
-    left_widget->addWidget(leftlog_out);
 
     right_widget->addWidget(rightAvatarLabel);
-    right_widget->addWidget(rightButtonLogin);
-    right_widget->addWidget(rightEditprofile);
-    right_widget->addWidget(rightlog_out);
+    right_widget->addWidget(new QLabel("Robot"));
+    right_widget->addWidget(Difficulty_Level_Robot);
 
     mainWidget->addLayout(left_widget);
     mainWidget->addLayout(middle);
@@ -99,11 +103,11 @@ void usersWidget::openRegisterPage(){
 
 void usersWidget::handleLoginSuccess(Player *player){
     //two possible situations
-    if(players_playing[0] == nullptr){
+    if(actual == actual_situation::No_players){
         actual = actual_situation::One_player;
         players_playing[0] = player;
         updateWidget(actual);
-    }else{
+    }else{ // actual situation deberia de estar en dos players
         actual = actual_situation::Two_players;
         players_playing[1] = player;
         updateWidget(actual);
@@ -118,8 +122,38 @@ void usersWidget::openForgotPasswordPage(){
     ForgotPasswordDialog.exec();
 }
 void usersWidget::openConfigureProfile(){
+    QPushButton *buttonSender = qobject_cast<QPushButton *>(sender());
+    if (buttonSender == leftEditprofile) {
 
+    } else if (buttonSender == rightEditprofile) {
+
+    }
 }
 void usersWidget::log_out(){
+    QMessageBox confirmDialog(this);
+    confirmDialog.setWindowTitle("Confirmar cierre de sesión");
+    confirmDialog.setText("¿Seguro que deseas cerrar sesión?");
+    confirmDialog.setIcon(QMessageBox::Question);
+    confirmDialog.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
+    confirmDialog.setDefaultButton(QMessageBox::No); // Por defecto, selecciona "No"
 
+    int ret = confirmDialog.exec(); // captura la respuesta del usuario
+
+    if(ret == QMessageBox::No) return;
+    //si le ha dado a si lo eliminamos
+    QPushButton *buttonSender = qobject_cast<QPushButton *>(sender());
+    if (buttonSender == leftlog_out) {
+        if(actual == actual_situation::Two_players){
+            players_playing[0] = players_playing[1]; // cambiamos el players_playing1 a la izquierda
+            actual = actual_situation::One_player;
+            updateWidget(actual);
+        }else{
+            players_playing[0] = nullptr;
+            actual = actual_situation::No_players;
+            updateWidget(actual);
+        }
+    }else if (buttonSender == rightlog_out) {
+        actual = actual_situation::One_player;
+        updateWidget(One_player);
+    }
 }

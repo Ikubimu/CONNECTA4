@@ -21,7 +21,7 @@ class usersWidget : public  QWidget
 {
     Q_OBJECT
 public:
-    usersWidget(QWidget *parent = nullptr,Player *players[2] = nullptr);
+    usersWidget(QWidget *parent = nullptr);
 
 private:
     enum actual_situation{
@@ -31,6 +31,7 @@ private:
     };
     actual_situation actual;
     Player  *players_playing[2];
+    Player *robot;
     QComboBox *whoStarts;
     QComboBox *Difficulty_Level_Robot;
     QImage AvatarRight;
