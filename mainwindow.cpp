@@ -10,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , settingsWidget(this)
+    ,rank(this)
+    //,userL(this)
+    //,userR(this)
+    ,board(this)
 {
     ui->setupUi(this); 
     QWidget *centralWidget = new QWidget(this);
@@ -57,6 +61,15 @@ MainWindow::MainWindow(QWidget *parent)
     Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
     Player* p1 = game.registerPlayer("oscar1", "oscar@oscar.com", "Password123!", QDate(1990, 1, 1), 0);
     players_playing[1] = machine_player;
+
+    //lamada para que las funciones cojan los estilos del codigo de estilos
+    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        this->setStyleSheet(styleSheet);
+        file.close();
+    }
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -74,7 +87,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::openLoginPage()
 {
-    LoginPage loginDialog(nullptr,players_playing);
+    LoginPage loginDialog(this,players_playing);
     connect(&loginDialog, &LoginPage::Login_succesful, this, &MainWindow::handleLoginSuccess);
     connect(&loginDialog, &LoginPage::requestRegisterPage, this, &MainWindow::openRegisterPage);
     connect(&loginDialog,&LoginPage::requestForgotPasswordPage,this,&MainWindow::openForgotPasswordPage);
@@ -94,7 +107,7 @@ void MainWindow::handleLoginSuccess(Player *player){
     qDebug() << "Register was successful!" <<player->getNickName()<<"  "<<player->getPassword();
 }
 void MainWindow::openForgotPasswordPage(){
-    ForgotPasswordPage ForgotPasswordDialog(nullptr,players_playing);
+    ForgotPasswordPage ForgotPasswordDialog(this,players_playing);
     connect(&ForgotPasswordDialog,&ForgotPasswordPage::Login_succesful,this,&MainWindow::handleLoginSuccess);
     ForgotPasswordDialog.exec();
 }

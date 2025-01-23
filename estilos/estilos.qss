@@ -1,0 +1,384 @@
+//Forgot_Password
+ForgotPasswordPage{
+    /* Estilo para el QDialog */
+    QDialog {
+        background-color: #f4f4f4;
+        border: 2px solid #4CAF50;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    /* Estilo para los QLineEdit (campos de texto) */
+    QLineEdit {
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+    }
+
+    QLineEdit:focus {
+        border: 2px solid #4CAF50;
+        background-color: #e8f5e9;
+    }
+
+    /* Estilo para QLabel */
+    QLabel {
+        font-size: 14px;
+        font-weight: bold;
+        color: #4CAF50;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Estilo para QPushButton */
+    QPushButton {
+        background-color: #4CAF50;
+        color: white;
+        border: 2px solid #388E3C;
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    QPushButton:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    QPushButton:pressed {
+        background-color: #388E3C;
+        transform: scale(0.95);
+    }
+
+    /* Desactivar botones (si se usa) */
+    QPushButton:disabled {
+        background-color: #e0e0e0;
+        color: #9e9e9e;
+        border: 2px solid #bdbdbd;
+    }
+
+    /* Estilo para QMessageBox */
+    QMessageBox {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    /* Estilo para los botones dentro de QMessageBox */
+    QMessageBox QPushButton {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    QMessageBox QPushButton:hover {
+        background-color: #45a049;
+    }
+}
+
+//LogIn
+LoginPage{
+    /* Estilo general para el QDialog */
+    QDialog {
+        background-color: #f4f4f4;
+        border: 2px solid #4CAF50;
+        border-radius: 10px;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Estilo para QLabel */
+    QLabel {
+        font-size: 14px;
+        color: #333333;
+        font-weight: bold;
+    }
+
+    /* Estilo para QLabel de errores */
+    QLabel[error="true"] {
+        color: red;
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    /* Estilo para QLineEdit (campos de texto) */
+    QLineEdit {
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+        background-color: #ffffff;
+        color: #333333;
+    }
+
+    QLineEdit:focus {
+        border: 2px solid #4CAF50;
+        background-color: #e8f5e9;
+    }
+
+    /* Estilo para QLineEdit con errores */
+    QLineEdit[error="true"] {
+        border: 2px solid red;
+        background-color: #ffe6e6;
+    }
+
+    /* Estilo para QPushButton */
+    QPushButton {
+        background-color: #4CAF50;
+        color: white;
+        border: 2px solid #388E3C;
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    QPushButton:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    QPushButton:pressed {
+        background-color: #388E3C;
+        transform: scale(0.95);
+    }
+
+    /* Botón desactivado */
+    QPushButton:disabled {
+        background-color: #e0e0e0;
+        color: #9e9e9e;
+        border: 2px solid #bdbdbd;
+    }
+
+    /* Mensajes de QMessageBox */
+    QMessageBox {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    QMessageBox QPushButton {
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    QMessageBox QPushButton:hover {
+        background-color: #45a049;
+    }
+}
+
+//ranking table
+rankingTable{
+    /* Estilo general del widget */
+    QWidget {
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    /* Estilo para el cuadro de búsqueda (QLineEdit) */
+    QLineEdit {
+        border: 2px solid #4CAF50;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+        background-color: #ffffff;
+        color: #333333;
+        margin: 5px;
+    }
+
+    QLineEdit:focus {
+        border: 2px solid #388E3C;
+        background-color: #e8f5e9;
+    }
+
+    /* Estilo para la tabla (QTableView) */
+    QTableView {
+        border: 2px solid #4CAF50;
+        border-radius: 10px;
+        background-color: #ffffff;
+        gridline-color: #dddddd;
+        font-size: 14px;
+        color: #333333;
+        margin: 5px;
+    }
+
+    /* Encabezados de la tabla */
+    QHeaderView::section {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px;
+        font-weight: bold;
+        border: none;
+        text-align: center;
+    }
+
+    /* Estilo para las filas de la tabla */
+    QTableView::item {
+        padding: 8px;
+        border: none;
+    }
+
+    QTableView::item:selected {
+        background-color: #D3E4CD; /* Color de fondo para filas seleccionadas */
+        color: black;
+    }
+
+    /* Filas alternadas */
+    QTableView {
+        alternate-background-color: #f2f2f2;
+    }
+
+    /* Scrollbars */
+    QScrollBar:vertical {
+        border: none;
+        background: #f2f2f2;
+        width: 10px;
+        margin: 0px 0px 0px 0px;
+    }
+    QScrollBar::handle:vertical {
+        background: #4CAF50;
+        border-radius: 4px;
+    }
+    QScrollBar::add-line:vertical,
+    QScrollBar::sub-line:vertical {
+        height: 0;
+        border: none;
+    }
+}
+
+//REGISTER
+RegisterPage{
+    /* Hoja de estilo para RegisterPage */
+
+    /* QLineEdit - Estilo para los campos de entrada */
+    QLineEdit {
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+        color: #333;
+        background-color: #f9f9f9;
+    }
+
+    QLineEdit:focus {
+        border-color: #007bff;
+        background-color: #fff;
+    }
+
+    /* QDateEdit - Campo de fecha */
+    QDateEdit {
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+        color: #333;
+        background-color: #f9f9f9;
+    }
+
+    QDateEdit::drop-down {
+        border: none;
+    }
+
+    /* QCalendarWidget - Estilo del calendario */
+    QCalendarWidget QWidget {
+        font-size: 14px;
+    }
+
+    QCalendarWidget QAbstractItemView:enabled {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    QCalendarWidget QToolButton {
+        font-size: 16px;
+        height: 30px;
+        width: 80px;
+    }
+
+    QCalendarWidget QToolButton#qt_calendar_yearbutton {
+        min-width: 100px;
+    }
+
+    QCalendarWidget QSpinBox {
+        font-size: 16px;
+        min-width: 100px;
+        padding: 5px;
+    }
+
+    QCalendarWidget QMenu {
+        font-size: 18px;
+        padding: 10px;
+    }
+
+    /* QComboBox - Estilo para el selector de avatar */
+    QComboBox {
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        font-size: 14px;
+        background-color: #f9f9f9;
+    }
+
+    QComboBox::drop-down {
+        border: none;
+    }
+
+    QComboBox QAbstractItemView {
+        border: 1px solid #ccc;
+        background-color: #fff;
+        selection-background-color: #007bff;
+        selection-color: #fff;
+    }
+
+    /* QPushButton - Estilo para los botones */
+    QPushButton {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    QPushButton:hover {
+        background-color: #0056b3;
+    }
+
+    QPushButton:pressed {
+        background-color: #003d80;
+    }
+
+    /* QLabel - Estilo para las etiquetas */
+    QLabel {
+        font-size: 14px;
+        color: #333;
+    }
+
+    /* Estilo para las etiquetas de error */
+    QLabel[error="true"] {
+        color: red;
+        font-size: 12px;
+    }
+
+    /* Campos de entrada con errores */
+    QLineEdit[error="true"], QDateEdit[error="true"] {
+        border: 2px solid red;
+        background-color: #ffe6e6;
+    }
+}
