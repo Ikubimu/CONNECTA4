@@ -22,6 +22,7 @@ SOURCES += \
     gameboard.cpp \
     gamehistory.cpp \
     gamehistorytablemodel.cpp \
+    language.cpp \
     main.cpp \
     mainwindow.cpp \
     rankingtable.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     gameboard.h \
     gamehistory.h \
     gamehistorytablemodel.h \
+    language.h \
     mainwindow.h \
     rankingtable.h \
     settinguser.h \
