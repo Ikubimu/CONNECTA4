@@ -16,6 +16,13 @@ public:
     explicit GameBoard(QWidget *parent = nullptr);
     ~GameBoard();
 
+        enum results
+    {
+        draw=0,
+        win,
+        lost
+    };
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -31,7 +38,7 @@ private:
 
     bool dropDisc(int column, int &row);
     bool checkWin(int row, int col);
-
+    bool checkFullGrid();
     // Variables para la animación
     bool isAnimating;
     int animColumn;
@@ -42,6 +49,9 @@ private:
     void startAnimation(int column, int player);
 
     bool cpu_on{true};
+
+signals:
+    void emit_result(results data);
 };
 
 #endif // GAMEBOARD_H

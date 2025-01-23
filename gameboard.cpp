@@ -89,7 +89,13 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
                 if(checkWin(row, column)){
 
                     QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
+                    emit emit_result((results)currentPlayer);
+                    return;
+                }
+                else if(checkFullGrid()){
 
+                    QMessageBox::information(this, "Empate", QString("No queda espacio de juego"));
+                    emit emit_result((results)currentPlayer);
                     return;
                 }
 
@@ -103,9 +109,16 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
                     if(checkWin(row, columnaCPU)){
 
                         QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
-
+                        emit emit_result((results)currentPlayer);
                         return;
                     }
+                    else if(checkFullGrid()){
+
+                        QMessageBox::information(this, "Empate", QString("No queda espacio de juego"));
+                        emit emit_result((results)currentPlayer);
+                        return;
+                    }
+
 
                     currentPlayer = 1;
 
@@ -118,6 +131,18 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
         }
 
     }
+}
+
+bool GameBoard::checkFullGrid()
+{
+    for(int i=0; i<grid.size(); i++)
+    {
+        if(grid[i].last() == 0)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool GameBoard::dropDisc(int column, int &row)
