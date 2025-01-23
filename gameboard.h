@@ -26,6 +26,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     Ui::GameBoard *ui;
@@ -33,6 +34,7 @@ private:
     int cols;
     int cellSize;
     int currentPlayer;
+    int column_selected = 0;
 
     QVector<QVector<int>> grid;
 
@@ -49,6 +51,7 @@ private:
     QTimer animationTimer;
     void startAnimation(int column, int player);
 
+    void set_cpu(bool state){ cpu_on = state; }
     bool cpu_on{true};
 
 signals:

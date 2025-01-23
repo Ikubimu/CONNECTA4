@@ -19,6 +19,7 @@ GameBoard::GameBoard(QWidget *parent)
     ui->setupUi(this);
     grid.resize(rows, QVector<int>(cols, 0));
     setMinimumSize(cols * 40, rows * 40);
+    setMouseTracking(true);
 }
 
 GameBoard::~GameBoard()
@@ -68,6 +69,45 @@ void GameBoard::paintEvent(QPaintEvent *event)
         }
     }
 
+
+    //Pintado de columna donde apunta el ratón Para el uso de estos efectos se ha usado ChatGPT
+    // Crear el gradiente radial
+    QRadialGradient gradient(x0 + column_selected * cellSize + cellSize / 2,
+                             y0 + espacioJuego.height() * 0.9,
+                             300);
+
+    // Configurar colores del gradiente
+    if(currentPlayer == 1)
+    {
+        gradient.setColorAt(1.0, QColor(255, 0, 0, 128)); // Rojo semitransparente (menor opacidad)
+        gradient.setColorAt(0.5, QColor(255, 0, 0, 64)); // Rojo más tenue a mitad de camino
+    }
+    else
+    {
+        gradient.setColorAt(1.0, QColor(255, 255, 0, 128)); // Amarillo semitransparente
+        gradient.setColorAt(0.5, QColor(255, 255, 64)); // Rojo más tenue a mitad de camino
+    }
+    gradient.setColorAt(0.2, Qt::transparent);
+
+    // Configurar el pintor
+    painter.setBrush(gradient);
+    painter.setPen(Qt::NoPen);
+
+    // Dibujar el rectángulo con el gradiente aplicado
+    painter.drawRect(x0 + column_selected * cellSize, y0, cellSize, espacioJuego.height());
+
+}
+
+
+void GameBoard::mouseMoveEvent(QMouseEvent *event)
+{
+    int x = event->pos().x();
+    QRect geom = geometry();
+    int with = geom.width();
+    int x0 = (with-(cols * cellSize))/2;
+    // hay que restar el x0
+    column_selected = (x-x0) / cellSize;
+    repaint();
 }
 
 void GameBoard::mousePressEvent(QMouseEvent *event)
