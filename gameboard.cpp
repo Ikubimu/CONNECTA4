@@ -5,6 +5,9 @@
 #include <QPainter>
 #include <QtMath>
 #include <QMessageBox>
+#include <climits>
+
+static int elegirJugada(QVector<QVector<int>>& tablero, int profundidad);
 
 GameBoard::GameBoard(QWidget *parent)
     : QWidget(parent)
@@ -93,6 +96,21 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
                 // Cambiar de jugador
                 currentPlayer = (currentPlayer == 1) ? 2 : 1;
 
+                if(currentPlayer==2 && cpu_on)
+                {
+                    int columnaCPU = elegirJugada(grid, 5);
+                    dropDisc(columnaCPU, row);
+                    if(checkWin(row, columnaCPU)){
+
+                        QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
+
+                        return;
+                    }
+
+                    currentPlayer = 1;
+
+                }
+
             }
             else{
                 QMessageBox::warning(this, "Columna Llena", "La columna seleccionada está llena. Por favor, elige otra.");
@@ -151,4 +169,171 @@ bool GameBoard::checkWin(int row, int col)
     }
 
     return false;
+}
+
+
+
+
+
+
+/*
+ * El siguiente código utiliza un sistema de heurística para jugar contra un bot
+ * El código se ha cogido de fuente externa cómo lo es ChatGPT debido a que
+ * ningún objetivo de este trabajo contemplaba hacer esta funcionalidad de esta manera
+ */
+
+
+
+static int evaluarHeuristica(const QVector<QVector<int>>& tablero, int jugador) {
+    int puntaje = 0;
+    int FILAS = tablero.size();
+    int COLUMNAS = tablero[0].size();
+
+    auto contarConsecutivos = [&](int fila, int columna, int deltaFila, int deltaColumna, int jugador) {
+        int cuenta = 0;
+        int espaciosVacios = 0;
+        for (int i = 0; i < 4; i++) {
+            int nuevaFila = fila + i * deltaFila;
+            int nuevaColumna = columna + i * deltaColumna;
+            if (nuevaFila >= 0 && nuevaFila < FILAS && nuevaColumna >= 0 && nuevaColumna < COLUMNAS) {
+                if (tablero[nuevaFila][nuevaColumna] == jugador) {
+                    cuenta++;
+                } else if (tablero[nuevaFila][nuevaColumna] == 0) {
+                    espaciosVacios++;
+                }
+            }
+        }
+        return (espaciosVacios + cuenta == 4) ? cuenta : 0; // Valorar solo si tiene potencial.
+    };
+
+    for (int fila = 0; fila < FILAS; fila++) {
+        for (int columna = 0; columna < COLUMNAS; columna++) {
+            if (tablero[fila][columna] == jugador) {
+                // Horizontal
+                int cuenta = contarConsecutivos(fila, columna, 0, 1, jugador);
+                puntaje += (cuenta == 3) ? 1000 : (cuenta == 2) ? 50 : 0;
+
+                // Vertical
+                cuenta = contarConsecutivos(fila, columna, 1, 0, jugador);
+                puntaje += (cuenta == 3) ? 1000 : (cuenta == 2) ? 50 : 0;
+
+                // Diagonal descendente (\)
+                cuenta = contarConsecutivos(fila, columna, 1, 1, jugador);
+                puntaje += (cuenta == 3) ? 1000 : (cuenta == 2) ? 50 : 0;
+
+                // Diagonal ascendente (/)
+                cuenta = contarConsecutivos(fila, columna, -1, 1, jugador);
+                puntaje += (cuenta == 3) ? 1000 : (cuenta == 2) ? 50 : 0;
+            }
+        }
+    }
+
+    // Valorar la posición central (estrategia).
+    for (int fila = 0; fila < FILAS; fila++) {
+        puntaje += (tablero[fila][COLUMNAS / 2] == jugador) ? 10 : 0;
+    }
+
+    return puntaje;
+}
+
+static int evaluarTablero(const QVector<QVector<int>>& tablero) {
+    int puntuacionCPU = evaluarHeuristica(tablero, 2);
+    int puntuacionJugador = evaluarHeuristica(tablero, 1);
+    return puntuacionCPU - puntuacionJugador;
+}
+
+static QVector<int> obtenerMovimientosDisponibles(const QVector<QVector<int>>& tablero) {
+    int FILAS = tablero.size();
+    int COLUMNAS = tablero[0].size();
+    QVector<int> movimientos;
+    for (int j = 0; j < COLUMNAS; j++) {
+        if (tablero[0][j] == 0) {
+            movimientos.push_back(j);
+        }
+    }
+    return movimientos;
+}
+
+static int minimax(QVector<QVector<int>>& tablero, int profundidad, int alpha, int beta, bool esMaximizador) {
+    int FILAS = tablero.size();
+    int COLUMNAS = tablero[0].size();
+    QVector<int> movimientos = obtenerMovimientosDisponibles(tablero);
+
+    // Evaluación de condiciones terminales.
+    int puntuacion = evaluarTablero(tablero);
+    if (profundidad == 0 || movimientos.isEmpty()) {
+        return puntuacion;
+    }
+
+    if (esMaximizador) {
+        int mejorValor = INT_MIN;
+        for (int col : movimientos) {
+            for (int fila = FILAS - 1; fila >= 0; fila--) {
+                if (tablero[fila][col] == 0) {
+                    tablero[fila][col] = 2;
+                    break;
+                }
+            }
+            mejorValor = std::max(mejorValor, minimax(tablero, profundidad - 1, alpha, beta, false));
+            alpha = std::max(alpha, mejorValor);
+            for (int fila = 0; fila < FILAS; fila++) {
+                if (tablero[fila][col] == 2) {
+                    tablero[fila][col] = 0;
+                    break;
+                }
+            }
+            if (beta <= alpha) break;
+        }
+        return mejorValor;
+    } else {
+        int mejorValor = INT_MAX;
+        for (int col : movimientos) {
+            for (int fila = FILAS - 1; fila >= 0; fila--) {
+                if (tablero[fila][col] == 0) {
+                    tablero[fila][col] = 1;
+                    break;
+                }
+            }
+            mejorValor = std::min(mejorValor, minimax(tablero, profundidad - 1, alpha, beta, true));
+            beta = std::min(beta, mejorValor);
+            for (int fila = 0; fila < FILAS; fila++) {
+                if (tablero[fila][col] == 1) {
+                    tablero[fila][col] = 0;
+                    break;
+                }
+            }
+            if (beta <= alpha) break;
+        }
+        return mejorValor;
+    }
+}
+
+static int elegirJugada(QVector<QVector<int>>& tablero, int profundidad) {
+    QVector<int> movimientos = obtenerMovimientosDisponibles(tablero);
+    int mejorJugada = -1;
+    int mejorValor = INT_MIN;
+
+    int FILAS = tablero.size();
+
+    for (int col : movimientos) {
+        for (int fila = FILAS - 1; fila >= 0; fila--) {
+            if (tablero[fila][col] == 0) {
+                tablero[fila][col] = 2;
+                break;
+            }
+        }
+        int valor = minimax(tablero, profundidad - 1, INT_MIN, INT_MAX, false);
+        if (valor > mejorValor) {
+            mejorValor = valor;
+            mejorJugada = col;
+        }
+        for (int fila = 0; fila < FILAS; fila++) {
+            if (tablero[fila][col] == 2) {
+                tablero[fila][col] = 0;
+                break;
+            }
+        }
+    }
+
+    return mejorJugada;
 }

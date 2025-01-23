@@ -40,6 +40,8 @@ private:
     int animPlayer; // Jugador que está animando
     QTimer animationTimer;
     void startAnimation(int column, int player);
+
+    bool cpu_on{true};
 };
 
 #endif // GAMEBOARD_H
