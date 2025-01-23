@@ -10,6 +10,7 @@
 #include <QTableView>
 #include <QPushButton>
 #include "gamehistorytablemodel.h"
+#include "language.h"
 
 namespace Ui {
 class gameHistory;

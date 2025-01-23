@@ -27,14 +27,14 @@ gameHistory::gameHistory(QWidget *parent)
 
     HistoryTable.setModel(&model);
 
-    getNickName.setPlaceholderText(QString("NickName (Optional)"));
+    getNickName.setPlaceholderText(QString(Labels::nickname_optional));
     connect(&getNickName, &QLineEdit::editingFinished, this, &gameHistory::textEditedCallback);
 
-    CheckWin.setText("Won");
+    CheckWin.setText(Labels::won);
     CheckWin.setEnabled(false);
-    CheckLost.setText("Lost");
+    CheckLost.setText(Labels::lost);
     CheckLost.setEnabled(false);
-    CheckAll.setText("All");
+    CheckAll.setText(Labels::all);
     CheckAll.setChecked(true);
     CheckAll.setEnabled(false);
 
@@ -43,7 +43,7 @@ gameHistory::gameHistory(QWidget *parent)
     checks.addButton(&CheckLost);
     checks.setExclusive(true);
 
-    SearchButton.setText(QString("Search"));
+    SearchButton.setText(QString(Labels::search));
     connect(&SearchButton, &QPushButton::clicked, this, &gameHistory::SearchButtonCallback);
 
     layoutHCheck->addWidget(&CheckWin);

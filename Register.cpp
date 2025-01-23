@@ -5,24 +5,24 @@ RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
     //create all the QLineEdits
     //username
     usernameField = new QLineEdit(this);
-    usernameField->setPlaceholderText("usuario");
+    usernameField->setPlaceholderText(Labels::username);
     usernameField->setMinimumWidth(200);
     // password
     passwordField = new QLineEdit(this);
-    passwordField->setPlaceholderText("contraseña");
+    passwordField->setPlaceholderText(Labels::password);
     passwordField->setEchoMode(QLineEdit::Password);
     passwordField->setMinimumWidth(200);
     // repeat password for safety
     repeatpasswordField = new QLineEdit(this);
-    repeatpasswordField->setPlaceholderText("Confirme la contraseña");
+    repeatpasswordField->setPlaceholderText(Labels::confirm_password);
     repeatpasswordField->setEchoMode(QLineEdit::Password);
     repeatpasswordField->setMinimumWidth(200);
     // email
     emailField = new QLineEdit(this);
-    emailField->setPlaceholderText("Email");
+    emailField->setPlaceholderText(Labels::email);
     emailField->setMinimumWidth(200);
     // birthday
-    QLabel *birthdayLabel = new QLabel("Birthday:", this);
+    QLabel *birthdayLabel = new QLabel(Labels::birthday + ":", this);
     BirthdayField = new QDateEdit(this);
     BirthdayField->setCalendarPopup(true);
     BirthdayField->setDate(QDate::currentDate());
@@ -53,12 +53,12 @@ RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
     }
 
     // Button for custom image selection
-    QPushButton *selectImageButton = new QPushButton("Elegir foto del ordenador ", this);
+    QPushButton *selectImageButton = new QPushButton(Labels::choose_photo_pc, this);
     selectImageButton->setFixedWidth(avatarComboBox->width());
     connect(selectImageButton, &QPushButton::clicked, this, &RegisterPage::selectImageFromFile);
 
     // Register button
-    RegisterButton = new QPushButton("Register", this);
+    RegisterButton = new QPushButton(Labels::registrer, this);
     connect(RegisterButton, &QPushButton::clicked, this, &RegisterPage::handleRegister);
 
     // Layouts
@@ -83,13 +83,13 @@ RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
     mainLayout->addWidget(RegisterButton);
 
     setLayout(mainLayout);
-    setWindowTitle("Register Page");
+    setWindowTitle(Labels::registrer_page);
     resize(400, 500);
 }
 
 void RegisterPage::selectImageFromFile() {
     // Open file dialog to select an image
-    QString filePath = QFileDialog::getOpenFileName(this, "Select Avatar", QDir::homePath(), "Images (*.png *.jpg *.jpeg *.bmp)");
+    QString filePath = QFileDialog::getOpenFileName(this, Labels::select_avatar, QDir::homePath(), "Images (*.png *.jpg *.jpeg *.bmp)");
     if (!filePath.isEmpty()) {
         QPixmap pixmap(filePath);
         if (!pixmap.isNull()) {
@@ -97,7 +97,7 @@ void RegisterPage::selectImageFromFile() {
             avatarComboBox->addItem(QIcon(pixmap), "");
             avatarComboBox->setCurrentIndex(avatarComboBox->count() - 1);
         } else {
-            QMessageBox::warning(this, "Error", "Failed to load the selected image.");
+            QMessageBox::warning(this, Labels::error,Labels::fail_uploading_image);
         }
     }
 }
@@ -203,8 +203,8 @@ void RegisterPage::handleRegister(){
         if (!usernameValid) {
             QString usernameErrors;
             if (!usernameValid) {
-                if (!size) usernameErrors += "Debe tener entre 6 y 15 caracteres.\n";
-                if (!spaces) usernameErrors += "No debe contener espacios.\n";
+                if (!size) usernameErrors += Labels::user_restriccion_character;
+                if (!spaces) usernameErrors += Labels::no_spacer;
             }
             usernameErrorLabel = new QLabel(usernameErrors, this);
 
@@ -214,11 +214,11 @@ void RegisterPage::handleRegister(){
         }
         if (!passwordValid) {
             QString passwordErrors;
-            if (!size) passwordErrors += "Debe tener entre 8 y 20 caracteres.\n";
-            if (!mayus) passwordErrors += "Debe incluir al menos una mayúscula.\n";
-            if (!minus) passwordErrors += "Debe incluir al menos una minúscula.\n";
-            if (!digit) passwordErrors += "Debe incluir al menos un número.\n";
-            if (!specialChar) passwordErrors += "Debe incluir al menos un carácter especial.\n";
+            if (!size) passwordErrors += Labels::password_restriccion_character;
+            if (!mayus) passwordErrors += Labels::password_mayus;
+            if (!minus) passwordErrors += Labels::password_minus;
+            if (!digit) passwordErrors +=Labels::password_number;
+            if (!specialChar) passwordErrors += Labels::password_special;
 
             passwordErrorLabel = new QLabel(passwordErrors, this);
             passwordErrorLabel->setStyleSheet("color: red; font-size: 12px;");
@@ -228,7 +228,7 @@ void RegisterPage::handleRegister(){
         }
 
         if (!repeat_passwordValid) {
-            QString repeatPasswordErrors = "Las contraseñas no coinciden.\n";
+            QString repeatPasswordErrors =Labels::todifferent_password ;
             repeatPasswordErrorLabel = new QLabel(repeatPasswordErrors, this);
             repeatPasswordErrorLabel->setStyleSheet("color: red; font-size: 12px;");
             formLayout->addWidget(repeatPasswordErrorLabel, 2, 2);
@@ -236,7 +236,7 @@ void RegisterPage::handleRegister(){
         }
 
         if (!emailValid) {
-            QString emailErrors = "El correo electrónico no es válido.\n";
+            QString emailErrors = Labels::nonvalid_email;
             emailErrorLabel = new QLabel(emailErrors, this);
             emailErrorLabel->setStyleSheet("color: red; font-size: 12px;");
             formLayout->addWidget(emailErrorLabel, 3, 2);
@@ -244,7 +244,7 @@ void RegisterPage::handleRegister(){
         }
 
         if (!birthdayValid) {
-            QString birthdayErrors = "Debes de tener más de 12 años para poder registrarte.\n";
+            QString birthdayErrors = Labels::wrong_birthday;
             birthdayErrorLabel = new QLabel(birthdayErrors, this);
             birthdayErrorLabel->setStyleSheet("color: red; font-size: 12px;");
             birthdayErrorLabel->setWordWrap(true);
@@ -255,7 +255,7 @@ void RegisterPage::handleRegister(){
         return;
     }
     if(existUsername){
-      QMessageBox::warning(this, "Error", "Ese usuario ya existe");
+      QMessageBox::warning(this, Labels::error, Labels::user_already_exist);
         return;
     }
     //Registramos el usuario si todo es valido
@@ -265,7 +265,7 @@ void RegisterPage::handleRegister(){
         accept();
     } else {
         // Manejar errores imprevistos
-        QMessageBox::warning(this, "Error", "Vuelva a registrarse, hemos tenido un error en la página.");
+        QMessageBox::warning(this, Labels::error,Labels::try2signup_again );
         accept();
     }
 }

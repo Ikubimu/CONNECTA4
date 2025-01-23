@@ -9,6 +9,7 @@
 #include "Login.h"
 #include "Forgot_Password.h"
 #include "gamehistory.h"
+#include "language.h"
 
 #include "settinguser.h"
 
@@ -46,7 +47,11 @@ private:
 
 
     QWidget* buildMainWidget();
+    QPushButton *settingsButton;
     void catchSignal();
     SettingsUser settingsWidget;
+private slots:
+    void change_language_signal(int idioma);
 };
+
 #endif // MAINWINDOW_H

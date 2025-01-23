@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QLineEdit>
 #include "rankingtablemodel.h"
+#include "language.h"
 
 class rankingTable : public QWidget
 {

@@ -11,6 +11,7 @@
 #include <ctime>
 #include "Register.h"
 #include "lib/connect4.h"
+#include "language.h"
 
 class ForgotPasswordPage : public QDialog
 {

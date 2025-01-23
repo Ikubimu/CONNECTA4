@@ -18,6 +18,7 @@
 #include <QComboBox>
 #include <QScrollArea>
 #include "lib/connect4.h"
+#include "language.h"
 
 class RegisterPage : public QDialog
 {

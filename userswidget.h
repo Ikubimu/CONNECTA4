@@ -2,6 +2,7 @@
 #define USERSWIDGET_H
 
 #include <QWidget>
+#include "language.h"
 
 class usersWidget : public  QWidget
 {
