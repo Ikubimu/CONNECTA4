@@ -9,16 +9,16 @@ SettingsUser::SettingsUser(QWidget *parent)
     : QWidget(parent)
 {
     // Crear los elementos de la interfaz
-    languageLabel = new QLabel("Select Language:", this);
+    languageLabel = new QLabel(Labels::select_language, this);
     languageComboBox = new QComboBox(this);
-    languageComboBox->addItem("English");
+    languageComboBox->addItem(Labels::dark_mode);
     languageComboBox->addItem("Español");
     languageComboBox->addItem("Français");
 
-    darkModeLabel = new QLabel("Enable Dark Mode:", this);
+    darkModeLabel = new QLabel(Labels::enable_dark_mode, this);
     darkModeCheckBox = new QCheckBox(this);
 
-    saveButton = new QPushButton("Save Settings", this);
+    saveButton = new QPushButton(Labels::save_settings, this);
 
     // Crear el layout y agregar los elementos
     layout = new QVBoxLayout(this);
@@ -82,7 +82,7 @@ void SettingsUser::saveSettings()
     }
 
     // Mensaje de confirmación
-    QMessageBox::information(this, "Settings Saved", "Your settings have been saved successfully.");
+    QMessageBox::information(this, Labels::settings_saved, Labels::succesful_saved_settings);
 }
 
 void SettingsUser::changeLanguage(int index)

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
+#include "language.h"
 
 namespace Ui {
 class GameBoard;

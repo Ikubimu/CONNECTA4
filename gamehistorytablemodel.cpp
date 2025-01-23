@@ -146,11 +146,11 @@ QVariant gameHistoryTableModel::headerData(int section, Qt::Orientation orientat
     if (orientation == Qt::Horizontal) {
         switch (section) {
         case DATE:
-            return QString("Date");
+            return QString(Labels::date);
         case WINNER:
-            return QString("Winner");
+            return QString(Labels::winner);
         case LOSER:
-            return QString("Loser");
+            return QString(Labels::loser);
         default:
             return QVariant();
         }

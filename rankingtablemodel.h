@@ -5,6 +5,7 @@
 #include "lib/connect4.h"
 #include "lib/connect4dao.h"
 #include <QLineEdit>
+#include "language.h"
 
 class rankingTableModel : public QAbstractTableModel
 {

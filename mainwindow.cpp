@@ -11,9 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , settingsWidget(this)
 {
-    ui->setupUi(this); 
+    ui->setupUi(this);
+    Language::change_to_tortilla_patata();
     QWidget *centralWidget = new QWidget(this);
-    openLoginButton = new QPushButton("Abrir LoginPage",this);
+    openLoginButton = new QPushButton(Labels::open_login_page,this);
     connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
     // Crear un layout vertical
     QHBoxLayout *layout = new QHBoxLayout(centralWidget);
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *layoutH = new QHBoxLayout(centralWidget);
 
 
-    QPushButton *settingsButton = new QPushButton("Abrir Ajustes", this);
+    settingsButton = new QPushButton(Labels::open_settings, this);
     connect(settingsButton, &QPushButton::clicked, [this]() {
         settingsWidget.setVisible(!settingsWidget.isVisible());
         settingsWidget.setGeometry(this->pos().x() + width()*0.1, height()*0.75, 200, 200);
@@ -91,10 +92,33 @@ void MainWindow::openRegisterPage(){
 }
 
 void MainWindow::handleLoginSuccess(Player *player){
-    qDebug() << "Register was successful!" <<player->getNickName()<<"  "<<player->getPassword();
+    qDebug() << Labels::succesful_registrer <<player->getNickName()<<"  "<<player->getPassword();
 }
 void MainWindow::openForgotPasswordPage(){
     ForgotPasswordPage ForgotPasswordDialog(nullptr,players_playing);
     connect(&ForgotPasswordDialog,&ForgotPasswordPage::Login_succesful,this,&MainWindow::handleLoginSuccess);
     ForgotPasswordDialog.exec();
+}
+void MainWindow::change_language_signal(int idioma){
+    switch(idioma){
+        case 0:
+        Language::change_to_tortilla_patata();
+            settingsButton->setText(Labels::open_settings);
+            openLoginButton->setText(Labels::open_login_page);
+            break;
+        case 1:
+            Language::change_to_fish_and_chips();
+            settingsButton->setText(Labels::open_settings);
+            openLoginButton->setText(Labels::open_login_page);
+            break;
+        case 2:
+            Language::change_to_Mbappe();
+            settingsButton->setText(Labels::open_settings);
+            openLoginButton->setText(Labels::open_login_page);
+            break;
+
+    }
+
+
+
 }

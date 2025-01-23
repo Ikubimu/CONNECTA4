@@ -7,6 +7,7 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QLabel>
+#include "language.h"
 
 class SettingsUser : public QWidget
 {
