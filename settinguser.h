@@ -10,6 +10,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QTranslator>
+#include "language.h"
 
 class SettingsUser : public QWidget
 {

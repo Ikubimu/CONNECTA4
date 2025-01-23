@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include "Register.h"
+#include "language.h"
 #include "lib/connect4.h"
 
 class LoginPage : public QDialog

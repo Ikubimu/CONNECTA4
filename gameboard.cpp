@@ -85,7 +85,7 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
                 //Verificar si el movimiento actual gana el juego
                 if(checkWin(row, column)){
 
-                    QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
+                    QMessageBox::information(this, Labels::victory, QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
 
                     return;
                 }
@@ -95,7 +95,7 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
 
             }
             else{
-                QMessageBox::warning(this, "Columna Llena", "La columna seleccionada está llena. Por favor, elige otra.");
+                QMessageBox::warning(this, Labels::empty_column, Labels::empty_column_phrase);
             }
         }
 

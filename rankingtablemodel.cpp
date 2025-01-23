@@ -10,7 +10,7 @@ rankingTableModel::rankingTableModel(QObject *parent)
 {
     db = &(Connect4DAO::getInstance());
     Connect4& DB_Instance = Connect4::getInstance();
-    Player* p1 = DB_Instance.getPlayer("Player1");
+    Player* p1 = DB_Instance.getPlayer(Labels::player_1);
     users=db->getRanking();
     for(int i=0; i<users.size(); i++)
     {
@@ -123,9 +123,9 @@ QVariant rankingTableModel::headerData(int section, Qt::Orientation orientation,
         case IMG:
             return QString("");
         case NAME:
-            return QString("Name");
+            return QString("ID");
         case POINTS:
-            return QString("Points");
+            return QString(Labels::points);
         default:
             return QVariant();
         }
