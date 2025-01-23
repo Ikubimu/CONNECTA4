@@ -12,7 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
     , settingsWidget(this)
 {
     ui->setupUi(this);
-    Language::change_to_tortilla_patata();
+
+
+    connect(&settingsWidget, &SettingsUser::languagechoosed,this,&MainWindow::change_language_signal);
+
+
     QWidget *centralWidget = new QWidget(this);
     openLoginButton = new QPushButton(Labels::open_login_page,this);
     connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
@@ -120,12 +124,12 @@ void MainWindow::openForgotPasswordPage()
 }
 void MainWindow::change_language_signal(int idioma){
     switch(idioma){
-        case 0:
+        case 1:
         Language::change_to_tortilla_patata();
             settingsButton->setText(Labels::open_settings);
             openLoginButton->setText(Labels::open_login_page);
             break;
-        case 1:
+        case 0:
             Language::change_to_fish_and_chips();
             settingsButton->setText(Labels::open_settings);
             openLoginButton->setText(Labels::open_login_page);

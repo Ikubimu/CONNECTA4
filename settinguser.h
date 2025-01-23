@@ -10,7 +10,6 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QTranslator>
-#include "language.h"
 
 class SettingsUser : public QWidget
 {
@@ -26,7 +25,7 @@ protected:
 
 private slots:
     void saveSettings();  // Guardar las configuraciones
-    void changeLanguage(int index);  // Cambiar el idioma seleccionado
+
 
 private:
     void applyDarkMode();   // Aplicar modo oscuro
@@ -39,6 +38,9 @@ private:
 
     QLabel *languageLabel;        // Etiqueta para el combo de idioma
     QLabel *darkModeLabel;        // Etiqueta para el modo oscuro
+
+signals:
+    void languagechoosed(int idx);
 };
 
 #endif // SETTINGSUSER_H

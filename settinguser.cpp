@@ -5,6 +5,7 @@
 #include <QTranslator>
 #include <QStyleFactory>
 #include <QMouseEvent>
+#include "language.h"
 
 SettingsUser::SettingsUser(QWidget *parent)
     : QWidget(parent)
@@ -12,7 +13,7 @@ SettingsUser::SettingsUser(QWidget *parent)
     // Crear los elementos de la interfaz
     languageLabel = new QLabel(Labels::select_language, this);
     languageComboBox = new QComboBox(this);
-    languageComboBox->addItem(Labels::dark_mode);
+    languageComboBox->addItem("English");
     languageComboBox->addItem("Español");
     languageComboBox->addItem("Français");
 
@@ -57,6 +58,10 @@ void SettingsUser::saveSettings()
     QString selectedLanguage = languageComboBox->currentText();
     bool isDarkMode = darkModeCheckBox->isChecked();
 
+    int idx = languageComboBox->currentIndex();
+
+    emit languagechoosed(idx);
+
     qDebug() << "Language selected: " << selectedLanguage;
     qDebug() << "Dark Mode: " << (isDarkMode ? "Enabled" : "Disabled");
 
@@ -66,33 +71,20 @@ void SettingsUser::saveSettings()
         applyLightMode();
     }
 
-    QMessageBox::information(this, "Settings Saved", "Your settings have been saved successfully.");
+    languageLabel->setText(Labels::select_language);
+
+
+    darkModeLabel->setText(Labels::enable_dark_mode);
+
+
+    saveButton->setText(Labels::save_settings);
+
+
+    QMessageBox::information(this, Labels::settings_saved, Labels::succesful_saved_settings);
     this->close(); // Cierra el widget después de guardar
 }
 
-void SettingsUser::changeLanguage(int index)
-{
-    static QTranslator *translator = nullptr;
 
-    if (translator) {
-        QApplication::removeTranslator(translator);
-        delete translator;
-        translator = nullptr;
-    }
-
-    QString language = languageComboBox->currentText();
-    translator = new QTranslator(this);
-
-    if (language == "Español") {
-        translator->load(":/translations/app_es.qm");
-    } else if (language == "Français") {
-        translator->load(":/translations/app_fr.qm");
-    }
-
-    if (translator) {
-        QApplication::installTranslator(translator);
-    }
-}
 
 void SettingsUser::mousePressEvent(QMouseEvent *event)
 {
