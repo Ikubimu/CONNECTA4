@@ -90,12 +90,14 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
 
                     QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
                     emit emit_result((results)currentPlayer);
+                    resetBoard();
                     return;
                 }
                 else if(checkFullGrid()){
 
                     QMessageBox::information(this, "Empate", QString("No queda espacio de juego"));
                     emit emit_result((results)currentPlayer);
+                    resetBoard();
                     return;
                 }
 
@@ -110,12 +112,14 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
 
                         QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
                         emit emit_result((results)currentPlayer);
+                        resetBoard();
                         return;
                     }
                     else if(checkFullGrid()){
 
                         QMessageBox::information(this, "Empate", QString("No queda espacio de juego"));
                         emit emit_result((results)currentPlayer);
+                        resetBoard();
                         return;
                     }
 
@@ -196,6 +200,17 @@ bool GameBoard::checkWin(int row, int col)
     return false;
 }
 
+void GameBoard::resetBoard()
+{
+    for(int i = 0; i<grid.size(); i++)
+    {
+        for(int j = 0; j<grid[i].size(); j++)
+        {
+            grid[i][j] = 0;
+        }
+    }
+    currentPlayer = 1;
+}
 
 
 

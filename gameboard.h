@@ -39,6 +39,7 @@ private:
     bool dropDisc(int column, int &row);
     bool checkWin(int row, int col);
     bool checkFullGrid();
+    void resetBoard();
     // Variables para la animación
     bool isAnimating;
     int animColumn;
