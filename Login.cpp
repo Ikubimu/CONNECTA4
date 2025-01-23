@@ -9,7 +9,7 @@ LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(paren
     passwordField->setEchoMode(QLineEdit::Password); // Ocultar la contraseña
 
     loginButton = new QPushButton(Labels::login, this);
-    RegisterButton = new QPushButton(Labels::logup_newacc, this);
+    RegisterButton = new QPushButton(Labels::signup_newacc, this);
     ForgetPasswordButton = new QPushButton(Labels::forgot_password_dude,this);
     // Conectar los botones
     connect(loginButton, &QPushButton::clicked, this, &LoginPage::handleLogin);

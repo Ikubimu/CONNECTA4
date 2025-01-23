@@ -32,7 +32,7 @@ namespace Labels {
     inline QString winner{};
     inline QString loser{};
     inline QString login{};
-    inline QString logup_newacc{};
+    inline QString signup_newacc{};
     inline QString forgot_password_dude{};
     inline QString user_restriccion_character{};
     inline QString no_spacer{};
@@ -57,7 +57,7 @@ namespace Labels {
     inline QString todifferent_password{};
     inline QString wrong_birthday{};
     inline QString user_already_exist{};
-    inline QString try2logup_again{};
+    inline QString try2signup_again{};
     inline QString select_language{};
     inline QString dark_mode{};
     inline QString save_settings{};

@@ -265,7 +265,7 @@ void RegisterPage::handleRegister(){
         accept();
     } else {
         // Manejar errores imprevistos
-        QMessageBox::warning(this, Labels::error,Labels::try2logup_again );
+        QMessageBox::warning(this, Labels::error,Labels::try2signup_again );
         accept();
     }
 }

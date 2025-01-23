@@ -31,7 +31,7 @@ void Language::change_to_tortilla_patata(){
     Labels::winner="ganador";
     Labels::loser="perdedor";
     Labels::login="Iniciar sesión";
-    Labels::logup_newacc="Registrar nueva cuenta";
+    Labels::signup_newacc="Registrar nueva cuenta";
     Labels::forgot_password_dude="¿Olvidaste la contraseña?";
     Labels::user_restriccion_character="Debe tener entre 6 y 15 carácteres.\n";
     Labels::no_spacer="No debe tener espacios.\n";
@@ -56,7 +56,7 @@ void Language::change_to_tortilla_patata(){
     Labels::todifferent_password="LAs contraseñas no coinciden.\n";
     Labels::wrong_birthday="Debes tener más de 12 años para poder registrarte.\n";
     Labels::user_already_exist="El nombre de usuario que has introducido ya existe";
-    Labels::try2logup_again="Vuelva a registrarse, hemos tenido un error en la página, disculpe las molestias";
+    Labels::try2signup_again="Vuelva a registrarse, hemos tenido un error en la página, disculpe las molestias";
     Labels::select_language="Escoja el idioma";
     Labels::dark_mode="Modo óscuro";
     Labels::save_settings="Guardar configuración";
@@ -95,7 +95,7 @@ void Language::change_to_fish_and_chips() {
     Labels::winner = "Winner";
     Labels::loser = "Loser";
     Labels::login = "Login";
-    Labels::logup_newacc = "Register a new account";
+    Labels::signup_newacc = "Register a new account";
     Labels::forgot_password_dude = "Forgot your password?";
     Labels::user_restriccion_character = "Must be between 6 and 15 characters.\n";
     Labels::no_spacer = "Must not contain spaces.\n";
@@ -120,7 +120,7 @@ void Language::change_to_fish_and_chips() {
     Labels::todifferent_password = "Passwords do not match.\n";
     Labels::wrong_birthday = "You must be over 12 years old to register.\n";
     Labels::user_already_exist = "The username you entered already exists";
-    Labels::try2logup_again = "Please register again, we encountered a page error, sorry for the inconvenience";
+    Labels::try2signup_again = "Please register again, we encountered a page error, sorry for the inconvenience";
     Labels::select_language = "Choose language";
     Labels::dark_mode = "Dark mode";
     Labels::save_settings = "Save settings";
@@ -159,7 +159,7 @@ void Language::change_to_Mbappe() {
     Labels::winner = "Gagnant";
     Labels::loser = "Perdant";
     Labels::login = "Connexion";
-    Labels::logup_newacc = "Créer un nouveau compte";
+    Labels::signup_newacc = "Créer un nouveau compte";
     Labels::forgot_password_dude = "Mot de passe oublié ?";
     Labels::user_restriccion_character = "Doit contenir entre 6 et 15 caractères.\n";
     Labels::no_spacer = "Ne doit pas contenir d'espaces.\n";
@@ -184,7 +184,7 @@ void Language::change_to_Mbappe() {
     Labels::todifferent_password = "Les mots de passe ne correspondent pas.\n";
     Labels::wrong_birthday = "Vous devez avoir plus de 12 ans pour vous inscrire.\n";
     Labels::user_already_exist = "Le nom d'utilisateur que vous avez saisi existe déjà";
-    Labels::try2logup_again = "Veuillez vous réinscrire, nous avons rencontré une erreur sur la page, désolé pour le désagrément";
+    Labels::try2signup_again = "Veuillez vous réinscrire, nous avons rencontré une erreur sur la page, désolé pour le désagrément";
     Labels::select_language = "Choisissez la langue";
     Labels::dark_mode = "Mode sombre";
     Labels::save_settings = "Enregistrer les paramètres";
