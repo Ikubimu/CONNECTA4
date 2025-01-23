@@ -10,10 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , settingsWidget(this)
-    ,rank(this)
-    //,userL(this)
-    //,userR(this)
-    ,board(this)
+    , rank(this)
+    , userL(this)
+    , userR(this)
+    , board(this)
 {
     ui->setupUi(this); 
     QWidget *centralWidget = new QWidget(this);
