@@ -6,5 +6,6 @@
         <file>fotos_avatar/foto4.png</file>
         <file>fotos_avatar/foto5.png</file>
         <file>fotos_avatar/foto6.png</file>
+        <file>estilos/estilos.qss</file>
     </qresource>
 </RCC>
