@@ -14,8 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , settingsWidget(this)
     , rank(this)
-    , userL(this)
-    , userR(this)
     , board(this)
 {
     ui->setupUi(this);
