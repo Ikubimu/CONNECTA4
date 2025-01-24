@@ -49,6 +49,7 @@ start_player usersWidget::get_who_starts(){
 void usersWidget::openLoginPage()
 {
     LoginPage loginDialog(nullptr,players_playing);
+    loginDialog.setStyleSheet(this->styleSheet());
     connect(&loginDialog, &LoginPage::Login_succesful, this, &usersWidget::handleLoginSuccess);
     connect(&loginDialog, &LoginPage::requestRegisterPage, this, &usersWidget::openRegisterPage);
     connect(&loginDialog,&LoginPage::requestForgotPasswordPage,this,&usersWidget::openForgotPasswordPage);
@@ -69,6 +70,7 @@ QPixmap usersWidget::createCircularPixmap(const QImage &image)
 }
 void usersWidget::openEditProfilePage(Player* player){
     EditProfilePage profileDialog(nullptr,player);
+    profileDialog.setStyleSheet(this->styleSheet());
     connect(&profileDialog,&EditProfilePage::Edit_Profile_succesful,this,&usersWidget::handleEditProfilePage);
     profileDialog.exec();
 }
@@ -77,6 +79,7 @@ void usersWidget::handleEditProfilePage(){
 }
 void usersWidget::openRegisterPage(){
     RegisterPage RegisterDialog;
+    RegisterDialog.setStyleSheet(this->styleSheet());
     //conectada a la misma funcion ya que al final para el userwidget sigue siendo que alguien sea loggeado
     //sea por register o por loggin
     connect(&RegisterDialog, &RegisterPage::Register_succesful, this, &usersWidget::handleLoginSuccess);
@@ -107,6 +110,7 @@ void usersWidget::handleLoginSuccess(Player *player){
 
 void usersWidget::openForgotPasswordPage(){
     ForgotPasswordPage ForgotPasswordDialog(nullptr,players_playing);
+    ForgotPasswordDialog.setStyleSheet(this->styleSheet());
     connect(&ForgotPasswordDialog,&ForgotPasswordPage::Login_succesful,this,&usersWidget::handleLoginSuccess);
     ForgotPasswordDialog.exec();
 }
