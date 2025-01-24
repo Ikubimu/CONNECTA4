@@ -1,10 +1,10 @@
 MainWindow{
-    background-color: white;
+    background-color: #e3e3e3;
 }
 MainWindow QPushButton {
-    background-color: grey;
+    background-color: #007bff;
     color: white;
-    border: 2px solid black;
+    border: 2px solid #007bff;
     border-radius: 5px;
     padding: 8px 16px;
     font-size: 14px;
@@ -12,18 +12,20 @@ MainWindow QPushButton {
     font-family: Arial, sans-serif;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
+MainWindow QPushButton:hover {
+    background-color: #0056b3;;
+    transform: scale(1.05);
+}
+
+MainWindow QPushButton:pressed {
+    background-color: #003d80;
+    transform: scale(0.95);
+}
 
 ForgotPasswordPage{
-    background-color: white;
+    background-color: #e3e3e3;
 }
-ForgotPasswordPage QLineEdit {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 14px;
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    color: #333333;
+
 }
 ForgotPasswordPage QLabel {
     font-size: 14px;
@@ -36,12 +38,12 @@ ForgotPasswordPage QLineEdit {
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
-    font-family: Arial, sans-serif;
+    font-weight: bold;
     background-color: #ffffff;/*blanco*/
     color: #333333;/*gris oscuro*/
 }
 ForgotPasswordPage QLineEdit:focus {
-    border: 2px solid black;
+    border: 2px solid blue;
     background-color: #f2f2f2; /*grsi claro*/
 }
 ForgotPasswordPage QLabel { /* mensaje de error*/
@@ -51,8 +53,8 @@ ForgotPasswordPage QLabel { /* mensaje de error*/
     font-family: Arial, sans-serif;
 }
 ForgotPasswordPage QPushButton {
-    background-color: white;
-    color: black;
+    background-color: #007bff;
+    color: white;
     border: 2px solid grey;
     border-radius: 5px;
     padding: 8px 16px;
@@ -63,12 +65,12 @@ ForgotPasswordPage QPushButton {
 }
 
 ForgotPasswordPage QPushButton:hover {
-    background-color: grey;
+    background-color: #0056b3;;
     transform: scale(1.05);
 }
 
 ForgotPasswordPage QPushButton:pressed {
-    background-color: grey;
+    background-color: #003d80;
     transform: scale(0.95);
 }
     /* Estilo para QMessageBox */
@@ -80,28 +82,29 @@ ForgotPasswordPage QMessageBox {
 }
 
 ForgotPasswordPage QMessageBox QPushButton {
-    background-color: white;
+    background-color: #007bff;
     color: black;
-    border: 2px solid grey;
+    border: 2px solid blue;
     border-radius: 5px;
     padding: 5px 10px;
     font-size: 13px;
 }
 
 ForgotPasswordPage QMessageBox QPushButton:hover {
-    background-color: grey;
+    background-color: #0056b3;;
 }
 
 
-//REGISTER
+/*REGISTER*/
 RegisterPage{
-    background-color: white;
+    background-color: #e3e3e3;
 }
 RegisterPage QLineEdit {
     border: 2px solid #ccc;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
+    font-weight: bold;
     color: #333;
     background-color: #f9f9f9;
 }
@@ -166,12 +169,13 @@ RegisterPage QComboBox {
 }
 
 RegisterPage QComboBox::drop-down {
-    border: none;
+    border: 2px solid black;
+    background-color: blue;
 }
 
 RegisterPage QComboBox QAbstractItemView {
-    border: 1px solid #ccc;
-    background-color: #fff;
+    border: 1px solid #ccc;/*gris claro*/
+    background-color: #fff;/*blanco*/
     selection-background-color: #007bff;
     selection-color: #fff;
 }
@@ -183,7 +187,7 @@ RegisterPage QPushButton {
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 RegisterPage QPushButton:hover {
@@ -212,10 +216,40 @@ RegisterPage QLineEdit[error="true"], QDateEdit[error="true"] {
     background-color: #ffe6e6;
 }
 
+/*RegisterPage QComboBox::down-arrow{
+    border: 2px solid grey;
+    border-left: 5px solid blue;
+    border-right: 5px solid blue;
+    border-top: 16px solid blue;
+}*/
+
 LoginPage{
-    background-color: red;
+    background-color: #e3e3e3;
+}
+LoginPage QLineEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;/*blanco*/
+    color: #333333;/*gris oscuro*/
+}
+LoginPage QLineEdit:focus {
+    border: 2px solid blue;
+    background-color: #f2f2f2; /*grsi claro*/
+}
+LoginPage QLabel{
+    color: black;
 }
 
+/*ajustes*/
+SettingsUser{
+    background-color: #e3e3e3;
+}
+SettingsUser QLabel{
+    color: black;
+}
 
 
 /*ranking table*/
@@ -223,7 +257,4 @@ rankingTable{
     background-color: red;
 }
 
-/*ajustes*/
-SettingsUser{
-    background-color: red;
-}
+
