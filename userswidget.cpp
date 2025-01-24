@@ -13,7 +13,10 @@ usersWidget::usersWidget(QWidget *parent): QWidget(parent),actual(No_players){
 }
 
 void usersWidget::updateWidget(actual_situation x){
-    actual = x;
+    if(x != current)
+    {
+        actual = x;
+    }
     // Limpiar el layout principal
     QLayoutItem *child;
     while ((child = mainLayout->takeAt(0)) != nullptr) {
@@ -22,7 +25,7 @@ void usersWidget::updateWidget(actual_situation x){
         }
         delete child;
     }
-    switch (x) {
+    switch ((int)actual) {
     case No_players:
         setupNoPlayersWidget();
         break;
@@ -324,6 +327,3 @@ void usersWidget::setupTwoPlayersWidget() {
     twoPlayersWidget->setLayout(mainLayoutWidget);
     mainLayout->addWidget(twoPlayersWidget);
 }
-
-
-

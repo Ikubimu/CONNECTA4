@@ -14,6 +14,7 @@ class rankingTable : public QWidget
 public:
     rankingTable(QWidget *parent = nullptr);
     void addUser(const Player* user);
+    void updateTable();
 
     private:
         Connect4 *db{nullptr};

@@ -25,6 +25,7 @@ enum actual_situation{
     No_players,
     One_player,
     Two_players,
+    current,
 };
 class usersWidget : public  QWidget
 {
@@ -33,6 +34,8 @@ public:
     usersWidget(QWidget *parent = nullptr);
     start_player get_who_starts();
     int get_players(Player* players[2]);
+
+    void updateWidget(actual_situation x);
 
 signals:
     void emit_current_players(int num);
@@ -65,7 +68,6 @@ private:
     void openForgotPasswordPage();
     void openConfigureProfile();
     void log_out();
-    void updateWidget(actual_situation x);
     void setupWidgets();
     void setupNoPlayersWidget();
     void setupOnePlayerWidget();

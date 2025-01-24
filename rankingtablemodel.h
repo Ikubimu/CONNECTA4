@@ -25,11 +25,12 @@ public:
     Player* getPlayer(int row);
     QList<Round*> getPlayerRounds(QString NickName);
 
+    void update_users();
+
 private:
     Connect4DAO* db = {nullptr}; //pointer to database
     QLineEdit* searchLine;
     QList<Player*> users;
-    QString prev_text="";
 
     enum Colum
     {
@@ -39,7 +40,7 @@ private:
         COLCOUNT
     };
 
-    void update_users();
+
 
 };
 

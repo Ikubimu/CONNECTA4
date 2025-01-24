@@ -40,7 +40,7 @@ private:
     GameBoard board;
     rankingTable rank;
     usersWidget *users;
-    QPushButton *historyButton;
+    QPushButton *historyButton, *colorPickerButton;
     Player* players_playing[2]; // will be initialized to nullptr at the beginning
     SettingsUser settingsWidget;
     gameHistory *hist{nullptr};

@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QtMath>
 #include <QVBoxLayout>
+#include <QTimer>
 
 #define SIZE_W 0.9
 #define SIZE_H 0.6
@@ -23,6 +24,23 @@ rankingTable::rankingTable(QWidget *parent)
     rankingView.resizeColumnsToContents();
     QRect geom = geometry();
     this->setFixedHeight(geom.height()*SIZE_H);
+
+    QTimer *timer = new QTimer(this);
+    timer->setInterval(100);
+
+    // Funcíon periódica que evalua la caja de búsqueda
+    connect(timer, &QTimer::timeout, this, &rankingTable::updateTable);
+
+
+    timer->start();
+
+}
+
+
+void rankingTable::updateTable()
+{
+    model.update_users();
+    searchLine.setPlaceholderText(Labels::search);
 }
 
 

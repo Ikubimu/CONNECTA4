@@ -18,16 +18,6 @@ rankingTableModel::rankingTableModel(QObject *parent)
         endInsertRows();
     }
 
-    QTimer *timer = new QTimer(this);
-    timer->setInterval(100);
-
-    // Funcíon periódica que evalua la caja de búsqueda
-    connect(timer, &QTimer::timeout, this, &rankingTableModel::update_users);
-
-
-    timer->start();
-
-    // Iniciar el temporizador
 }
 
 void rankingTableModel::update_users()
@@ -42,29 +32,28 @@ void rankingTableModel::update_users()
             break;
         }
     }
+
     QString text = searchLine->text();
-    if(text != prev_text)
+
+    beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+    endRemoveRows();
+    for(int i=0; i<users.size(); i++)
     {
-        prev_text = text;
-        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
-        endRemoveRows();
-        for(int i=0; i<users.size(); i++)
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        endInsertRows();
+    }
+    for(int i=0; i<users.size(); i++)
+    {
+        QString name = users.at(i)->getNickName();
+        if(!name.contains(text))
         {
-            beginInsertRows(QModelIndex(), rowCount(), rowCount());
-            endInsertRows();
-        }
-        for(int i=0; i<users.size(); i++)
-        {
-            QString name = users.at(i)->getNickName();
-            if(!name.contains(text))
-            {
-                beginRemoveRows(QModelIndex(), i, i);
-                users.removeAt(i);
-                endRemoveRows();
-                i--;
-            }
+            beginRemoveRows(QModelIndex(), i, i);
+            users.removeAt(i);
+            endRemoveRows();
+            i--;
         }
     }
+
 
 
 

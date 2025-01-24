@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // Crear el botón para seleccionar color
-    QPushButton *colorPickerButton = new QPushButton(Labels::change_color, this);
+    colorPickerButton = new QPushButton(Labels::change_color, this);
     // Conectar el botón con el cambio de color
     connect(colorPickerButton, &QPushButton::clicked, this, &MainWindow::onChangePieceColor);
 
@@ -157,6 +157,10 @@ void MainWindow::change_language_signal(int idioma){
             break;
     }
     historyButton->setText(Labels::history);
+    colorPickerButton->setText(Labels::change_color);
+
+    users->updateWidget(actual_situation::current);
+
 }
 
 
