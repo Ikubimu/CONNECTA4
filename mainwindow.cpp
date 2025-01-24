@@ -157,9 +157,6 @@ void MainWindow::change_language_signal(int idioma){
             Language::change_to_Mbappe();
             break;
     }
-
-    settingsButton->setText(Labels::open_settings);
-    openLoginButton->setText(Labels::open_login_page);
     historyButton->setText(Labels::history);
 }
 
