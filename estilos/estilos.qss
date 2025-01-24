@@ -221,12 +221,12 @@ MainWindow QPushButton:pressed {
 }
 /* QPushButton - Estilo para los botones */
 .LoginPage QPushButton {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 16px;
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 10px 15px;
+font-size: 16px;
 }
 
 .LoginPage QPushButton:hover {
@@ -530,7 +530,7 @@ usersWidget QLabel{
     color: black; /*#4CAF50;*/
     font-family: Arial, sans-serif;
 }
-#miEtiquetaEspecial {
+usersWidget QLabel#miEtiquetaEspecial{
     color: black;
     font-size: 20px;
     font-weight: bold;
