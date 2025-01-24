@@ -38,12 +38,13 @@ GameBoard::GameBoard(QWidget *parent)
 
             // Verificar condiciones de victoria o empate
             if (checkWin(animTargetRow, animColumn)) {
-                QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(animPlayer));
+
+                QMessageBox::information(this, Labels::victory, QString(Labels::player_win + ":  %1 ").arg(animPlayer));
                 emit emit_result((results)animPlayer);
                 resetBoard();
                 return;
             } else if (checkFullGrid()) {
-                QMessageBox::information(this, "Empate", "No queda espacio de juego");
+                QMessageBox::information(this, Labels::draw,Labels::draw);
                 emit emit_result(draw);
                 resetBoard();
                 return;
@@ -190,9 +191,9 @@ void GameBoard::startAnimation(int column, int player) {
 
 bool GameBoard::checkFullGrid()
 {
-    for(int i=0; i<grid.size(); i++)
+    for(int i=0; i< 6; i++)
     {
-        if(grid[i].last() == 0)
+        if(grid[0][i] == 0)
         {
             return false;
         }
@@ -212,7 +213,7 @@ bool GameBoard::dropDisc(int column, int &row) {
 }
 
 bool GameBoard::canDropDisc(int column, int &row) {
-    for (int r = rows - 1; r >= 0; --r) {
+    for (int r = rows -1; r >= 0; --r) {
         if (grid[r][column] == 0) {
             row = r;
             return true;
