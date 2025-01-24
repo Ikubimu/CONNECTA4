@@ -230,8 +230,7 @@ SettingsUser QLabel{
 
 usersWidget{
     background-color: red;
-    color: 10 px green;
-    border: 10px solid orange;
+    color: green;
 }
 
 /*ranking table*/
