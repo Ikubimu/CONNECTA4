@@ -156,10 +156,10 @@ MainWindow::~MainWindow() {
 }
 void MainWindow::change_language_signal(int idioma){
     switch(idioma){
-        case 1:
+        case 0:
         Language::change_to_tortilla_patata();
         break;
-    case 0:
+    case 1:
         Language::change_to_fish_and_chips();
         break;
     case 2:
