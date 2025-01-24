@@ -38,7 +38,6 @@ private:
     Player *robot;
 
     QComboBox *whoStarts;
-    QComboBox *Difficulty_Level_Robot;
 
     QImage AvatarRight;
     QImage AvatarLeft;
@@ -52,12 +51,9 @@ private:
     QPushButton *leftEditprofile;
     QPushButton *leftlog_out;
 
-    QStackedWidget *stackedWidget;
-    QWidget *noPlayersWidget;
-    QWidget *onePlayerWidget;
-    QWidget *twoPlayersWidget;
+    QVBoxLayout *mainLayout;
 
-    QVBoxLayout *middle;
+    QWidget *middleContainer;
     void openLoginPage();
     void openRegisterPage();
     void handleLoginSuccess(Player *player);
