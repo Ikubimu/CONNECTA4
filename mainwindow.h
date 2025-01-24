@@ -47,6 +47,8 @@ private:
     void handleLoginSuccess(Player* Player);
     void handleRegisterSuccess(Player* Player);
 
+    void onChangePieceColor();
+
     QWidget* buildMainWidget();
     QPushButton *settingsButton;
     void catchSignal();
