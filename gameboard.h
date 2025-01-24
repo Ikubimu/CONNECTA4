@@ -73,6 +73,7 @@ public slots:
 
 signals:
     void emit_result(results data);
+    void turnChanged(int currentPlayerIndex); // Señal para indicar el cambio de turno
 };
 
 #endif // GAMEBOARD_H

@@ -16,19 +16,22 @@
 #include "lib/connect4.h"
 #include "edit_profile.h"
 
-enum start_player{
+#include <QPainterPath>
+
+enum start_player {
     first_player,
     second_player,
     random
 };
-enum actual_situation{
+
+enum actual_situation {
     No_players,
     One_player,
     Two_players,
     current,
 };
-class usersWidget : public  QWidget
-{
+
+class usersWidget : public QWidget {
     Q_OBJECT
 public:
     usersWidget(QWidget *parent = nullptr);
@@ -37,12 +40,14 @@ public:
 
     void updateWidget(actual_situation x);
 
+    void highlightPlayer(int playerIndex); // Nueva función para resaltar al jugador activo
+
 signals:
     void emit_current_players(int num);
-private:
 
+private:
     actual_situation actual;
-    Player  *players_playing[2];
+    Player *players_playing[2];
     Player *robot;
 
     QComboBox *whoStarts;
@@ -50,8 +55,8 @@ private:
     QImage AvatarRight;
     QImage AvatarLeft;
 
-    QLabel *rightAvatarLabel;
-    QLabel *leftAvatarLabel;
+    QLabel *rightAvatarLabel; // Miembro de la clase
+    QLabel *leftAvatarLabel;  // Miembro de la clase
     QPushButton *rightButtonLogin;
     QPushButton *rightEditprofile;
     QPushButton *rightlog_out;
@@ -62,6 +67,7 @@ private:
     QVBoxLayout *mainLayout;
 
     QWidget *middleContainer;
+
     void openLoginPage();
     void openRegisterPage();
     void handleLoginSuccess(Player *player);
@@ -74,8 +80,9 @@ private:
     void setupTwoPlayersWidget();
     void openEditProfilePage(Player* player);
     void handleEditProfilePage();
-    QPixmap createCircularPixmap(const QImage &image); // hecho con IA
+    void drawRedBorder(QLabel *label);
 
+    QPixmap createCircularPixmap(const QImage &image); // Hecho con IA
 };
 
 #endif // USERSWIDGET_H
