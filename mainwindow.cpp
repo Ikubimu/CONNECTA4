@@ -160,17 +160,31 @@ void MainWindow::change_language_signal(int idioma){
 
 void MainWindow::receive_result(GameBoard::results data)
 {
+    Player* winner;
+    Player* looser;
     switch(data)
     {
     case GameBoard::win:
-        players_playing[0]->addPoints(30);
+        winner = players_playing[0];
+        winner->addPoints(30);
         break;
     case GameBoard::draw:
-        players_playing[0]->addPoints(10);
-        players_playing[1]->addPoints(10);
+        winner = players_playing[1];
+        looser = players_playing[0];
+        winner->addPoints(10);
+        winner->addPoints(10);
         break;
     case GameBoard::lost:
-        players_playing[1]->addPoints(30);
+        winner = players_playing[1];
+        looser = players_playing[0];
+        winner->addPoints(30);
         break;
+    }
+
+    if(players_playing[1]->getNickName()!="ROBOT")
+    {
+        Connect4& instance = Connect4::getInstance();
+        //La base de datos no contempla el caso de que sea empate, ponemos a un ganador aunque haya reparto de puntos
+        instance.registerRound(QDateTime::currentDateTime(), winner, looser);
     }
 }
