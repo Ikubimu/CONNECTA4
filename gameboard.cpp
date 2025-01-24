@@ -8,6 +8,7 @@
 #include <climits>
 
 static int elegirJugada(QVector<QVector<int>>& tablero, int profundidad);
+static QColor get_opposite_color(QColor color);
 
 GameBoard::GameBoard(QWidget *parent)
     : QWidget(parent)
@@ -15,6 +16,8 @@ GameBoard::GameBoard(QWidget *parent)
     , rows(6)
     , cols(7)
     , currentPlayer(1)
+    , p1(255,0,0)
+    , p2(0, 255, 255)
 {
     ui->setupUi(this);
     grid.resize(rows, QVector<int>(cols, 0));
@@ -61,9 +64,9 @@ void GameBoard::paintEvent(QPaintEvent *event)
             if (grid[r][c] == 0) {
                 painter.setBrush(Qt::white);
             } else if (grid[r][c] == 1) {
-                painter.setBrush(Qt::red);
+                painter.setBrush(p1);
             } else {
-                painter.setBrush(Qt::yellow);
+                painter.setBrush(p2);
             }
             painter.drawEllipse(circleRect);
         }
@@ -77,16 +80,22 @@ void GameBoard::paintEvent(QPaintEvent *event)
                              300);
 
     // Configurar colores del gradiente
+    QColor color, color64, color128;
     if(currentPlayer == 1)
     {
-        gradient.setColorAt(1.0, QColor(255, 0, 0, 128)); // Rojo semitransparente (menor opacidad)
-        gradient.setColorAt(0.5, QColor(255, 0, 0, 64)); // Rojo más tenue a mitad de camino
+        color = p1;
     }
     else
     {
-        gradient.setColorAt(1.0, QColor(255, 255, 0, 128)); // Amarillo semitransparente
-        gradient.setColorAt(0.5, QColor(255, 255, 64)); // Rojo más tenue a mitad de camino
+        color = p2;
+
     }
+    color128 = color;
+    color64 = color;
+    color128.setAlpha(128);
+    color64.setAlpha(64);
+    gradient.setColorAt(1.0, color128); // Rojo semitransparente (menor opacidad)
+    gradient.setColorAt(0.5, color64); // Rojo más tenue a mitad de camino
     gradient.setColorAt(0.2, Qt::transparent);
 
     // Configurar el pintor
@@ -250,6 +259,22 @@ void GameBoard::resetBoard()
         }
     }
     currentPlayer = 1;
+}
+
+void GameBoard::setColorPieces(QColor color)
+{
+    p1 = color;
+    p2 = get_opposite_color(color);
+}
+
+
+static QColor get_opposite_color(QColor color)
+{
+    int r = 255 - color.red();
+    int g = 255 - color.green();
+    int b = 255 - color.blue();
+
+    return QColor(r, g, b);
 }
 
 
