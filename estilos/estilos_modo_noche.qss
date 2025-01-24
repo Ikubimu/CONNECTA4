@@ -511,7 +511,7 @@ usersWidget QLabel{
     color: black; /*#4CAF50;*/
     font-family: Arial, sans-serif;
 }
-usersWidget QLabel#versus{
+usersWidget QLabel#VS{
     color: white;
     font-size: 20px;
     font-weight: bold;

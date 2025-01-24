@@ -538,3 +538,11 @@ usersWidget QLabel#miEtiquetaEspecial{
     font-family: Algerian, sans-serif;
 }
 
+usersWidget QLabel#VS{
+    font-size: 16px;
+    font-weight: bold;
+    color: black; /*#4CAF50;*/
+    font-family: Algerian, sans-serif;
+}
+
+

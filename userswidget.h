@@ -60,7 +60,7 @@ private:
     QPushButton *leftlog_out;
     QLabel *nickname;
     QLabel *CPU;
-    QLabel *versus;
+    QLabel *versus, *start;
     QVBoxLayout *mainLayout;
 
     QWidget *middleContainer;
