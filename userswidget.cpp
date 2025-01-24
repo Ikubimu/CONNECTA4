@@ -6,16 +6,11 @@ usersWidget::usersWidget(QWidget *parent): QWidget(parent),actual(No_players){
     robot = game.registerPlayer("CPU", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0, QImage(":/fotos_avatar/robot.png"));
     players_playing[1] = robot;
 
-
-
-
     mainLayout = new QVBoxLayout(this);
     setLayout(mainLayout);
-    updateWidget(No_players);
-
     QColor red(255, 0, 0); // Crear un color rojo
     this->setPlayerColors(red); // Establecer el color del jugador 1 en rojo
-
+    updateWidget(No_players);
 }
 
 void usersWidget::updateWidget(actual_situation x){
