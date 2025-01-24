@@ -31,17 +31,18 @@ MainWindow QPushButton:pressed {
     font-family: Arial, sans-serif;
 }
 .ForgotPasswordPage QLineEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555; /* Borde gris oscuro */
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
     font-weight: bold;
-    background-color: #f9f9f9; /* Fondo gris claro */
-    color: #333; /* Texto gris oscuro */
+    color: #ddd; /* Texto gris claro */
+    background-color: #1e1e1e; /* Fondo gris muy oscuro */
 }
+
 .ForgotPasswordPage QLineEdit:focus {
-    border: 2px solid #007bff; /* Azul estándar */
-    background-color: #fff; /* Fondo blanco */
+    border-color: #1e90ff; /* Azul claro */
+    background-color: #333; /* Fondo más claro */
 }
 .ForgotPasswordPage QLabel {
     font-size: 14px;
