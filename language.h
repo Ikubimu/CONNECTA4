@@ -70,6 +70,21 @@ namespace Labels {
     inline QString history{};
     inline QString confirm_edit_profile{};
     inline QString edit_profile{};
+    inline QString your_code{};
+    inline QString without_space{};
+    inline QString draw{};
+    inline QString victory_off{};
+    inline QString player_2{};
+    inline QString random{};
+    inline QString log_out{};
+    inline QString starts{};
+    inline QString who_starts{};
+    inline QString play_with_friend{};
+    inline QString confirm_log_out{};
+    inline QString confirm_log_out_sure{};
+    inline QString wrong_password{};
+    inline QString select_color{};
+    inline QString change_color{};
 };
 
 class Language : public QObject

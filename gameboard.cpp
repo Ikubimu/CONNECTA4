@@ -142,14 +142,14 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
                 //Verificar si el movimiento actual gana el juego
                 if(checkWin(row, column)){
 
-                    QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
+                    QMessageBox::information(this, Labels::victory, QString(Labels::victory_off+"%1").arg(currentPlayer));
                     emit emit_result((results)currentPlayer);
                     resetBoard();
                     return;
                 }
                 else if(checkFullGrid()){
 
-                    QMessageBox::information(this, "Empate", QString("No queda espacio de juego"));
+                    QMessageBox::information(this, Labels::draw, QString(Labels::without_space));
                     emit emit_result((results)currentPlayer);
                     resetBoard();
                     return;
@@ -164,14 +164,14 @@ void GameBoard::mousePressEvent(QMouseEvent *event)
                     dropDisc(columnaCPU, row);
                     if(checkWin(row, columnaCPU)){
 
-                        QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(currentPlayer));
+                        QMessageBox::information(this, Labels::victory, QString(Labels::victory_off+"%1").arg(currentPlayer));
                         emit emit_result((results)currentPlayer);
                         resetBoard();
                         return;
                     }
                     else if(checkFullGrid()){
 
-                        QMessageBox::information(this, "Empate", QString("No queda espacio de juego"));
+                        QMessageBox::information(this, Labels::draw, QString(Labels::without_space));
                         emit emit_result((results)currentPlayer);
                         resetBoard();
                         return;

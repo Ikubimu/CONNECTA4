@@ -32,9 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-
     // Crear el botón para seleccionar color
-    QPushButton *colorPickerButton = new QPushButton("Cambiar color de las fichas", this);
+    QPushButton *colorPickerButton = new QPushButton(Labels::change_color, this);
     // Conectar el botón con el cambio de color
     connect(colorPickerButton, &QPushButton::clicked, this, &MainWindow::onChangePieceColor);
 
@@ -95,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Registro de jugadores (ejemplo)
     Connect4& game = Connect4::getInstance();
-    Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
+    Player* machine_player = game.registerPlayer("CPU", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
     Player* p1 = game.registerPlayer("oscar1", "oscar@oscar.com", "Password123!", QDate(1990, 1, 1), 0);
     players_playing[0] = p1;
     players_playing[1] = machine_player;
@@ -117,7 +116,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::onChangePieceColor()
 {
     // Abrir un selector de color
-    QColor selectedColor = QColorDialog::getColor(Qt::red, this, "Selecciona un color para las fichas");
+    QColor selectedColor = QColorDialog::getColor(Qt::red, this, Labels::select_color);
 
     // Validar si se seleccionó un color válido
     if (selectedColor.isValid()) {
@@ -190,7 +189,7 @@ void MainWindow::receive_result(GameBoard::results data)
         break;
     }
 
-    if(players_playing[1]->getNickName()!="ROBOT")
+    if(players_playing[1]->getNickName()!="CPU")
     {
         Connect4& instance = Connect4::getInstance();
         //La base de datos no contempla el caso de que sea empate, ponemos a un ganador aunque haya reparto de puntos

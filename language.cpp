@@ -45,7 +45,8 @@ void Language::change_to_tortilla_patata(){
     Labels::open_settings="Abrir ajustes";
     Labels::succesful_registrer="¡Registro exitoso!";
     Labels::points="puntos";
-    Labels::player_1="Jugador_1";
+    Labels::player_1="Jugador 1";
+    Labels::player_2="Jugador 2";
     Labels::confirm_password="Confirma la contraseña";
     Labels::birthday="Fecha de nacimiento";
     Labels::choose_photo_pc="Elegir foto del oredenador";
@@ -53,12 +54,12 @@ void Language::change_to_tortilla_patata(){
     Labels::registrer_page="Pagina para registro";
     Labels::select_avatar="Selecciona un avatar";
     Labels::fail_uploading_image="Fallo al cargar la foto seleccionada";
-    Labels::todifferent_password="LAs contraseñas no coinciden.\n";
+    Labels::todifferent_password="Las contraseñas no coinciden.\n";
     Labels::wrong_birthday="Debes tener más de 12 años para poder registrarte.\n";
     Labels::user_already_exist="El nombre de usuario que has introducido ya existe";
     Labels::try2signup_again="Vuelva a registrarse, hemos tenido un error en la página, disculpe las molestias";
     Labels::select_language="Escoja el idioma";
-    Labels::dark_mode="Modo óscuro";
+    Labels::dark_mode="Modo oscuro";
     Labels::save_settings="Guardar configuración";
     Labels::language_selected="Lenguaje seleccionado";
     Labels::settings_saved="Configuración guardada";
@@ -69,6 +70,20 @@ void Language::change_to_tortilla_patata(){
     Labels::history="Historial";
     Labels::confirm_edit_profile = "Guardar cambios";
     Labels::edit_profile = "Editar Perfil";
+    Labels::your_code="Tu código es: ";
+    Labels::draw="empate";
+    Labels::without_space="no queda más espacio en el tablero";
+    Labels::victory_off="victoria del jugador ";
+    Labels::random="aleatorio";
+    Labels::log_out="Cerrar sesión";
+    Labels::play_with_friend="Jugar con un amigo";
+    Labels::starts="Empieza";
+    Labels::who_starts="¿Quién empieza?";
+    Labels::confirm_log_out="Confirmar cerrar sesión";
+    Labels::confirm_log_out_sure="¿Estás seguro de querer cerrar sesión?";
+    Labels::wrong_password="La contraseña es incorrecta";
+    Labels::change_color="Cambiar color de las fichas";
+    Labels::select_color="Seleccionar color de las fichas";
 }
 void Language::change_to_fish_and_chips() {
     Labels::password = "Password";
@@ -113,6 +128,7 @@ void Language::change_to_fish_and_chips() {
     Labels::succesful_registrer = "Registration successful!";
     Labels::points = "Points";
     Labels::player_1 = "Player 1";
+    Labels::player_2="Player 2";
     Labels::confirm_password = "Confirm password";
     Labels::birthday = "Birthday";
     Labels::choose_photo_pc = "Choose photo from computer";
@@ -136,6 +152,20 @@ void Language::change_to_fish_and_chips() {
     Labels::history="History";
     Labels::confirm_edit_profile = "Save changes";
     Labels::edit_profile = "Edit Profile";
+    Labels::your_code="Your code is: ";
+    Labels::without_space="There isn't enought space on the gameboard";
+    Labels::draw="Draw";
+    Labels::victory_off="Victory off player ";
+    Labels::random="random";
+    Labels::log_out="Log out";
+    Labels::play_with_friend="Play with a friend";
+    Labels::who_starts="Who is going to start?";
+    Labels::starts="Starts";
+    Labels::confirm_log_out="Confirm Log out";
+    Labels::confirm_log_out_sure="You want to log out, sure?";
+    Labels::wrong_password="Wrong password";
+    Labels::change_color="Change chip's colour";
+    Labels::select_color="Select chip's colour";
 }
 void Language::change_to_Mbappe() {
     Labels::password = "Mot de passe";
@@ -180,6 +210,7 @@ void Language::change_to_Mbappe() {
     Labels::succesful_registrer = "Inscription réussie !";
     Labels::points = "Points";
     Labels::player_1 = "Joueur 1";
+    Labels::player_2="Joueur 2";
     Labels::confirm_password = "Confirmez le mot de passe";
     Labels::birthday = "Date de naissance";
     Labels::choose_photo_pc = "Choisir une photo depuis l'ordinateur";
@@ -203,4 +234,19 @@ void Language::change_to_Mbappe() {
     Labels::history="Enregistrer";
     Labels::confirm_edit_profile = "conserver changes";
     Labels::edit_profile = "Edit Profile";
+    Labels::your_code="Votre code est : ";
+    Labels::draw="égalité";
+    Labels::without_space="il n'y a plus de place sur le plateau";
+    Labels::victory_off="victoire du joueur ";
+    Labels::random="aléatoire";
+    Labels::log_out="Se déconnecter";
+    Labels::play_with_friend="Jouer avec un ami";
+    Labels::starts="Commence";
+    Labels::who_starts="Qui commence ?";
+    Labels::confirm_log_out="Confirmer la déconnexion";
+    Labels::confirm_log_out_sure="Êtes-vous sûr de vouloir vous déconnecter ?";
+    Labels::wrong_password="Le mot de passe est incorrect";
+    Labels::change_color="Changer la couleur des pions";
+    Labels::select_color="Sélectionner la couleur des pions";
+
 }
