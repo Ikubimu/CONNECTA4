@@ -56,9 +56,6 @@ private:
     QGridLayout *formLayout;
     void handleRegister(); //slot
     void selectImageFromFile();
-    //void uploadCustomAvatar();
-    //void selectPredefinedAvatar(int index);
-    //void mousePressEvent(QMouseEvent *event) override;
 };
 
 #endif // LOGIN_H

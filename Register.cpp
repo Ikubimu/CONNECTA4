@@ -41,10 +41,11 @@ RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
     avatarComboBox->setIconSize(QSize(100, 100));
     avatarComboBox->setFixedWidth(150);
     avatarComboBox->setMaxVisibleItems(3);
-    // Load predefined avatars
+
     QStringList avatarPaths = {":/fotos_avatar/foto1.png", ":/fotos_avatar/foto2.png",
                                ":/fotos_avatar/foto3.png", ":/fotos_avatar/foto4.png",
                                ":/fotos_avatar/foto5.png", ":/fotos_avatar/foto6.png"};
+    //bucle hecho con IA
     for (const QString &path : avatarPaths) {
         QPixmap pixmap(path);
         if (!pixmap.isNull()) {
@@ -156,7 +157,11 @@ void RegisterPage::handleRegister(){
     QString repeat_password = repeatpasswordField ->text();
     QString email = emailField->text();
     QDate Birthday = BirthdayField->date();
-
+    // obtener la imagen seleccionada
+    int selectedIndex = avatarComboBox->currentIndex();
+    QIcon selectedIcon = avatarComboBox->itemIcon(selectedIndex);
+    QPixmap pixmap = selectedIcon.pixmap(100, 100);
+    avatarImage = pixmap.toImage();
     // bools para comprobar que esta fallando si algo falla
     bool usernameValid, passwordValid, emailValid, birthdayValid,repeat_passwordValid;
     bool size, spaces, mayus, minus, digit, specialChar;

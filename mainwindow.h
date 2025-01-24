@@ -9,9 +9,13 @@
 #include "Login.h"
 #include "Forgot_Password.h"
 #include "gamehistory.h"
-#include "language.h"
+#include "ui_mainwindow.h"
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPushButton>#include "language.h"
 
 #include "settinguser.h"
+#include "lib/connect4.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -35,17 +39,12 @@ private:
     Ui::MainWindow *ui;
     GameBoard board;
     rankingTable rank;
-    usersWidget userL, userR;
+    usersWidget *users;
     QPushButton *openLoginButton, *historyButton;
     Player* players_playing[2]; // will be initialized to nullptr at the beginning
     SettingsUser settingsWidget;
     gameHistory *hist{nullptr};
 
-    void openLoginPage();
-    void openRegisterPage();
-    void openForgotPasswordPage();
-    void handleLoginSuccess(Player* Player);
-    void handleRegisterSuccess(Player* Player);
 
     QWidget* buildMainWidget();
     QPushButton *settingsButton;

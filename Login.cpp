@@ -1,11 +1,11 @@
 #include "Login.h"
 LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(parent) {
     // Crear los elementos de la UI
-    QLabel *usernameLabel = new QLabel(Labels::username + ":", this);
     usernameField = new QLineEdit(this);
+    usernameField->setPlaceholderText("usuario");
 
-    QLabel *passwordLabel = new QLabel(Labels::password +":", this);
     passwordField = new QLineEdit(this);
+    passwordField->setPlaceholderText("contraseña");
     passwordField->setEchoMode(QLineEdit::Password); // Ocultar la contraseña
 
     loginButton = new QPushButton(Labels::login, this);
@@ -17,13 +17,11 @@ LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(paren
     connect(ForgetPasswordButton,&QPushButton::clicked,this,&LoginPage::change_to_forgot_password);
     // Crear el layout
     layout = new QGridLayout(this);
-    layout->addWidget(usernameLabel,0,0);
-    layout->addWidget(usernameField,0,1);
-    layout->addWidget(passwordLabel,1,0);
-    layout->addWidget(passwordField,1,1);
-    layout->addWidget(loginButton,4,0,1,2);
-    layout ->addWidget(ForgetPasswordButton,5,0,1,2);
-    layout->addWidget(RegisterButton,6,0,1,2);
+    layout->addWidget(usernameField,0,0,1,2);
+    layout->addWidget(passwordField,1,0,1,2);
+    layout->addWidget(loginButton,3,0,1,2);
+    layout ->addWidget(ForgetPasswordButton,4,0,1,2);
+    layout->addWidget(RegisterButton,5,0,1,2);
 
     //add players so after you can check if the user has already login
     Players[0] = players_playing[0];

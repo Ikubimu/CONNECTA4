@@ -1,11 +1,5 @@
+
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "lib/connect4.h"
-
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -18,10 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     QWidget *centralWidget = new QWidget(this);
-    openLoginButton = new QPushButton(Labels::open_login_page,this);
-    connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
-
-    // Crear layouts
+    users = new usersWidget(this);
+    //openLoginButton = new QPushButton("Abrir LoginPage",this);
+    //connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
+    // Crear un layout vertical
     QHBoxLayout *layout = new QHBoxLayout(centralWidget);
     QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
     QVBoxLayout *layoutVLeft = new QVBoxLayout(centralWidget);
@@ -59,12 +53,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     layoutVLeft->addStretch(1);
     layoutVLeft->addWidget(historyButton);
-    layoutVLeft->addWidget(openLoginButton);
+    //layoutVLeft->addWidget(openLoginButton);
     layoutVLeft->addWidget(settingsButton, 1, Qt::AlignLeft);
 
     layoutH->addStretch(1);
-    layoutH->addWidget(&userL, 1);
-    layoutH->addWidget(&userR, 1);
+    layoutH->addWidget(users, 4);
     layoutH->addStretch(1);
 
     layoutV->addLayout(layoutH, 1);
@@ -119,32 +112,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::openLoginPage()
-{
-    LoginPage loginDialog(nullptr, players_playing);
-    connect(&loginDialog, &LoginPage::Login_succesful, this, &MainWindow::handleLoginSuccess);
-    connect(&loginDialog, &LoginPage::requestRegisterPage, this, &MainWindow::openRegisterPage);
-    connect(&loginDialog, &LoginPage::requestForgotPasswordPage, this, &MainWindow::openForgotPasswordPage);
-    loginDialog.exec();
-}
-
-void MainWindow::openRegisterPage()
-{
-    RegisterPage RegisterDialog;
-    connect(&RegisterDialog, &RegisterPage::Register_succesful, this, &MainWindow::handleLoginSuccess);
-    RegisterDialog.exec();
-}
-
-void MainWindow::handleLoginSuccess(Player *player){
-    qDebug() << Labels::succesful_registrer <<player->getNickName()<<"  "<<player->getPassword();
-}
-
-void MainWindow::openForgotPasswordPage()
-{
-    ForgotPasswordPage ForgotPasswordDialog(nullptr, players_playing);
-    connect(&ForgotPasswordDialog, &ForgotPasswordPage::Login_succesful, this, &MainWindow::handleLoginSuccess);
-    ForgotPasswordDialog.exec();
-}
 void MainWindow::change_language_signal(int idioma){
     switch(idioma){
         case 1:
