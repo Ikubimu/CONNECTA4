@@ -254,6 +254,7 @@ void usersWidget::setupOnePlayerWidget() {
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     versus = new QLabel("    VS   ",this);
+    versus->setObjectName("miEtiquetaEspecial");
     middleLayout->addWidget(versus);
     middleLayout->addWidget(new QLabel(Labels::starts,this));
     middleLayout->addWidget(whoStarts);
