@@ -55,6 +55,7 @@ private:
 private slots:
     void receive_result(GameBoard::results data);
     void change_language_signal(int idioma);
+    void changeAllStyles(bool mode);
 };
 
 #endif // MAINWINDOW_H

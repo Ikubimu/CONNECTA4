@@ -11,13 +11,6 @@ gameHistory::gameHistory(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
-    if (file.open(QFile::ReadOnly)) {
-        QString styleSheet = QString::fromUtf8(file.readAll());
-        this->setStyleSheet(styleSheet);
-        file.close();
-    }
-
     QVBoxLayout* layout = new QVBoxLayout(this);
     QHBoxLayout* layoutHDate = new QHBoxLayout();
     QHBoxLayout* layoutHCheck = new QHBoxLayout();

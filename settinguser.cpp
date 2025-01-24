@@ -61,15 +61,10 @@ void SettingsUser::saveSettings()
     int idx = languageComboBox->currentIndex();
 
     emit languagechoosed(idx);
+    emit styleMode(isDarkMode);
 
     qDebug() << "Language selected: " << selectedLanguage;
     qDebug() << "Dark Mode: " << (isDarkMode ? "Enabled" : "Disabled");
-
-    if (isDarkMode) {
-        applyDarkMode();
-    } else {
-        applyLightMode();
-    }
 
     languageLabel->setText(Labels::select_language);
 

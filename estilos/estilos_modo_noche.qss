@@ -1,5 +1,5 @@
 MainWindow {
-    background-color: black; /*#e3e3e3;*/ /* Fondo gris claro */
+    background-color: #333333; /* Fondo gris claro */
 }
 MainWindow QPushButton {
     background-color: #007bff; /* Azul estándar */
