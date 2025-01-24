@@ -24,6 +24,8 @@ public:
         lost
     };
 
+    void setColorPieces(QColor color);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -54,6 +56,8 @@ private:
 
     void set_cpu(bool state){ cpu_on = state; }
     bool cpu_on{true};
+
+    QColor p1, p2;
 
 signals:
     void emit_result(results data);
