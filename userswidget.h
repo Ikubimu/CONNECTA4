@@ -42,6 +42,8 @@ public:
 
     void highlightPlayer(int playerIndex); // Nueva función para resaltar al jugador activo
 
+    void setPlayerColors(const QColor &color1);
+
 signals:
     void emit_current_players(int num);
 
@@ -68,6 +70,9 @@ private:
 
     QWidget *middleContainer;
 
+    QColor p1Color; // Color de la ficha del jugador 1
+    QColor p2Color; // Color de la ficha del jugador 2
+
     void openLoginPage();
     void openRegisterPage();
     void handleLoginSuccess(Player *player);
@@ -80,7 +85,7 @@ private:
     void setupTwoPlayersWidget();
     void openEditProfilePage(Player* player);
     void handleEditProfilePage();
-    void drawRedBorder(QLabel *label);
+    void drawPlayerBorder(QLabel *label, const QColor &borderColor);
 
     QPixmap createCircularPixmap(const QImage &image); // Hecho con IA
 };

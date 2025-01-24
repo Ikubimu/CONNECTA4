@@ -293,6 +293,7 @@ static QColor get_opposite_color(QColor color)
 }
 
 
+
 void GameBoard::receive_current_players(int num)
 {
     switch(num)

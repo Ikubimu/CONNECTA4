@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     colorPickerButton->setStyleSheet("QPushButton { border: none; background: transparent; }"); // Estilo para eliminar el borde y el fondo
     colorPickerButton->setText(""); // Eliminar el texto (opcional)
 
+
+
     // Conectar el botón con el cambio de color
     connect(colorPickerButton, &QPushButton::clicked, this, &MainWindow::onChangePieceColor);
 
@@ -114,6 +116,7 @@ void MainWindow::onChangePieceColor() {
     // Validar si se seleccionó un color válido
     if (selectedColor.isValid()) {
         board.setColorPieces(selectedColor); // Llamar a la función del tablero
+        users->setPlayerColors(selectedColor);
     }
 }
 

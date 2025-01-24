@@ -3,8 +3,12 @@
 usersWidget::usersWidget(QWidget *parent): QWidget(parent),actual(No_players){
     players_playing[0] = nullptr;
     Connect4& game = Connect4::getInstance();
-    robot = game.registerPlayer("CPU", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
+    robot = game.registerPlayer("CPU", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0, QImage(":/fotos_avatar/robot.png"));
     players_playing[1] = robot;
+
+    QColor red(255, 0, 0); // Crear un color rojo
+    this->setPlayerColors(red); // Establecer el color del jugador 1 en rojo
+
 
     mainLayout = new QVBoxLayout(this);
     setLayout(mainLayout);
@@ -153,27 +157,30 @@ void usersWidget::log_out() {
     QPushButton *buttonSender = qobject_cast<QPushButton *>(sender());
     if (buttonSender == leftlog_out) {
         if (actual == actual_situation::Two_players) {
-            players_playing[0] = players_playing[1]; // Cambiar el jugador 1 al jugador 2
+            // Si hay dos jugadores, mover el jugador derecho al izquierdo
+            players_playing[0] = players_playing[1];
+            players_playing[1] = robot; // Restablecer el jugador derecho al robot
             actual = actual_situation::One_player;
         } else {
+            // Si solo hay un jugador, desconectarlo
             players_playing[0] = nullptr;
             actual = actual_situation::No_players;
         }
     } else if (buttonSender == rightlog_out) {
+        // Desconectar al jugador derecho y restablecer al robot
+        players_playing[1] = robot;
         actual = actual_situation::One_player;
     }
 
     // Actualizar el widget para reflejar los cambios
     updateWidget(actual);
 
-    // Restablecer el avatar del jugador desconectado
-    if (buttonSender == leftlog_out && actual == actual_situation::No_players) {
-        leftAvatarLabel->setPixmap(createCircularPixmap(QImage(":/fotos_avatar/noUserImage.jpg")));
-    } else if (buttonSender == rightlog_out && actual == actual_situation::One_player) {
-        rightAvatarLabel->setPixmap(createCircularPixmap(QImage(":/fotos_avatar/robot.png")));
+    // Emitir la señal para notificar el cambio en el número de jugadores
+    if (actual == actual_situation::No_players) {
+        emit emit_current_players(0);
+    } else if (actual == actual_situation::One_player) {
+        emit emit_current_players(1);
     }
-
-
 }
 
 int usersWidget::get_players(Player* players[2]){
@@ -265,7 +272,7 @@ void usersWidget::setupOnePlayerWidget() {
     QVBoxLayout *rightLayout = new QVBoxLayout();
     rightAvatarLabel = new QLabel(); // Usar el miembro de la clase
     rightAvatarLabel->setFixedSize(CIRCLE + 20, CIRCLE + 20); // Aumentar el tamaño para el borde
-    QImage AvatarRight = QImage(":/fotos_avatar/robot.png"); // Asegúrate de que esta ruta sea correcta
+    QImage AvatarRight = robot->getAvatar(); // Usar la foto del robot
     rightAvatarLabel->setPixmap(createCircularPixmap(AvatarRight));
     rightAvatarLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightAvatarLabel);
@@ -339,7 +346,7 @@ void usersWidget::setupTwoPlayersWidget() {
     QVBoxLayout *rightLayout = new QVBoxLayout();
     rightAvatarLabel = new QLabel(); // Usar el miembro de la clase
     rightAvatarLabel->setFixedSize(CIRCLE + 20, CIRCLE + 20); // Aumentar el tamaño para el borde
-    QImage AvatarRight = players_playing[1]->getAvatar();
+    QImage AvatarRight = players_playing[1]->getAvatar(); // Usar la foto del segundo jugador
     rightAvatarLabel->setPixmap(createCircularPixmap(AvatarRight));
     rightAvatarLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightAvatarLabel);
@@ -385,7 +392,24 @@ void usersWidget::setupTwoPlayersWidget() {
     // Resaltar al jugador activo (por defecto, el jugador 1)
     highlightPlayer(0);
 }
-void usersWidget::drawRedBorder(QLabel *label) {
+
+static QColor get_opposite_color(QColor color)
+{
+    int r = 255 - color.red();
+    int g = 255 - color.green();
+    int b = 255 - color.blue();
+
+    return QColor(r, g, b);
+}
+
+void usersWidget::setPlayerColors(const QColor &color1) {
+    p1Color = color1;
+    p2Color = get_opposite_color(p1Color);
+
+    updateWidget(actual);
+}
+
+void usersWidget::drawPlayerBorder(QLabel *label, const QColor &borderColor) {
     if (!label) return;
 
     // Obtener el QPixmap actual del QLabel
@@ -401,8 +425,8 @@ void usersWidget::drawRedBorder(QLabel *label) {
     QPainter painter(&borderedPixmap);
     painter.setRenderHint(QPainter::Antialiasing, true);
 
-    // Dibujar el marco rojo
-    painter.setPen(QPen(Qt::red, borderWidth)); // Marco rojo de 6 píxeles de ancho
+    // Dibujar el marco con el color especificado
+    painter.setPen(QPen(borderColor, borderWidth)); // Marco con el color proporcionado
     painter.setBrush(Qt::NoBrush); // Sin relleno
     painter.drawEllipse(borderedPixmap.rect().adjusted(borderWidth / 2, borderWidth / 2, -borderWidth / 2, -borderWidth / 2));
 
@@ -423,10 +447,10 @@ void usersWidget::highlightPlayer(int playerIndex) {
         rightAvatarLabel->setPixmap(createCircularPixmap(players_playing[1]->getAvatar())); // Restaurar la imagen original
     }
 
-    // Aplicar el borde rojo al jugador activo
+    // Aplicar el borde al jugador activo con el color correspondiente
     if (playerIndex == 0 && leftAvatarLabel) {
-        drawRedBorder(leftAvatarLabel); // Dibujar el borde en el jugador izquierdo
+        drawPlayerBorder(leftAvatarLabel, p1Color); // Dibujar el borde en el jugador izquierdo con el color de p1
     } else if (playerIndex == 1 && rightAvatarLabel) {
-        drawRedBorder(rightAvatarLabel); // Dibujar el borde en el jugador derecho
+        drawPlayerBorder(rightAvatarLabel, p2Color); // Dibujar el borde en el jugador derecho con el color de p2
     }
 }
