@@ -17,9 +17,9 @@ public:
     explicit GameBoard(QWidget *parent = nullptr);
     ~GameBoard();
 
-        enum results
+    enum results
     {
-        draw=0,
+        draw = 0,
         win,
         lost
     };
@@ -42,9 +42,11 @@ private:
     QVector<QVector<int>> grid;
 
     bool dropDisc(int column, int &row);
+    bool canDropDisc(int column, int &row);
     bool checkWin(int row, int col);
     bool checkFullGrid();
     void resetBoard();
+
     // Variables para la animación
     bool isAnimating;
     int animColumn;
@@ -54,7 +56,7 @@ private:
     QTimer animationTimer;
     void startAnimation(int column, int player);
 
-    void set_cpu(bool state){ cpu_on = state; }
+    void set_cpu(bool state) { cpu_on = state; }
     bool cpu_on{true};
 
     QColor p1, p2;
