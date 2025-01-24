@@ -58,6 +58,8 @@ RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
 
     // Button for custom image selection
     QPushButton *selectImageButton = new QPushButton(Labels::choose_photo_pc, this);
+    selectImageButton->adjustSize();  // Habilitar el ajuste de texto
+    selectImageButton->setToolTip(Labels::choose_photo_pc); // Mostrar el texto como tooltip
     selectImageButton->setFixedWidth(avatarComboBox->width());
     connect(selectImageButton, &QPushButton::clicked, this, &RegisterPage::selectImageFromFile);
 

@@ -49,7 +49,7 @@ void Language::change_to_tortilla_patata(){
     Labels::player_2="Jugador 2";
     Labels::confirm_password="Confirma la contraseña";
     Labels::birthday="Fecha de nacimiento";
-    Labels::choose_photo_pc="Elegir foto del oredenador";
+    Labels::choose_photo_pc="Subir foto";
     Labels::registrer="Registrarse";
     Labels::registrer_page="Pagina para registro";
     Labels::select_avatar="Selecciona un avatar";
@@ -131,7 +131,7 @@ void Language::change_to_fish_and_chips() {
     Labels::player_2="Player 2";
     Labels::confirm_password = "Confirm password";
     Labels::birthday = "Birthday";
-    Labels::choose_photo_pc = "Choose photo from computer";
+    Labels::choose_photo_pc = "upload picture";
     Labels::registrer = "Register";
     Labels::registrer_page = "Registration page";
     Labels::select_avatar = "Select an avatar";
@@ -213,7 +213,7 @@ void Language::change_to_Mbappe() {
     Labels::player_2="Joueur 2";
     Labels::confirm_password = "Confirmez le mot de passe";
     Labels::birthday = "Date de naissance";
-    Labels::choose_photo_pc = "Choisir une photo depuis l'ordinateur";
+    Labels::choose_photo_pc = "Easter Egg";
     Labels::registrer = "S'inscrire";
     Labels::registrer_page = "Page d'inscription";
     Labels::select_avatar = "Sélectionnez un avatar";
