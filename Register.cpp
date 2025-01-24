@@ -1,7 +1,16 @@
 #include "Register.h"
 #include "QRegularExpression"
 
+
 RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
+    setObjectName("RegisterPage");
+
+    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        this->setStyleSheet(styleSheet);
+        file.close();
+    }
     //create all the QLineEdits
     //username
     usernameField = new QLineEdit(this);

@@ -24,8 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QWidget *centralWidget = new QWidget(this);
     users = new usersWidget(this);
-    //openLoginButton = new QPushButton("Abrir LoginPage",this);
-    //connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
+
     // Crear un layout vertical
     QHBoxLayout *layout = new QHBoxLayout(centralWidget);
     QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
@@ -94,13 +93,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     centralWidget->setLayout(layout);
     this->setCentralWidget(centralWidget);
-
-    // Registro de jugadores (ejemplo)
-    Connect4& game = Connect4::getInstance();
-    Player* machine_player = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
-    Player* p1 = game.registerPlayer("oscar1", "oscar@oscar.com", "Password123!", QDate(1990, 1, 1), 0);
-    players_playing[0] = p1;
-    players_playing[1] = machine_player;
+    //Poner por defecto el lenguaje en castellano
 
     //lamada para que las funciones cojan los estilos del codigo de estilos
     QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
