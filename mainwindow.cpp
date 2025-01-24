@@ -1,5 +1,14 @@
 
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "lib/connect4.h"
+
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
+
+#include <QColorDialog>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -20,6 +29,18 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
     QVBoxLayout *layoutVLeft = new QVBoxLayout(centralWidget);
     QHBoxLayout *layoutH = new QHBoxLayout(centralWidget);
+
+
+
+
+    // Crear el botón para seleccionar color
+    QPushButton *colorPickerButton = new QPushButton("Cambiar color de las fichas", this);
+    // Conectar el botón con el cambio de color
+    connect(colorPickerButton, &QPushButton::clicked, this, &MainWindow::onChangePieceColor);
+
+
+
+
 
     historyButton = new QPushButton(Labels::history, this);
     connect(historyButton, &QPushButton::clicked, [&]() {
@@ -51,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
     settingsWidget.setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
+    layoutVLeft->addStretch(1);
+    layoutVLeft->addWidget(colorPickerButton);
     layoutVLeft->addStretch(1);
     layoutVLeft->addWidget(historyButton);
     //layoutVLeft->addWidget(openLoginButton);
@@ -90,7 +113,16 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         updateSettingsWidgetPosition();
     }
 }
+void MainWindow::onChangePieceColor()
+{
+    // Abrir un selector de color
+    QColor selectedColor = QColorDialog::getColor(Qt::red, this, "Selecciona un color para las fichas");
 
+    // Validar si se seleccionó un color válido
+    if (selectedColor.isValid()) {
+        board.setColorPieces(selectedColor); // Llamar a la función del tablero
+    }
+}
 void MainWindow::updateSettingsWidgetPosition()
 {
     // Dimensiones del widget

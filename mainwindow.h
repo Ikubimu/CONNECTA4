@@ -46,6 +46,8 @@ private:
     gameHistory *hist{nullptr};
 
 
+    void onChangePieceColor();
+
     QWidget* buildMainWidget();
     QPushButton *settingsButton;
     void catchSignal();
