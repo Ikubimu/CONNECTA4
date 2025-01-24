@@ -1,4 +1,5 @@
 #include "gamehistorytablemodel.h"
+#include<algorithm>
 
 gameHistoryTableModel::gameHistoryTableModel(QObject *parent)
  : QAbstractTableModel(parent)
@@ -60,10 +61,6 @@ static QList<Round*> filter_state(QList<Round*> raw_rounds, QString name, gameHi
 
     return rounds;
 }
-static QList<Round*> order_by_date(QList<Round*> raw_rounds)
-{
-
-}
 
 void gameHistoryTableModel::updateData(QString name, QDate firstDate, QDate secondDate, searchFilter filter)
 {
@@ -90,8 +87,14 @@ void gameHistoryTableModel::updateData(QString name, QDate firstDate, QDate seco
     {
         raw_rounds = filter_state(raw_rounds, name, filter);
     }
+    std::sort(raw_rounds.begin(), raw_rounds.end(),
+              [](const Round* a, const Round* b)
+              {
+                  return a->getTimestamp() > b->getTimestamp();
+              }                     );
     beginInsertRows(QModelIndex(), 0, raw_rounds.size());
     endInsertRows();
+
     rounds = raw_rounds;
     endResetModel();
 
