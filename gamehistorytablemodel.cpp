@@ -67,6 +67,7 @@ static QList<Round*> order_by_date(QList<Round*> raw_rounds)
 
 void gameHistoryTableModel::updateData(QString name, QDate firstDate, QDate secondDate, searchFilter filter)
 {
+    beginResetModel();
     beginRemoveRows(QModelIndex(), 0, rowCount());
     endRemoveRows();
 
@@ -92,6 +93,7 @@ void gameHistoryTableModel::updateData(QString name, QDate firstDate, QDate seco
     beginInsertRows(QModelIndex(), 0, raw_rounds.size());
     endInsertRows();
     rounds = raw_rounds;
+    endResetModel();
 
 }
 

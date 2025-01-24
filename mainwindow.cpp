@@ -136,10 +136,12 @@ void MainWindow::receive_result(GameBoard::results data)
 {
     Player* winner;
     Player* looser;
+    int players = users->get_players(players_playing);
     switch(data)
     {
     case GameBoard::win:
-        winner = players_playing[0];
+        winner =  players_playing[0];
+        looser = players_playing[1];
         winner->addPoints(30);
         break;
     case GameBoard::draw:

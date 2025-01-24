@@ -89,9 +89,15 @@ void LoginPage::handleLogin(){
     }
     // Todo valido proceder con el login
     Connect4& db = Connect4::getInstance();
+    Player* us = db.getPlayer(username);
+    if(us == nullptr)
+    {
+        QMessageBox::warning(this, Labels::error, Labels::non_user);
+        return;
+    }
     Player* user_player = db.loginPlayer(username, password);
     if (user_player == nullptr) {
-        QMessageBox::warning(this, Labels::error, Labels::non_user);
+        QMessageBox::warning(this, Labels::error, "wrong password");
         return;
     }
     if (user_player == Players[0]) {

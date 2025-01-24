@@ -133,7 +133,7 @@ void usersWidget::log_out(){
 }
 
 int usersWidget::get_players(Player* players[2]){
-    if(players_playing[1] == nullptr){
+    if(players_playing[0] == nullptr){
         return 0;
     }
     players[0] = players_playing[0];
