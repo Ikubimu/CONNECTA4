@@ -2,6 +2,7 @@
 #include "ui_gamehistory.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QFile>
 #include "language.h"
 
 gameHistory::gameHistory(QWidget *parent)
@@ -9,6 +10,13 @@ gameHistory::gameHistory(QWidget *parent)
     , ui(new Ui::gameHistory)
 {
     ui->setupUi(this);
+
+    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        this->setStyleSheet(styleSheet);
+        file.close();
+    }
 
     QVBoxLayout* layout = new QVBoxLayout(this);
     QHBoxLayout* layoutHDate = new QHBoxLayout();
