@@ -26,7 +26,7 @@ void Language::change_to_tortilla_patata(){
     Labels::won="Ganadas";
     Labels::lost="Perdidas";
     Labels::all="Todas";
-    Labels::search="buscar";
+    Labels::search="Buscar";
     Labels::date="Fecha";
     Labels::winner="ganador";
     Labels::loser="perdedor";

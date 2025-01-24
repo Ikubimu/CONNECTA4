@@ -13,6 +13,7 @@ rankingTable::rankingTable(QWidget *parent)
     rankingView.setModel(&model);
 
     QVBoxLayout *layout = new QVBoxLayout(this);
+    searchLine.setPlaceholderText(Labels::search);
     layout->addWidget(&searchLine);
     layout->addWidget(&rankingView);
 

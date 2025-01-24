@@ -34,6 +34,14 @@ void rankingTableModel::update_users()
 {
 
     users=db->getRanking();
+    for(int i=0;i<users.size(); i++)
+    {
+        if(users.at(i)->getNickName() == "ROBOT")
+        {
+            users.removeAt(i);
+            break;
+        }
+    }
     QString text = searchLine->text();
     if(text != prev_text)
     {
