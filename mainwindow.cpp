@@ -96,7 +96,7 @@ void MainWindow::openLoginPage()
 
 
 void MainWindow::openRegisterPage(){
-    RegisterPage RegisterDialog;
+    RegisterPage RegisterDialog(this);
     //conectada a la misma funcion ya que al final para el mainwindows sigue siendo que alguien sea loggeado
     //sea por register o por loggin
     connect(&RegisterDialog, &RegisterPage::Register_succesful, this, &MainWindow::handleLoginSuccess);
