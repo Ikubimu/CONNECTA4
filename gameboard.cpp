@@ -7,22 +7,60 @@
 #include <QMessageBox>
 #include <climits>
 
-static int elegirJugada(QVector<QVector<int>>& tablero, int profundidad);
+// Prototipos de funciones auxiliares
+static int elegirJugada(QVector<QVector<int>> &tablero, int profundidad);
 static QColor get_opposite_color(QColor color);
 
 GameBoard::GameBoard(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::GameBoard)
-    , rows(6)
-    , cols(7)
-    , currentPlayer(1)
-    , p1(255,0,0)
-    , p2(0, 255, 255)
+    : QWidget(parent),
+    ui(new Ui::GameBoard),
+    rows(6),
+    cols(7),
+    currentPlayer(1),
+    p1(255, 0, 0),
+    p2(0, 255, 255),
+    isAnimating(false)
 {
     ui->setupUi(this);
     grid.resize(rows, QVector<int>(cols, 0));
     setMinimumSize(cols * 40, rows * 40);
     setMouseTracking(true);
+
+    // Configurar el temporizador para la animación
+    connect(&animationTimer, &QTimer::timeout, this, [this]() {
+        animY += 5; // Incremento de posición
+        if (animY >= animTargetRow * cellSize) {
+            // Detener animación y colocar ficha
+            animationTimer.stop();
+            grid[animTargetRow][animColumn] = animPlayer;
+            isAnimating = false;
+            update();
+
+            // Verificar condiciones de victoria o empate
+            if (checkWin(animTargetRow, animColumn)) {
+                QMessageBox::information(this, "Victoria", QString("¡Jugador %1 ha ganado!").arg(animPlayer));
+                emit emit_result((results)animPlayer);
+                resetBoard();
+                return;
+            } else if (checkFullGrid()) {
+                QMessageBox::information(this, "Empate", "No queda espacio de juego");
+                emit emit_result(draw);
+                resetBoard();
+                return;
+            }
+
+            // Cambiar de jugador
+            currentPlayer = (currentPlayer == 1) ? 2 : 1;
+
+            // Turno del CPU
+            if (currentPlayer == 2 && cpu_on) {
+                int cpuColumn = elegirJugada(grid, 5);
+                int row;
+                startAnimation(cpuColumn, 2);
+            }
+        }
+        update(); // Redibujar mientras cae la ficha
+    });
 }
 
 GameBoard::~GameBoard()
@@ -30,33 +68,23 @@ GameBoard::~GameBoard()
     delete ui;
 }
 
-void GameBoard::paintEvent(QPaintEvent *event)
-{
+void GameBoard::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
 
-    // a las posiciones (x,y) de cualquier punto se le suman la posicion (x0,y0) donde se pinta el centralQWidget sobre MainWindow
     QRect espacioJuego = geometry();
-
-    // calcula el tamaño de la celda
-    if (espacioJuego.width() / cols < espacioJuego.height() / rows) {
-        cellSize = espacioJuego.width() / cols;
-    } else {
-        cellSize = espacioJuego.height() / rows;
-    }
+    cellSize = qMin(espacioJuego.width() / cols, espacioJuego.height() / rows);
     int x0 = (espacioJuego.width() - (cellSize * cols)) / 2;
     int y0 = (espacioJuego.height() - (cellSize * rows)) / 2;
 
-    // Dibujar la fondo
+    // Dibujar el fondo
     painter.setBrush(Qt::gray);
     painter.drawRect(x0, y0, cellSize * cols, cellSize * rows);
 
     // Dibujar celdas
     for (int r = 0; r < rows; ++r) {
         for (int c = 0; c < cols; ++c) {
-            // Dibujar círculo para cada celda
-            //QRectF circleRect(c * cellSize + 5, r * cellSize + 5, cellSize - 10, cellSize - 10);
             QRectF circleRect(x0 + (c * cellSize + 5),
                               y0 + (r * cellSize + 5),
                               cellSize - 10,
@@ -73,39 +101,26 @@ void GameBoard::paintEvent(QPaintEvent *event)
     }
 
     if(curr_state == disable) return;
+    // Dibujar ficha animada
+    if (isAnimating) {
+        QRectF animRect(x0 + (animColumn * cellSize + 5),
+                        y0 + animY + 5,
+                        cellSize - 10,
+                        cellSize - 10);
+        painter.setBrush(animPlayer == 1 ? p1 : p2);
+        painter.drawEllipse(animRect);
+    }
 
-    //Pintado de columna donde apunta el ratón Para el uso de estos efectos se ha usado ChatGPT
-    // Crear el gradiente radial
+    // Indicar columna seleccionada
     QRadialGradient gradient(x0 + column_selected * cellSize + cellSize / 2,
-                             y0 + espacioJuego.height() * 0.9,
-                             300);
-
-    // Configurar colores del gradiente
-    QColor color, color64, color128;
-    if(currentPlayer == 1)
-    {
-        color = p1;
-    }
-    else
-    {
-        color = p2;
-
-    }
-    color128 = color;
-    color64 = color;
-    color128.setAlpha(128);
-    color64.setAlpha(64);
-    gradient.setColorAt(1.0, color128); // Rojo semitransparente (menor opacidad)
-    gradient.setColorAt(0.5, color64); // Rojo más tenue a mitad de camino
-    gradient.setColorAt(0.2, Qt::transparent);
-
-    // Configurar el pintor
+                             y0 + cellSize / 2, 300);  // Ajustar posición del gradiente
+    QColor color = (currentPlayer == 1) ? p1 : p2;
+    color.setAlpha(128);
+    gradient.setColorAt(0, color);
+    gradient.setColorAt(1, Qt::transparent);
     painter.setBrush(gradient);
     painter.setPen(Qt::NoPen);
-
-    // Dibujar el rectángulo con el gradiente aplicado
     painter.drawRect(x0 + column_selected * cellSize, y0, cellSize, espacioJuego.height());
-
 }
 
 
@@ -115,79 +130,52 @@ void GameBoard::mouseMoveEvent(QMouseEvent *event)
 
     int x = event->pos().x();
     QRect geom = geometry();
-    int with = geom.width();
-    int x0 = (with-(cols * cellSize))/2;
-    // hay que restar el x0
-    column_selected = (x-x0) / cellSize;
+    int width = geom.width();
+    int x0 = (width - (cols * cellSize)) / 2;
+
+    column_selected = (x - x0) / cellSize;
+    if (column_selected < 0 || column_selected >= cols) {
+        column_selected = -1;  // Fuera del tablero
+    }
     repaint();
 }
 
-void GameBoard::mousePressEvent(QMouseEvent *event)
-{
+void GameBoard::mousePressEvent(QMouseEvent *event) {
     if(curr_state==disable) return;
 
-    if (event->button() == Qt::LeftButton) {
+    if (event->button() == Qt::LeftButton && !isAnimating) {  // Evitar clics durante animación
         int x = event->pos().x();
         QRect geom = geometry();
-        int with = geom.width();
-        int x0 = (with-(cols * cellSize))/2;
-        // hay que restar el x0
-        int column = (x-x0) / cellSize;
-        if(column >= 0 && column < cols){
+        int width = geom.width();
+        int x0 = (width - (cols * cellSize)) / 2;
+
+        int column = (x - x0) / cellSize;
+        if (column >= 0 && column < cols) {
             int row;
-            if(dropDisc(column, row)){
-
-                update();
-
-                //Verificar si el movimiento actual gana el juego
-                if(checkWin(row, column)){
-
-                    QMessageBox::information(this, Labels::victory, QString(Labels::victory_off+"%1").arg(currentPlayer));
-                    emit emit_result((results)currentPlayer);
-                    resetBoard();
-                    return;
-                }
-                else if(checkFullGrid()){
-
-                    QMessageBox::information(this, Labels::draw, QString(Labels::without_space));
-                    emit emit_result((results)currentPlayer);
-                    resetBoard();
-                    return;
-                }
-
-                // Cambiar de jugador
-                currentPlayer = (currentPlayer == 1) ? 2 : 1;
-
-                if(currentPlayer==2 && cpu_on)
-                {
-                    int columnaCPU = elegirJugada(grid, 5);
-                    dropDisc(columnaCPU, row);
-                    if(checkWin(row, columnaCPU)){
-
-                        QMessageBox::information(this, Labels::victory, QString(Labels::victory_off+"%1").arg(currentPlayer));
-                        emit emit_result((results)currentPlayer);
-                        resetBoard();
-                        return;
-                    }
-                    else if(checkFullGrid()){
-
-                        QMessageBox::information(this, Labels::draw, QString(Labels::without_space));
-                        emit emit_result((results)currentPlayer);
-                        resetBoard();
-                        return;
-                    }
-
-
-                    currentPlayer = 1;
-
-                }
-
-            }
-            else{
+            if (canDropDisc(column, row)) {  // Verificar si se puede colocar la ficha
+                startAnimation(column, currentPlayer); // Iniciar animación
+            } else {
                 QMessageBox::warning(this, Labels::empty_column, Labels::empty_column_phrase);
             }
         }
+    }
+}
 
+
+//el codigo de la nimacion hemos usado la IA deepSeek para hacerlo, ya que creemos que queda bien pero pasaba nuestros conocimientos
+
+
+void GameBoard::startAnimation(int column, int player) {
+    int row;
+    if (canDropDisc(column, row)) {  // Verificar sin modificar el tablero
+        animColumn = column;
+        animTargetRow = row;
+        animY = 0;
+        animPlayer = player;
+        isAnimating = true;
+        animationTimer.start(16);  // ~60 FPS
+    } else {
+        QMessageBox::warning(this, Labels::empty_column, Labels::empty_column_phrase);
     }
 }
 
@@ -203,8 +191,7 @@ bool GameBoard::checkFullGrid()
     return true;
 }
 
-bool GameBoard::dropDisc(int column, int &row)
-{
+bool GameBoard::dropDisc(int column, int &row) {
     for (int r = rows - 1; r >= 0; --r) {
         if (grid[r][column] == 0) {
             grid[r][column] = currentPlayer;
@@ -214,6 +201,17 @@ bool GameBoard::dropDisc(int column, int &row)
     }
     return false; // Columna llena
 }
+
+bool GameBoard::canDropDisc(int column, int &row) {
+    for (int r = rows - 1; r >= 0; --r) {
+        if (grid[r][column] == 0) {
+            row = r;
+            return true;
+        }
+    }
+    return false; // Columna llena
+}
+
 bool GameBoard::checkWin(int row, int col)
 {
     int player = grid[row][col];
