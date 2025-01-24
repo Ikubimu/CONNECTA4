@@ -2,6 +2,7 @@
 #include "ui_gamehistory.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include "language.h"
 
 gameHistory::gameHistory(QWidget *parent)
     : QWidget(parent)

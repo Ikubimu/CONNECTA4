@@ -27,6 +27,21 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *layoutVLeft = new QVBoxLayout(centralWidget);
     QHBoxLayout *layoutH = new QHBoxLayout(centralWidget);
 
+    historyButton = new QPushButton(Labels::history, this);
+    connect(historyButton, &QPushButton::clicked, [&]() {
+        if(hist == nullptr)
+        {
+            hist = new gameHistory(nullptr);
+            hist->setAttribute(Qt::WA_DeleteOnClose);
+            hist->setWindowTitle(Labels::history);
+            hist->resize(400, 300); // Ajusta el tamaño de la ventana según sea necesario
+            connect(hist, &QObject::destroyed, [&]() {
+                hist = nullptr;
+            });
+            hist->show();
+        }
+
+    });
 
     settingsButton = new QPushButton(Labels::open_settings, this);
     connect(settingsButton, &QPushButton::clicked, [this]() {
@@ -35,7 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
     settingsWidget.setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
 
-    layoutVLeft->addStretch(2);
+    layoutVLeft->addStretch(1);
+    layoutVLeft->addWidget(historyButton);
     layoutVLeft->addWidget(openLoginButton);
     layoutVLeft->addWidget(settingsButton, 1, Qt::AlignLeft);
 
@@ -126,24 +142,18 @@ void MainWindow::change_language_signal(int idioma){
     switch(idioma){
         case 1:
         Language::change_to_tortilla_patata();
-            settingsButton->setText(Labels::open_settings);
-            openLoginButton->setText(Labels::open_login_page);
             break;
         case 0:
             Language::change_to_fish_and_chips();
-            settingsButton->setText(Labels::open_settings);
-            openLoginButton->setText(Labels::open_login_page);
             break;
         case 2:
             Language::change_to_Mbappe();
-            settingsButton->setText(Labels::open_settings);
-            openLoginButton->setText(Labels::open_login_page);
             break;
-
     }
 
-
-
+    settingsButton->setText(Labels::open_settings);
+    openLoginButton->setText(Labels::open_login_page);
+    historyButton->setText(Labels::history);
 }
 
 

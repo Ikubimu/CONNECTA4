@@ -36,9 +36,10 @@ private:
     GameBoard board;
     rankingTable rank;
     usersWidget userL, userR;
-    QPushButton *openLoginButton;
+    QPushButton *openLoginButton, *historyButton;
     Player* players_playing[2]; // will be initialized to nullptr at the beginning
     SettingsUser settingsWidget;
+    gameHistory *hist{nullptr};
 
     void openLoginPage();
     void openRegisterPage();

@@ -66,6 +66,7 @@ void Language::change_to_tortilla_patata(){
     Labels::user_already_logged="El usuario ya ha iniciado sesión";
     Labels::nonvalid_email="El correo electrónico no es válido.\n";
     Labels::enable_dark_mode="Activar el modo óscuro";
+    Labels::history="Historial";
 }
 void Language::change_to_fish_and_chips() {
     Labels::password = "Password";
@@ -130,6 +131,7 @@ void Language::change_to_fish_and_chips() {
     Labels::user_already_logged = "The user is already logged in";
     Labels::nonvalid_email = "The email address is not valid.\n";
     Labels::enable_dark_mode = "Enable dark mode";
+    Labels::history="History";
 }
 void Language::change_to_Mbappe() {
     Labels::password = "Mot de passe";
@@ -194,4 +196,5 @@ void Language::change_to_Mbappe() {
     Labels::user_already_logged = "L'utilisateur est déjà connecté";
     Labels::nonvalid_email = "L'adresse e-mail n'est pas valide.\n";
     Labels::enable_dark_mode = "Activer le mode sombre";
+    Labels::history="Enregistrer";
 }
