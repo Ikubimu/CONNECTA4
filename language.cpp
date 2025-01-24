@@ -159,7 +159,7 @@ void Language::change_to_fish_and_chips() {
     Labels::random="random";
     Labels::log_out="Log out";
     Labels::play_with_friend="Play with a friend";
-    Labels::who_starts="Who is going to start?";
+    Labels::who_starts="Who start?";
     Labels::starts="Starts";
     Labels::confirm_log_out="Confirm Log out";
     Labels::confirm_log_out_sure="You want to log out, sure?";
