@@ -3,6 +3,14 @@
 ForgotPasswordPage::ForgotPasswordPage(QWidget *parent, Player* players_playing[2])
     : QDialog(parent)
 {
+    setObjectName("ForgotPasswordPage");
+
+    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        this->setStyleSheet(styleSheet);
+        file.close();
+    }
     // Copiar el puntero de los jugadores
     Players[0] = players_playing[0];
     Players[1] = players_playing[1];

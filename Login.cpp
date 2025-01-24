@@ -1,5 +1,12 @@
 #include "Login.h"
 LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(parent) {
+    setObjectName("LoginPage");
+    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        this->setStyleSheet(styleSheet);
+        file.close();
+    }
     // Crear los elementos de la UI
     usernameField = new QLineEdit(this);
     usernameField->setPlaceholderText(Labels::username);

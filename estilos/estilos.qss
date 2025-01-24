@@ -1,0 +1,241 @@
+MainWindow{
+    background-color: #e3e3e3;
+}
+MainWindow QPushButton {
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+MainWindow QPushButton:hover {
+    background-color: #0056b3;;
+    transform: scale(1.05);
+}
+
+MainWindow QPushButton:pressed {
+    background-color: #003d80;
+    transform: scale(0.95);
+}
+
+.ForgotPasswordPage{
+    background-color: #e3e3e3;
+}
+
+}
+.ForgotPasswordPage QLabel {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4CAF50;
+    font-family: Arial, sans-serif;
+}
+.ForgotPasswordPage QLineEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;/*blanco*/
+    color: #333333;/*gris oscuro*/
+}
+.ForgotPasswordPage QLineEdit:focus {
+    border: 2px solid blue;
+    background-color: #f2f2f2; /*grsi claro*/
+}
+.ForgotPasswordPage QLabel { /* mensaje de error*/
+    font-size: 14px;
+    font-weight: bold;
+    color: black; /*#4CAF50;*/
+    font-family: Arial, sans-serif;
+}
+.ForgotPasswordPage QPushButton {
+    background-color: #007bff;
+    color: white;
+    border: 2px solid grey;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.ForgotPasswordPage QPushButton:hover {
+    background-color: #0056b3;;
+    transform: scale(1.05);
+}
+
+.ForgotPasswordPage QPushButton:pressed {
+    background-color: #003d80;
+    transform: scale(0.95);
+}
+    /* Estilo para QMessageBox */
+.ForgotPasswordPage QMessageBox {
+    background-color: white;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.ForgotPasswordPage QMessageBox QPushButton {
+    background-color: #007bff;
+    color: white;
+    border: 2px solid blue;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 13px;
+}
+
+.ForgotPasswordPage QMessageBox QPushButton:hover {
+    background-color: #0056b3;;
+}
+
+.ForgotPasswordPage QMessageBox QLabel{
+    color: black;
+}
+
+
+/*REGISTER*/
+.RegisterPage{
+    background-color: #e3e3e3;
+}
+.RegisterPage QLineEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.RegisterPage QLineEdit:focus {
+    border-color: #007bff;
+    background-color: #fff;
+}
+
+    /* QDateEdit - Campo de fecha */
+.RegisterPage QDateEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.RegisterPage QDateEdit::drop-down {
+    border: none;
+}
+
+    /* QCalendarWidget - Estilo del calendario */
+.RegisterPage QCalendarWidget QWidget {
+    font-size: 14px;
+}
+
+.RegisterPage QCalendarWidget QAbstractItemView:enabled {
+    font-size: 14px;
+    padding: 10px;
+}
+
+.RegisterPage QCalendarWidget QToolButton {
+    font-size: 16px;
+    height: 30px;
+    width: 80px;
+}
+
+.RegisterPage QCalendarWidget QToolButton#qt_calendar_yearbutton {
+    min-width: 100px;
+}
+
+.RegisterPage QCalendarWidget QSpinBox {
+    font-size: 16px;
+    min-width: 100px;
+    padding: 5px;
+}
+
+.RegisterPage QCalendarWidget QMenu {
+    font-size: 18px;
+    padding: 10px;
+}
+
+    /* QPushButton - Estilo para los botones */
+.RegisterPage QPushButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.RegisterPage QPushButton:hover {
+    background-color: #0056b3;
+}
+
+.RegisterPage QPushButton:pressed {
+    background-color: #003d80;
+}
+
+    /* QLabel - Estilo para las etiquetas */
+.RegisterPage QLabel {
+    font-size: 14px;
+    color: #333;
+}
+
+    /* Estilo para las etiquetas de error */
+.RegisterPage QLabel[error="true"] {
+    color: red;
+    font-size: 12px;
+}
+
+    /* Campos de entrada con errores */
+.RegisterPage QLineEdit[error="true"], QDateEdit[error="true"] {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
+
+.LoginPage{
+    background-color: #e3e3e3;
+}
+.LoginPage QLineEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;/*blanco*/
+    color: #333333;/*gris oscuro*/
+}
+.LoginPage QLineEdit:focus {
+    border: 2px solid blue;
+    background-color: #f2f2f2; /*grsi claro*/
+}
+.LoginPage QLabel{
+    color: black;
+}
+
+/*ajustes*/
+SettingsUser{
+    background-color: #e3e3e3;
+}
+SettingsUser QLabel{
+    color: black;
+}
+
+usersWidget{
+    background-color: red;
+    color: green;
+}
+
+/*ranking table*/
+rankingTable{
+    background-color: red;
+}
+
+

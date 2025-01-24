@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , settingsWidget(this)
+    , board(this)
 {
     ui->setupUi(this);
 
@@ -22,8 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QWidget *centralWidget = new QWidget(this);
     users = new usersWidget(this);
-    //openLoginButton = new QPushButton("Abrir LoginPage",this);
-    //connect(openLoginButton, &QPushButton::clicked, this, &MainWindow::openLoginPage);
+
     // Crear un layout vertical
     QHBoxLayout *layout = new QHBoxLayout(centralWidget);
     QVBoxLayout *layoutV = new QVBoxLayout(centralWidget);
@@ -87,10 +87,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     layout->addLayout(layoutVLeft, 1);
     layout->addLayout(layoutV, 3);
-    layout->addWidget(&rank, 1);
+    layout->addWidget(&rank, 2);
 
     centralWidget->setLayout(layout);
     this->setCentralWidget(centralWidget);
+    //Poner por defecto el lenguaje en castellano
+
+    //lamada para que las funciones cojan los estilos del codigo de estilos
+    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
+    if (file.open(QFile::ReadOnly)) {
+        QString styleSheet = QString::fromUtf8(file.readAll());
+        this->setStyleSheet(styleSheet);
+        rank.setStyleSheet(styleSheet);
+        file.close();
+    }
 
     // Registro de jugadores (ejemplo)
     Connect4& game = Connect4::getInstance();
@@ -143,7 +153,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 void MainWindow::change_language_signal(int idioma){
     switch(idioma){
         case 1:
