@@ -19,6 +19,7 @@ SOURCES += \
     Forgot_Password.cpp \
     Login.cpp \
     Register.cpp \
+    edit_profile.cpp \
     gameboard.cpp \
     gamehistory.cpp \
     gamehistorytablemodel.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     Forgot_Password.h \
     Login.h \
     Register.h \
+    edit_profile.h \
     gameboard.h \
     gamehistory.h \
     gamehistorytablemodel.h \

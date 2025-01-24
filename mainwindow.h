@@ -12,8 +12,8 @@
 #include "ui_mainwindow.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>#include "language.h"
-
+#include <QPushButton>
+#include "language.h"
 #include "settinguser.h"
 #include "lib/connect4.h"
 
