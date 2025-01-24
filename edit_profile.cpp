@@ -5,12 +5,6 @@ EditProfilePage::EditProfilePage(QWidget *parent,Player *player_to_edit) : QDial
     //create all the QLineEdits
     player = player_to_edit;
 
-    QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
-    if (file.open(QFile::ReadOnly)) {
-        QString styleSheet = QString::fromUtf8(file.readAll());
-        this->setStyleSheet(styleSheet);
-        file.close();
-    }
     //username
     QLabel *usernameLabel = new QLabel(Labels::username + ":",this);
     usernameField = new QLineEdit(this);

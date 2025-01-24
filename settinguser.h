@@ -41,6 +41,7 @@ private:
 
 signals:
     void languagechoosed(int idx);
+    void styleMode(bool mode);
 };
 
 #endif // SETTINGSUSER_H

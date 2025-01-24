@@ -11,6 +11,8 @@
 class rankingTable : public QWidget
 {
     Q_OBJECT
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 public:
     rankingTable(QWidget *parent = nullptr);
     void addUser(const Player* user);

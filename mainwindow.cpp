@@ -15,7 +15,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(&settingsWidget, &SettingsUser::languagechoosed, this, &MainWindow::change_language_signal);
+
+    connect(&settingsWidget, &SettingsUser::languagechoosed,this,&MainWindow::change_language_signal);
+    connect(&settingsWidget, &SettingsUser::styleMode,this,&MainWindow::changeAllStyles);
+
 
     QWidget *centralWidget = new QWidget(this);
     users = new usersWidget(this);
@@ -43,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(historyButton, &QPushButton::clicked, [&]() {
         if (hist == nullptr) {
             hist = new gameHistory(nullptr);
+            hist->setStyleSheet(this->styleSheet());
             hist->setAttribute(Qt::WA_DeleteOnClose);
             hist->setWindowTitle(Labels::history);
             hist->resize(400, 300); // Ajusta el tamaño de la ventana según sea necesario
@@ -66,7 +70,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     layoutVLeft->addStretch(1);
     layoutVLeft->addWidget(colorPickerButton);
-    layoutVLeft->addStretch(1);
     layoutVLeft->addWidget(historyButton);
     layoutVLeft->addWidget(settingsButton, 1, Qt::AlignLeft);
 
@@ -91,6 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
         QString styleSheet = QString::fromUtf8(file.readAll());
         this->setStyleSheet(styleSheet);
         rank.setStyleSheet(styleSheet);
+        users->setStyleSheet(styleSheet);
         file.close();
     }
 
@@ -199,4 +203,34 @@ void MainWindow::receive_result(GameBoard::results data) {
 // En MainWindow o GameBoard
 void MainWindow::onTurnChanged(int currentPlayerIndex) {
     users->highlightPlayer(currentPlayerIndex); // Resaltar al jugador activo
+}
+
+
+
+void MainWindow::changeAllStyles(bool mode)
+{
+    if(mode)
+    {
+        QFile file(":/estilos/estilos_modo_noche.qss"); // Ruta al archivo en el recurso
+        if (file.open(QFile::ReadOnly)) {
+            QString styleSheet = QString::fromUtf8(file.readAll());
+            this->setStyleSheet(styleSheet);
+            rank.setStyleSheet(styleSheet);
+            settingsWidget.setStyleSheet(styleSheet);
+            users->setStyleSheet(styleSheet);
+            file.close();
+        }
+    }
+    else
+    {
+        QFile file(":/estilos/estilos.qss"); // Ruta al archivo en el recurso
+        if (file.open(QFile::ReadOnly)) {
+            QString styleSheet = QString::fromUtf8(file.readAll());
+            this->setStyleSheet(styleSheet);
+            rank.setStyleSheet(styleSheet);
+            settingsWidget.setStyleSheet(styleSheet);
+            users->setStyleSheet(styleSheet);
+            file.close();
+        }
+    }
 }

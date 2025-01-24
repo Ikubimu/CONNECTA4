@@ -13,5 +13,6 @@
         <file>fotos_varias/settings.png</file>
         <file>fotos_varias/changecolor.png</file>
         
+        <file>estilos/estilos_modo_noche.qss</file>
     </qresource>
 </RCC>

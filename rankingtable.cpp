@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QTimer>
 
-#define SIZE_W 0.9
+#define SIZE_W 0.7
 #define SIZE_H 0.6
 
 rankingTable::rankingTable(QWidget *parent)
@@ -36,6 +36,12 @@ rankingTable::rankingTable(QWidget *parent)
 
 }
 
+
+void rankingTable::resizeEvent(QResizeEvent *event)
+{
+    QRect geom = geometry();
+    this->setFixedWidth(geom.height()*SIZE_W);
+}
 
 void rankingTable::updateTable()
 {
