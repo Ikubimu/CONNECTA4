@@ -265,6 +265,9 @@ void GameBoard::setColorPieces(QColor color)
 {
     p1 = color;
     p2 = get_opposite_color(color);
+
+    repaint();
+
 }
 
 
