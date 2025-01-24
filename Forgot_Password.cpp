@@ -48,7 +48,7 @@ void ForgotPasswordPage::handleForgot()
     }
     srand(static_cast<unsigned>(time(0)));
     int code = rand() % 10000; // Creamos un numero de 4 números como código
-    QMessageBox::information(this, Labels::code, QString("Tu código es: %1").arg(code, 4, 10, QChar('0')));
+    QMessageBox::information(this, Labels::code, QString(Labels::your_code + "%1").arg(code, 4, 10, QChar('0')));
 
     //cambiamos total el diseño para que se inserte el código de recuperación
     QLayoutItem *item;

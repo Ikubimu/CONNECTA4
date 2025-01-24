@@ -2,10 +2,10 @@
 LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(parent) {
     // Crear los elementos de la UI
     usernameField = new QLineEdit(this);
-    usernameField->setPlaceholderText("usuario");
+    usernameField->setPlaceholderText(Labels::username);
 
     passwordField = new QLineEdit(this);
-    passwordField->setPlaceholderText("contraseña");
+    passwordField->setPlaceholderText(Labels::password);
     passwordField->setEchoMode(QLineEdit::Password); // Ocultar la contraseña
 
     loginButton = new QPushButton(Labels::login, this);
@@ -27,7 +27,7 @@ LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(paren
     Players[0] = players_playing[0];
     Players[1] = players_playing[1];
     setLayout(layout);
-    setWindowTitle(tr("Inicio de sesión"));
+    setWindowTitle(tr("Log in"));
     resize(500, 500);
 }
 void LoginPage::handleLogin(){
@@ -97,7 +97,7 @@ void LoginPage::handleLogin(){
     }
     Player* user_player = db.loginPlayer(username, password);
     if (user_player == nullptr) {
-        QMessageBox::warning(this, Labels::error, "wrong password");
+        QMessageBox::warning(this, Labels::error, Labels::wrong_password);
         return;
     }
     if (user_player == Players[0]) {

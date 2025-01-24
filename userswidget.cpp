@@ -3,7 +3,7 @@
 usersWidget::usersWidget(QWidget *parent): QWidget(parent),actual(No_players){
     players_playing[0] = nullptr;
     Connect4& game = Connect4::getInstance();
-    robot = game.registerPlayer("ROBOT", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
+    robot = game.registerPlayer("CPU", "robot@robot.com", "Password123!", QDate(1990, 1, 1), 0);
     players_playing[1] = robot;
 
     mainLayout = new QVBoxLayout(this);
@@ -90,7 +90,7 @@ void usersWidget::handleLoginSuccess(Player *player){
         emit emit_current_players(1);
     }else{ // actual situation deberia de estar en dos players
         if(players_playing[0]->getNickName() == player->getNickName()){
-            QMessageBox::warning(this, "Error", "Este jugador ya ha iniciado sesión.", QMessageBox::Ok);
+            QMessageBox::warning(this, Labels::error, Labels::currently_logged, QMessageBox::Ok);
             return;
         }
 
@@ -117,8 +117,8 @@ void usersWidget::openConfigureProfile(){
 }
 void usersWidget::log_out(){
     QMessageBox confirmDialog(this);
-    confirmDialog.setWindowTitle("Confirmar cierre de sesión");
-    confirmDialog.setText("¿Seguro que deseas cerrar sesión?");
+    confirmDialog.setWindowTitle(Labels::confirm_log_out);
+    confirmDialog.setText(Labels::confirm_log_out_sure);
     confirmDialog.setIcon(QMessageBox::Question);
     confirmDialog.setStandardButtons(QMessageBox::No | QMessageBox::Yes);
     confirmDialog.setDefaultButton(QMessageBox::No); // Por defecto, selecciona "No"
@@ -163,7 +163,7 @@ void usersWidget::setupNoPlayersWidget() {
     leftAvatarLabel->setAlignment(Qt::AlignCenter);
     leftLayout->addWidget(leftAvatarLabel);
 
-    leftButtonLogin = new QPushButton("Iniciar Sesión", this);
+    leftButtonLogin = new QPushButton(Labels::login, this);
     connect(leftButtonLogin, &QPushButton::clicked, this, &usersWidget::openLoginPage);
     leftLayout->addWidget(leftButtonLogin);
 
@@ -174,22 +174,22 @@ void usersWidget::setupNoPlayersWidget() {
     rightAvatarLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightAvatarLabel);
 
-    QLabel *rightTextLabel = new QLabel("Robot", this);
+    QLabel *rightTextLabel = new QLabel("CPU", this);
     rightTextLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightTextLabel);
 
     //crear el middle widget
     QWidget *middleContainer = new QWidget(this);
     whoStarts = new QComboBox(this);
-    whoStarts ->addItem("Jugador 1");
-    whoStarts ->addItem("Jugador 2");
-    whoStarts ->addItem("Aleatorio");
+    whoStarts ->addItem(Labels::player_1);
+    whoStarts ->addItem(Labels::player_2);
+    whoStarts ->addItem(Labels::random);
     whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     whoStarts->setEnabled(false);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     middleLayout->addWidget(new QLabel("    VS   ", this));
-    middleLayout->addWidget(new QLabel("Empieza:",this));
+    middleLayout->addWidget(new QLabel(Labels::starts,this));
     middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);
     middleContainer->setFixedWidth(100);
@@ -215,11 +215,11 @@ void usersWidget::setupOnePlayerWidget() {
 
     QString nick = players_playing[0]->getNickName();
     leftLayout->addWidget(new QLabel(nick,this));
-    leftEditprofile = new QPushButton("Editar Perfil", this);
+    leftEditprofile = new QPushButton(Labels::edit_profile, this);
     connect(leftEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
     leftLayout->addWidget(leftEditprofile);
 
-    leftlog_out = new QPushButton("Cerrar sesión", this);
+    leftlog_out = new QPushButton(Labels::log_out, this);
     connect(leftlog_out, &QPushButton::clicked, this, &usersWidget::log_out);
     leftLayout->addWidget(leftlog_out);
 
@@ -230,10 +230,10 @@ void usersWidget::setupOnePlayerWidget() {
     rightAvatarLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightAvatarLabel);
 
-    QLabel *rightTextLabel = new QLabel("Robot", this);
+    QLabel *rightTextLabel = new QLabel("CPU", this);
     rightTextLabel->setAlignment(Qt::AlignCenter);
     rightLayout ->addWidget(rightTextLabel);
-    rightButtonLogin = new QPushButton("Jugar con un amigo", this);
+    rightButtonLogin = new QPushButton(Labels::play_with_friend, this);
     connect(rightButtonLogin, &QPushButton::clicked, this, &usersWidget::openLoginPage);
     rightLayout->addWidget(rightButtonLogin);
 
@@ -241,15 +241,15 @@ void usersWidget::setupOnePlayerWidget() {
     //crear el middle widget
     QWidget *middleContainer = new QWidget(this);
     whoStarts = new QComboBox(this);
-    whoStarts ->addItem("Jugador 1");
-    whoStarts ->addItem("Jugador 2");
-    whoStarts ->addItem("Aleatorio");
+    whoStarts ->addItem(Labels::player_1);
+    whoStarts ->addItem(Labels::player_2);
+    whoStarts ->addItem(Labels::random);
     whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     whoStarts->setEnabled(false);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     middleLayout->addWidget(new QLabel("    VS   ", this));
-    middleLayout->addWidget(new QLabel("Empieza",this));
+    middleLayout->addWidget(new QLabel(Labels::starts,this));
     middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);
     middleContainer->setFixedWidth(100);
@@ -275,11 +275,11 @@ void usersWidget::setupTwoPlayersWidget() {
 
     QString nick = players_playing[0]->getNickName();
     leftLayout->addWidget(new QLabel(nick,this));
-    leftEditprofile = new QPushButton("Editar Perfil", this);
+    leftEditprofile = new QPushButton(Labels::edit_profile, this);
     connect(leftEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
     leftLayout->addWidget(leftEditprofile);
 
-    leftlog_out = new QPushButton("Cerrar sesión", this);
+    leftlog_out = new QPushButton(Labels::log_out, this);
     connect(leftlog_out, &QPushButton::clicked, this, &usersWidget::log_out);
     leftLayout->addWidget(leftlog_out);
 
@@ -293,25 +293,25 @@ void usersWidget::setupTwoPlayersWidget() {
     QString nick2 = players_playing[1]->getNickName();
     rightLayout->addWidget(new QLabel(nick2,this));
 
-    rightEditprofile = new QPushButton("Editar Perfil", this);
+    rightEditprofile = new QPushButton(Labels::edit_profile, this);
     connect(rightEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
     rightLayout->addWidget(rightEditprofile);
 
-    rightlog_out = new QPushButton("Cerrar sesión", this);
+    rightlog_out = new QPushButton(Labels::log_out, this);
     connect(rightlog_out, &QPushButton::clicked, this, &usersWidget::log_out);
     rightLayout->addWidget(rightlog_out);
 
     //crear el middle widget
     QWidget *middleContainer = new QWidget(this);
     whoStarts = new QComboBox(this);
-    whoStarts ->addItem("Jugador 1");
-    whoStarts ->addItem("Jugador 2");
-    whoStarts ->addItem("Aleatorio");
+    whoStarts ->addItem(Labels::player_1);
+    whoStarts ->addItem(Labels::player_2);
+    whoStarts ->addItem(Labels::random);
     whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     middleLayout->addWidget(new QLabel("    VS   ", this));
-    middleLayout->addWidget(new QLabel("¿Quien empieza?",this));
+    middleLayout->addWidget(new QLabel(Labels::who_starts,this));
     middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);
     middleContainer->setFixedWidth(120);

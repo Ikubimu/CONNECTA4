@@ -36,7 +36,7 @@ void rankingTableModel::update_users()
     users=db->getRanking();
     for(int i=0;i<users.size(); i++)
     {
-        if(users.at(i)->getNickName() == "ROBOT")
+        if(users.at(i)->getNickName() == "CPU")
         {
             users.removeAt(i);
             break;

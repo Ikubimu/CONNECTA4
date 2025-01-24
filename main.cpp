@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Language::change_to_tortilla_patata();
+    Language::change_to_Mbappe();
     MainWindow w;
     w.setWindowTitle("Connect4");
     w.show();
