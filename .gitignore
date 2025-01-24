@@ -1,3 +1,4 @@
+#echo con IA
 # Ignorar carpetas de build y debug
 build/
 debug/
@@ -16,7 +17,7 @@ debug/
 *.swp
 
 # Ignorar archivos generados por Qt Creator
-*.pro.user
+*.pro.user*
 *.qmake.stash
 *.qmake.cache
 

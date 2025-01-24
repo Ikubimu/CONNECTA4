@@ -1,5 +1,5 @@
-#ifndef REGISTER_H
-#define REGISTER_H
+#ifndef EDIT_PROFILE_H
+#define EDIT_PROFILE_H
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -19,42 +19,36 @@
 #include <QScrollArea>
 #include "lib/connect4.h"
 #include "language.h"
+#include "Register.h"
 
-class RegisterPage : public QDialog
+class EditProfilePage : public QDialog
 {
     Q_OBJECT
 
 public:
-    RegisterPage(QWidget *parent = nullptr);
-    //methods to check the differents fields
-   static bool check_username(const QString& username,bool& size,bool& spaces);
-   static bool check_password(const QString& password,bool& size,bool& mayus,bool& minus,bool& digit,bool& car_special);
-   static bool check_birthday(int day,int month,int year);
-   static bool check_email(const QString& email);
-   static bool compare_password(const QString& password,const QString& repeatpassword);
-   QString avatarPath;
+    EditProfilePage(QWidget *parent = nullptr,Player *player = nullptr);
+    QString avatarPath;
 
 signals:
-    void Register_succesful(Player* player);
+    void Edit_Profile_succesful();
 
 private:
+    Player *player;
     QLineEdit *usernameField;
     QLineEdit *passwordField;
-    QLineEdit *repeatpasswordField;
     QLineEdit *emailField;
     QDateEdit *BirthdayField;
     QComboBox *avatarComboBox;
     QImage avatarImage;
-    QPushButton *RegisterButton;
+    QPushButton *EditProfileButton;
     QLabel *usernameErrorLabel = nullptr;
     QLabel *passwordErrorLabel = nullptr;
     QLabel *emailErrorLabel = nullptr;
     QLabel *birthdayErrorLabel = nullptr;
-    QLabel *repeatPasswordErrorLabel = nullptr;
     QLabel *avatarLabel = nullptr;
     QVBoxLayout *mainLayout;
     QGridLayout *formLayout;
-    void handleRegister(); //slot
+    void handleEditProfile();
     void selectImageFromFile();
 };
 

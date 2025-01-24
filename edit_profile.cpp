@@ -1,31 +1,30 @@
-#include "Register.h"
+#include "edit_profile.h"
 #include "QRegularExpression"
 
-RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
+EditProfilePage::EditProfilePage(QWidget *parent,Player *player_to_edit) : QDialog(parent) {
     //create all the QLineEdits
+    player = player_to_edit;
     //username
+    QLabel *usernameLabel = new QLabel(Labels::username + ":",this);
     usernameField = new QLineEdit(this);
-    usernameField->setPlaceholderText(Labels::username);
+    usernameField->setText(player->getNickName());
+    usernameField->setReadOnly(true);
     usernameField->setMinimumWidth(200);
     // password
+    QLabel *passwordLabel = new QLabel(Labels::password + ":", this);
     passwordField = new QLineEdit(this);
-    passwordField->setPlaceholderText(Labels::password);
-    passwordField->setEchoMode(QLineEdit::Password);
+    passwordField->setText(player->getPassword());
     passwordField->setMinimumWidth(200);
-    // repeat password for safety
-    repeatpasswordField = new QLineEdit(this);
-    repeatpasswordField->setPlaceholderText(Labels::confirm_password);
-    repeatpasswordField->setEchoMode(QLineEdit::Password);
-    repeatpasswordField->setMinimumWidth(200);
     // email
+    QLabel *emailLabel = new QLabel(Labels::email + ":", this);
     emailField = new QLineEdit(this);
-    emailField->setPlaceholderText(Labels::email);
+    emailField->setText(player->getEmail());
     emailField->setMinimumWidth(200);
     // birthday
     QLabel *birthdayLabel = new QLabel(Labels::birthday + ":", this);
     BirthdayField = new QDateEdit(this);
     BirthdayField->setCalendarPopup(true);
-    BirthdayField->setDate(QDate::currentDate());
+    BirthdayField->setDate(player->getBirthdate()); // Establecer la fecha del jugador
     BirthdayField->setMinimumWidth(200);
     QCalendarWidget *calendar = BirthdayField->calendarWidget();
     calendar->setStyleSheet(
@@ -52,15 +51,23 @@ RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
             avatarComboBox->addItem(QIcon(pixmap), "");
         }
     }
-
+    // Seleccionar el avatar del usuario en la lista
+    QPixmap currentAvatar = QPixmap::fromImage(player->getAvatar());
+    for (int i = 0; i < avatarComboBox->count(); ++i) {
+        if (!avatarComboBox->itemIcon(i).pixmap(100, 100).toImage().isNull() &&
+            avatarComboBox->itemIcon(i).pixmap(100, 100).toImage() == currentAvatar.toImage()) {
+            avatarComboBox->setCurrentIndex(i);
+            break;
+        }
+    }
     // Button for custom image selection
     QPushButton *selectImageButton = new QPushButton(Labels::choose_photo_pc, this);
     selectImageButton->setFixedWidth(avatarComboBox->width());
-    connect(selectImageButton, &QPushButton::clicked, this, &RegisterPage::selectImageFromFile);
+    connect(selectImageButton, &QPushButton::clicked, this, &EditProfilePage::selectImageFromFile);
 
     // Register button
-    RegisterButton = new QPushButton(Labels::registrer, this);
-    connect(RegisterButton, &QPushButton::clicked, this, &RegisterPage::handleRegister);
+    EditProfileButton = new QPushButton(Labels::confirm_edit_profile, this);
+    connect(EditProfileButton, &QPushButton::clicked, this, EditProfilePage::handleEditProfile);
 
     // Layouts
     mainLayout = new QVBoxLayout(this);
@@ -70,25 +77,27 @@ RegisterPage::RegisterPage(QWidget *parent) : QDialog(parent) {
     avatarLayout->addWidget(avatarComboBox);
     avatarLayout->addWidget(selectImageButton);
     // Add fields to form layout
+    formLayout->addWidget(usernameLabel, 0, 0);
     formLayout->addWidget(usernameField, 0, 1);
+    formLayout->addWidget(passwordLabel, 1, 0);
     formLayout->addWidget(passwordField, 1, 1);
-    formLayout->addWidget(repeatpasswordField, 2, 1);
-    formLayout->addWidget(emailField, 4, 1);
-    formLayout->addWidget(birthdayLabel, 5, 0);
-    formLayout->addWidget(BirthdayField, 5, 1);
+    formLayout->addWidget(emailLabel, 3, 0);
+    formLayout->addWidget(emailField, 3, 1);
+    formLayout->addWidget(birthdayLabel, 4, 0);
+    formLayout->addWidget(BirthdayField, 4, 1);
 
     mainLayout->addLayout(avatarLayout);
     mainLayout ->addLayout(formLayout);
 
     // Add Register button at the bottom of the form
-    mainLayout->addWidget(RegisterButton);
+    mainLayout->addWidget(EditProfileButton);
 
     setLayout(mainLayout);
-    setWindowTitle(Labels::registrer_page);
+    setWindowTitle(Labels::edit_profile);
     resize(400, 500);
 }
 
-void RegisterPage::selectImageFromFile() {
+void EditProfilePage::selectImageFromFile() {
     // Open file dialog to select an image
     QString filePath = QFileDialog::getOpenFileName(this, Labels::select_avatar, QDir::homePath(), "Images (*.png *.jpg *.jpeg *.bmp)");
     if (!filePath.isEmpty()) {
@@ -103,58 +112,9 @@ void RegisterPage::selectImageFromFile() {
     }
 }
 
-
-bool RegisterPage::check_birthday(int day,int month,int year){
-    time_t now = time(0);
-    tm *current = localtime(&now);
-    int currentDay = current->tm_mday;
-    int currentMonth = current->tm_mon + 1; // es 0 para enero
-    int currentYear = current->tm_year + 1900; //empieza desde 1900
-    int ageYears = currentYear - year;
-    if(currentMonth < month || (currentMonth == month && currentDay < day)){
-        ageYears--;
-    }
-    return ageYears >= 12;
-}
- bool RegisterPage::check_email(const QString& email){
-    //expresion regularExpression
-    static QRegularExpression regex(R"((^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$))");
-    QRegularExpressionMatch match = regex.match(email);
-    return match.hasMatch();
-}
-bool RegisterPage::check_username(const QString& username,bool& size, bool& no_spaces){
-    size = (username.size() >= 6 && username.size() <= 15);
-    no_spaces = !username.contains(' ');
-    return size && no_spaces;
-}
-
-bool  RegisterPage::check_password(const QString& password,bool& size,bool& mayus,bool& minus,bool& digit,bool& car_special){
-    size = password.size() >= 8 && password.size() <= 20;
-    QString special_caracters = "!@#$%&*()-+=";
-    for(int i = 0; i < password.size(); i++){
-        if(password[i] <= 'Z' && password[i] >= 'A'){ //checkear si es mayus
-            mayus = true;
-        }
-        if(password[i] <= 'z' && password[i] >= 'a'){ //checkear si es minus
-            minus = true;
-        }
-        if(password[i] <= '9' && password[i] >= '0'){ //checkear si es digit
-            digit = true;
-        }
-        if(special_caracters.contains(password[i])){
-            car_special = true;
-        }
-    }
-    return size && mayus && minus && digit && car_special;
-}
-bool RegisterPage::compare_password(const QString& password,const QString& repeatpassword){
-    return password == repeatpassword;
-}
-void RegisterPage::handleRegister(){
+void EditProfilePage::handleEditProfile(){
     //leer los datos del registro
-    QString username = usernameField->text();
     QString password = passwordField->text();
-    QString repeat_password = repeatpasswordField ->text();
     QString email = emailField->text();
     QDate Birthday = BirthdayField->date();
     // obtener la imagen seleccionada
@@ -163,23 +123,18 @@ void RegisterPage::handleRegister(){
     QPixmap pixmap = selectedIcon.pixmap(100, 100);
     avatarImage = pixmap.toImage();
     // bools para comprobar que esta fallando si algo falla
-    bool usernameValid, passwordValid, emailValid, birthdayValid,repeat_passwordValid;
-    bool size_user,size_password, spaces, mayus, minus, digit, specialChar;
+    bool passwordValid, emailValid, birthdayValid;
+    bool size_password, spaces, mayus, minus, digit, specialChar;
 
-    size_user = size_password = spaces = mayus = minus = digit = specialChar = false; // we suposse that everything is false and when we check if it's true will change
+    size_password = spaces = mayus = minus = digit = specialChar = false; // we suposse that everything is false and when we check if it's true will change
 
-    usernameValid = check_username(username, size_user, spaces);
-    passwordValid = check_password(password, size_password, mayus, minus, digit, specialChar);
-    emailValid = check_email(email);
-    birthdayValid = check_birthday(Birthday.day(), Birthday.month(), Birthday.year());
-    repeat_passwordValid = compare_password(password,repeat_password);
 
-    Connect4& db = Connect4::getInstance();
-    bool existUsername = db.existsNickName(username);
-    //eliminamos todos los errores antes de comenzar y reseteamos el estilo de los campos
+    passwordValid = RegisterPage::check_password(password, size_password, mayus, minus, digit, specialChar);
+    emailValid = RegisterPage::check_email(email);
+    birthdayValid = RegisterPage::check_birthday(Birthday.day(), Birthday.month(), Birthday.year());
+
     usernameField->setStyleSheet("");
     passwordField->setStyleSheet("");
-    repeatpasswordField->setStyleSheet("");
     emailField->setStyleSheet("");
     BirthdayField->setStyleSheet("");
     if (usernameErrorLabel) {
@@ -189,10 +144,6 @@ void RegisterPage::handleRegister(){
     if (passwordErrorLabel) {
         delete passwordErrorLabel;
         passwordErrorLabel = nullptr;
-    }
-    if (repeatPasswordErrorLabel) {
-        delete repeatPasswordErrorLabel;
-        repeatPasswordErrorLabel = nullptr;
     }
     if (emailErrorLabel) {
         delete emailErrorLabel;
@@ -204,19 +155,7 @@ void RegisterPage::handleRegister(){
     }
 
     // Comprobación por si hay algun error
-    if (!usernameValid || !passwordValid || !emailValid || !birthdayValid || !repeat_passwordValid) {
-        if (!usernameValid) {
-            QString usernameErrors;
-            if (!usernameValid) {
-                if (!size_user) usernameErrors += Labels::user_restriccion_character;
-                if (!spaces) usernameErrors += Labels::no_spacer;
-            }
-            usernameErrorLabel = new QLabel(usernameErrors, this);
-
-            formLayout->addWidget(usernameErrorLabel, 0, 2);
-            usernameErrorLabel->setStyleSheet("color: red; font-size: 12px;");
-            usernameField->setStyleSheet("border: 2px solid red;");
-        }
+    if (!passwordValid || !emailValid || !birthdayValid) {
         if (!passwordValid) {
             QString passwordErrors;
             if (!size_password) passwordErrors += Labels::password_restriccion_character;
@@ -230,14 +169,6 @@ void RegisterPage::handleRegister(){
             passwordErrorLabel->setWordWrap(true);
             formLayout->addWidget(passwordErrorLabel, 1, 2);
             passwordField->setStyleSheet("border: 2px solid red;");
-        }
-
-        if (!repeat_passwordValid) {
-            QString repeatPasswordErrors =Labels::todifferent_password ;
-            repeatPasswordErrorLabel = new QLabel(repeatPasswordErrors, this);
-            repeatPasswordErrorLabel->setStyleSheet("color: red; font-size: 12px;");
-            formLayout->addWidget(repeatPasswordErrorLabel, 2, 2);
-            repeatpasswordField->setStyleSheet("border: 2px solid red;");
         }
 
         if (!emailValid) {
@@ -256,23 +187,16 @@ void RegisterPage::handleRegister(){
             formLayout->addWidget(birthdayErrorLabel, 4, 2);
             BirthdayField->setStyleSheet("border: 2px solid red;");
         }
-        //adaptar tamaño del boton
         return;
     }
-    if(existUsername){
-      QMessageBox::warning(this, Labels::error, Labels::user_already_exist);
-        return;
-    }
-    //Registramos el usuario si todo es valido
-    Player* user_player = db.registerPlayer(username, email, password, Birthday, 0,avatarImage);
-    if (user_player != nullptr) {
-        emit Register_succesful(user_player);
-        accept();
-    } else {
-        // Manejar errores imprevistos
-        QMessageBox::warning(this, Labels::error,Labels::try2signup_again );
-        accept();
-    }
+    //Editamos los campos del usuario si todo es valido
+    player->setAvatar(avatarImage);
+    player->setBirthdate(Birthday);
+    player->setEmail(email);
+    player->setPassword(password);
+
+    emit Edit_Profile_succesful();
+    accept();
 }
 
 

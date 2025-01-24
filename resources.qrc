@@ -7,5 +7,9 @@
         <file>fotos_avatar/foto5.png</file>
         <file>fotos_avatar/foto6.png</file>
         <file>estilos/estilos.qss</file>
+        <file>fotos_avatar/noUserImage.jpg</file>
+        <file>fotos_avatar/robot.png</file>
+        <file>fotos_avatar/maquina.jpg</file>
+        <file>fotos_varias/settings.png</file>
     </qresource>
 </RCC>

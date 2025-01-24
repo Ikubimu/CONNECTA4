@@ -9,8 +9,13 @@
 #include "Login.h"
 #include "Forgot_Password.h"
 #include "gamehistory.h"
-
+#include "ui_mainwindow.h"
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include "language.h"
 #include "settinguser.h"
+#include "lib/connect4.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,24 +33,28 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event) override; // Declaración del resizeEvent
+    void updateSettingsWidgetPosition();
 
 private:
     Ui::MainWindow *ui;
     GameBoard board;
     rankingTable rank;
-    usersWidget userL, userR;
-    QPushButton *openLoginButton;
-    void openLoginPage();
-    void openRegisterPage();
-    void openForgotPasswordPage();
-    void handleLoginSuccess(Player* Player);
-    void handleRegisterSuccess(Player* Player);
+    usersWidget *users;
+    QPushButton *openLoginButton, *historyButton;
     Player* players_playing[2]; // will be initialized to nullptr at the beginning
-    QWidget* centralWidget;
+    SettingsUser settingsWidget;
+    gameHistory *hist{nullptr};
 
+
+    void onChangePieceColor();
 
     QWidget* buildMainWidget();
+    QPushButton *settingsButton;
     void catchSignal();
-    SettingsUser settingsWidget;
+
+private slots:
+    void receive_result(GameBoard::results data);
+    void change_language_signal(int idioma);
 };
+
 #endif // MAINWINDOW_H

@@ -1,29 +1,27 @@
 #include "Login.h"
 LoginPage::LoginPage(QWidget *parent,Player* players_playing[2]) : QDialog(parent) {
     // Crear los elementos de la UI
-    QLabel *usernameLabel = new QLabel("Nombre de usuario:", this);
     usernameField = new QLineEdit(this);
+    usernameField->setPlaceholderText("usuario");
 
-    QLabel *passwordLabel = new QLabel("Contraseña:", this);
     passwordField = new QLineEdit(this);
+    passwordField->setPlaceholderText("contraseña");
     passwordField->setEchoMode(QLineEdit::Password); // Ocultar la contraseña
 
-    loginButton = new QPushButton("Iniciar sesión", this);
-    RegisterButton = new QPushButton("Registrar una nueva cuenta", this);
-    ForgetPasswordButton = new QPushButton("¿Olvidaste la contraseña?",this);
+    loginButton = new QPushButton(Labels::login, this);
+    RegisterButton = new QPushButton(Labels::signup_newacc, this);
+    ForgetPasswordButton = new QPushButton(Labels::forgot_password_dude,this);
     // Conectar los botones
     connect(loginButton, &QPushButton::clicked, this, &LoginPage::handleLogin);
     connect(RegisterButton, &QPushButton::clicked, this, &LoginPage::change_to_register);
     connect(ForgetPasswordButton,&QPushButton::clicked,this,&LoginPage::change_to_forgot_password);
     // Crear el layout
     layout = new QGridLayout(this);
-    layout->addWidget(usernameLabel,0,0);
-    layout->addWidget(usernameField,0,1);
-    layout->addWidget(passwordLabel,1,0);
-    layout->addWidget(passwordField,1,1);
-    layout->addWidget(loginButton,4,0,1,2);
-    layout ->addWidget(ForgetPasswordButton,5,0,1,2);
-    layout->addWidget(RegisterButton,6,0,1,2);
+    layout->addWidget(usernameField,0,0,1,2);
+    layout->addWidget(passwordField,1,0,1,2);
+    layout->addWidget(loginButton,3,0,1,2);
+    layout ->addWidget(ForgetPasswordButton,4,0,1,2);
+    layout->addWidget(RegisterButton,5,0,1,2);
 
     //add players so after you can check if the user has already login
     Players[0] = players_playing[0];
@@ -38,12 +36,12 @@ void LoginPage::handleLogin(){
 
     // bools para comprobar que esta fallando si algo falla
     bool usernameValid, passwordValid;
-    bool size, spaces, mayus, minus, digit, specialChar;
+    bool size_user, spaces, mayus, minus, digit, specialChar,size_password;
 
-    size = spaces = mayus = minus = digit = specialChar = false; // we suposse that everything is false and when we check if it's true will change
+    size_user = size_password = spaces = mayus = minus = digit = specialChar = false; // we suposse that everything is false and when we check if it's true will change
 
-    usernameValid = RegisterPage::check_username(username, size, spaces);
-    passwordValid = RegisterPage::check_password(password, size, mayus, minus, digit, specialChar);
+    usernameValid = RegisterPage::check_username(username, size_user, spaces);
+    passwordValid = RegisterPage::check_password(password, size_password, mayus, minus, digit, specialChar);
 
     // Eliminamos cualquier error que hayamos puesto antes y reseteamos los campos
     usernameField->setStyleSheet("");
@@ -61,8 +59,8 @@ void LoginPage::handleLogin(){
     if (!usernameValid || !passwordValid) {
         if (!usernameValid) {
             QString usernameErrors;
-            if (!size) usernameErrors += "Debe tener entre 6 y 15 caracteres.\n";
-            if (spaces) usernameErrors += "No debe contener espacios.\n";
+            if (!size_user) usernameErrors += Labels::user_restriccion_character;
+            if (spaces) usernameErrors += Labels::no_spacer;
 
             usernameErrorLabel = new QLabel(usernameErrors, this);
             layout->addWidget(usernameErrorLabel, 0, 2);
@@ -73,11 +71,11 @@ void LoginPage::handleLogin(){
 
         if (!passwordValid) {
             QString passwordErrors;
-            if (!size) passwordErrors += "Debe tener entre 8 y 20 caracteres.\n";
-            if (!mayus) passwordErrors += "Debe incluir al menos una mayúscula.\n";
-            if (!minus) passwordErrors += "Debe incluir al menos una minúscula.\n";
-            if (!digit) passwordErrors += "Debe incluir al menos un número.\n";
-            if (!specialChar) passwordErrors += "Debe incluir al menos un carácter especial:!@#$%&*()-+=.\n";
+            if (!size_password) passwordErrors += Labels::password_restriccion_character;
+            if (!mayus) passwordErrors += Labels::password_mayus;
+            if (!minus) passwordErrors += Labels::password_minus;
+            if (!digit) passwordErrors += Labels::password_number;
+            if (!specialChar) passwordErrors += Labels::password_special;
 
             passwordErrorLabel = new QLabel(passwordErrors, this);
             passwordErrorLabel->setStyleSheet("color: red; font-size: 12px;");
@@ -91,13 +89,19 @@ void LoginPage::handleLogin(){
     }
     // Todo valido proceder con el login
     Connect4& db = Connect4::getInstance();
+    Player* us = db.getPlayer(username);
+    if(us == nullptr)
+    {
+        QMessageBox::warning(this, Labels::error, Labels::non_user);
+        return;
+    }
     Player* user_player = db.loginPlayer(username, password);
     if (user_player == nullptr) {
-        QMessageBox::warning(this, "Error", "El usuario no existe.");
+        QMessageBox::warning(this, Labels::error, "wrong password");
         return;
     }
     if (user_player == Players[0]) {
-        QMessageBox::warning(this, "Error", "El usuario ya está loggeado.");
+        QMessageBox::warning(this, Labels::error, Labels::user_already_logged);
         return;
     }
     emit Login_succesful(user_player);

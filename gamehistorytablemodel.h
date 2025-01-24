@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <QList>
 #include "lib/connect4dao.h"
+#include "language.h"
 
 class gameHistoryTableModel : public QAbstractTableModel
 {

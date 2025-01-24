@@ -67,6 +67,7 @@ static QList<Round*> order_by_date(QList<Round*> raw_rounds)
 
 void gameHistoryTableModel::updateData(QString name, QDate firstDate, QDate secondDate, searchFilter filter)
 {
+    beginResetModel();
     beginRemoveRows(QModelIndex(), 0, rowCount());
     endRemoveRows();
 
@@ -92,6 +93,7 @@ void gameHistoryTableModel::updateData(QString name, QDate firstDate, QDate seco
     beginInsertRows(QModelIndex(), 0, raw_rounds.size());
     endInsertRows();
     rounds = raw_rounds;
+    endResetModel();
 
 }
 
@@ -146,11 +148,11 @@ QVariant gameHistoryTableModel::headerData(int section, Qt::Orientation orientat
     if (orientation == Qt::Horizontal) {
         switch (section) {
         case DATE:
-            return QString("Date");
+            return QString(Labels::date);
         case WINNER:
-            return QString("Winner");
+            return QString(Labels::winner);
         case LOSER:
-            return QString("Loser");
+            return QString(Labels::loser);
         default:
             return QVariant();
         }
