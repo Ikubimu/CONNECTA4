@@ -181,9 +181,9 @@ void usersWidget::setupNoPlayersWidget() {
     rightAvatarLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightAvatarLabel);
 
-    QLabel *rightTextLabel = new QLabel("CPU", this);
-    rightTextLabel->setAlignment(Qt::AlignCenter);
-    rightLayout->addWidget(rightTextLabel);
+    CPU = new QLabel("CPU",this);
+    CPU->setAlignment(Qt::AlignCenter);
+    rightLayout ->addWidget(CPU);
 
     //crear el middle widget
     QWidget *middleContainer = new QWidget(this);
@@ -194,8 +194,10 @@ void usersWidget::setupNoPlayersWidget() {
     whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     whoStarts->setEnabled(false);
 
+
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
-    middleLayout->addWidget(new QLabel("    VS   ", this));
+    versus = new QLabel("    VS   ",this);
+    middleLayout->addWidget(versus);
     middleLayout->addWidget(new QLabel(Labels::starts,this));
     middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);
@@ -220,8 +222,8 @@ void usersWidget::setupOnePlayerWidget() {
     leftAvatarLabel->setAlignment(Qt::AlignCenter);
     leftLayout->addWidget(leftAvatarLabel);
 
-    QString nick = players_playing[0]->getNickName();
-    leftLayout->addWidget(new QLabel(nick,this));
+    nickname = new QLabel(players_playing[0]->getNickName());
+    leftLayout->addWidget(nickname);
     leftEditprofile = new QPushButton(Labels::edit_profile, this);
     connect(leftEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
     leftLayout->addWidget(leftEditprofile);
@@ -237,9 +239,9 @@ void usersWidget::setupOnePlayerWidget() {
     rightAvatarLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightAvatarLabel);
 
-    QLabel *rightTextLabel = new QLabel("CPU", this);
-    rightTextLabel->setAlignment(Qt::AlignCenter);
-    rightLayout ->addWidget(rightTextLabel);
+    CPU = new QLabel("CPU",this);
+    CPU->setAlignment(Qt::AlignCenter);
+    rightLayout ->addWidget(CPU);
     rightButtonLogin = new QPushButton(Labels::play_with_friend, this);
     connect(rightButtonLogin, &QPushButton::clicked, this, &usersWidget::openLoginPage);
     rightLayout->addWidget(rightButtonLogin);
@@ -255,7 +257,8 @@ void usersWidget::setupOnePlayerWidget() {
     whoStarts->setEnabled(false);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
-    middleLayout->addWidget(new QLabel("    VS   ", this));
+    versus = new QLabel("    VS   ",this);
+    middleLayout->addWidget(versus);
     middleLayout->addWidget(new QLabel(Labels::starts,this));
     middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);
@@ -280,8 +283,8 @@ void usersWidget::setupTwoPlayersWidget() {
     leftAvatarLabel->setAlignment(Qt::AlignCenter);
     leftLayout->addWidget(leftAvatarLabel);
 
-    QString nick = players_playing[0]->getNickName();
-    leftLayout->addWidget(new QLabel(nick,this));
+    nickname = new QLabel(players_playing[0]->getNickName());
+    leftLayout->addWidget(nickname);
     leftEditprofile = new QPushButton(Labels::edit_profile, this);
     connect(leftEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
     leftLayout->addWidget(leftEditprofile);
@@ -297,8 +300,8 @@ void usersWidget::setupTwoPlayersWidget() {
     rightAvatarLabel->setAlignment(Qt::AlignCenter);
     rightLayout->addWidget(rightAvatarLabel);
 
-    QString nick2 = players_playing[1]->getNickName();
-    rightLayout->addWidget(new QLabel(nick2,this));
+    nickname = new QLabel(players_playing[1]->getNickName());
+    leftLayout->addWidget(nickname);
 
     rightEditprofile = new QPushButton(Labels::edit_profile, this);
     connect(rightEditprofile, &QPushButton::clicked, this, &usersWidget::openConfigureProfile);
@@ -317,7 +320,8 @@ void usersWidget::setupTwoPlayersWidget() {
     whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
-    middleLayout->addWidget(new QLabel("    VS   ", this));
+    versus = new QLabel("    VS   ",this);
+    middleLayout->addWidget(versus);
     middleLayout->addWidget(new QLabel(Labels::who_starts,this));
     middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);

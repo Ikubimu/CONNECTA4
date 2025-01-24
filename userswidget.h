@@ -58,7 +58,9 @@ private:
     QPushButton *leftButtonLogin;
     QPushButton *leftEditprofile;
     QPushButton *leftlog_out;
-
+    QLabel *nickname;
+    QLabel *CPU;
+    QLabel *versus;
     QVBoxLayout *mainLayout;
 
     QWidget *middleContainer;
