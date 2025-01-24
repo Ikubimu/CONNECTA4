@@ -11,5 +11,6 @@
         <file>fotos_avatar/robot.png</file>
         <file>fotos_avatar/maquina.jpg</file>
         <file>fotos_varias/settings.png</file>
+        <file>estilos/estilos_modo_noche.qss</file>
     </qresource>
 </RCC>

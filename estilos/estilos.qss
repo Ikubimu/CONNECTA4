@@ -420,7 +420,7 @@ rankingTable QPushButton:pressed {
 
 
 /* Estilo general de gameHistory */
-gameHistoryTableModel {
+gameHistory {
     background-color: #e3e3e3; /* Fondo gris claro */
     border: 1px solid #ccc; /* Borde gris */
     border-radius: 10px;
@@ -522,5 +522,4 @@ gameHistory QHeaderView::section {
 gameHistory QHeaderView::section:hover {
     background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
 }
-
 

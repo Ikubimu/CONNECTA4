@@ -1,8 +1,8 @@
-MainWindow{
-    background-color: #e3e3e3;
+MainWindow {
+    background-color: black; /*#e3e3e3;*/ /* Fondo gris claro */
 }
 MainWindow QPushButton {
-    background-color: #007bff;
+    background-color: #007bff; /* Azul estándar */
     color: white;
     border: 2px solid #007bff;
     border-radius: 5px;
@@ -13,24 +13,21 @@ MainWindow QPushButton {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 MainWindow QPushButton:hover {
-    background-color: #0056b3;;
+    background-color: #0056b3; /* Azul más oscuro */
     transform: scale(1.05);
 }
-
 MainWindow QPushButton:pressed {
-    background-color: #003d80;
+    background-color: #003d80; /* Azul aún más oscuro */
     transform: scale(0.95);
 }
 
-.ForgotPasswordPage{
-    background-color: #e3e3e3;
-}
-
+.ForgotPasswordPage {
+    background-color: black;
 }
 .ForgotPasswordPage QLabel {
     font-size: 14px;
     font-weight: bold;
-    color: #4CAF50;
+    color: #28a745; /* Verde claro */
     font-family: Arial, sans-serif;
 }
 .ForgotPasswordPage QLineEdit {
@@ -39,21 +36,21 @@ MainWindow QPushButton:pressed {
     padding: 5px;
     font-size: 14px;
     font-weight: bold;
-    background-color: #ffffff;/*blanco*/
-    color: #333333;/*gris oscuro*/
+    background-color: #f9f9f9; /* Fondo gris claro */
+    color: #333; /* Texto gris oscuro */
 }
 .ForgotPasswordPage QLineEdit:focus {
-    border: 2px solid blue;
-    background-color: #f2f2f2; /*grsi claro*/
+    border: 2px solid #007bff; /* Azul estándar */
+    background-color: #fff; /* Fondo blanco */
 }
-.ForgotPasswordPage QLabel { /* mensaje de error*/
+.ForgotPasswordPage QLabel {
     font-size: 14px;
     font-weight: bold;
-    color: black; /*#4CAF50;*/
+    color: #333; /* Gris oscuro */
     font-family: Arial, sans-serif;
 }
 .ForgotPasswordPage QPushButton {
-    background-color: #007bff;
+    background-color: #007bff; /* Azul estándar */
     color: white;
     border: 2px solid grey;
     border-radius: 5px;
@@ -63,76 +60,70 @@ MainWindow QPushButton:pressed {
     font-family: Arial, sans-serif;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
-
 .ForgotPasswordPage QPushButton:hover {
-    background-color: #0056b3;;
+    background-color: #0056b3; /* Azul más oscuro */
     transform: scale(1.05);
 }
-
 .ForgotPasswordPage QPushButton:pressed {
-    background-color: #003d80;
+    background-color: #003d80; /* Azul aún más oscuro */
     transform: scale(0.95);
 }
-    /* Estilo para QMessageBox */
 .ForgotPasswordPage QMessageBox {
-    background-color: white;
+    background-color: black;
     font-family: Arial, sans-serif;
     font-size: 14px;
     border-radius: 10px;
 }
 
 .ForgotPasswordPage QMessageBox QPushButton {
-    background-color: #007bff;
+    background-color: #007bff; /* Azul estándar */
     color: white;
-    border: 2px solid blue;
+    border: 2px solid #0056b3; /* Azul más oscuro */
     border-radius: 5px;
     padding: 5px 10px;
     font-size: 13px;
 }
-
 .ForgotPasswordPage QMessageBox QPushButton:hover {
-    background-color: #0056b3;;
+    background-color: #0056b3; /* Azul más oscuro */
 }
-
-.ForgotPasswordPage QMessageBox QLabel{
-    color: black;
+.ForgotPasswordPage QMessageBox QLabel {
+    color: white;
 }
-
 
 /*REGISTER*/
 .RegisterPage{
-    background-color: #e3e3e3;
+    background-color: #121212; /* Fondo oscuro */
 }
 .RegisterPage QLineEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555; /* Borde gris oscuro */
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
     font-weight: bold;
-    color: #333;
-    background-color: #f9f9f9;
+    color: #ddd; /* Texto gris claro */
+    background-color: #1e1e1e; /* Fondo gris muy oscuro */
 }
 
 .RegisterPage QLineEdit:focus {
-    border-color: #007bff;
-    background-color: #fff;
+    border-color: #1e90ff; /* Azul claro */
+    background-color: #333; /* Fondo más claro */
 }
 
-    /* QDateEdit - Campo de fecha */
+/* QDateEdit - Campo de fecha */
 .RegisterPage QDateEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
-    color: #333;
-    background-color: #f9f9f9;
+    color: #ddd;
+    background-color: #1e1e1e;
 }
 
 .RegisterPage QDateEdit::drop-down {
     border: none;
 }
 
-    /* QCalendarWidget - Estilo del calendario */
+/* QCalendarWidget - Estilo del calendario */
 .RegisterPage QCalendarWidget QWidget {
     font-size: 14px;
 }
@@ -163,9 +154,9 @@ MainWindow QPushButton:pressed {
     padding: 10px;
 }
 
-    /* QPushButton - Estilo para los botones */
+/* QPushButton - Estilo para los botones */
 .RegisterPage QPushButton {
-    background-color: #007bff;
+    background-color: #1e90ff; /* Azul vivo */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -174,111 +165,115 @@ MainWindow QPushButton:pressed {
 }
 
 .RegisterPage QPushButton:hover {
-    background-color: #0056b3;
+    background-color: #0066cc; /* Azul oscuro */
 }
 
 .RegisterPage QPushButton:pressed {
-    background-color: #003d80;
+    background-color: #004c99; /* Azul aún más oscuro */
 }
 
-    /* QLabel - Estilo para las etiquetas */
+/* QLabel - Estilo para las etiquetas */
 .RegisterPage QLabel {
     font-size: 14px;
-    color: #333;
+    color: #ddd; /* Texto gris claro */
 }
 
-    /* Estilo para las etiquetas de error */
+/* Estilo para las etiquetas de error */
 .RegisterPage QLabel[error="true"] {
-    color: red;
+    color: #ff5555; /* Rojo vivo */
     font-size: 12px;
 }
 
-    /* Campos de entrada con errores */
+/* Campos de entrada con errores */
 .RegisterPage QLineEdit[error="true"], QDateEdit[error="true"] {
-    border: 2px solid red;
-    background-color: #ffe6e6;
+    border: 2px solid #ff5555;
+    background-color: #4c1a1a; /* Fondo rojo oscuro */
 }
-
 
 .LoginPage{
-    background-color: #e3e3e3;
+    background-color: #121212;
 }
 .LoginPage QLineEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
     font-weight: bold;
-    background-color: #ffffff;/*blanco*/
-    color: #333333;/*gris oscuro*/
+    background-color: #1e1e1e; /* Fondo gris oscuro */
+    color: #ddd; /* Gris claro */
 }
 .LoginPage QLineEdit:focus {
-    border: 2px solid blue;
-    background-color: #f2f2f2; /*grsi claro*/
+    border: 2px solid #1e90ff;
+    background-color: #333; /* Gris más claro */
 }
 .LoginPage QLabel{
-    color: black;
+    color: #ddd; /* Gris claro */
 }
 /* QPushButton - Estilo para los botones */
 .LoginPage QPushButton {
-background-color: #007bff;
-color: #fff;
-border: none;
-border-radius: 5px;
-padding: 10px 15px;
-font-size: 16px;
+    background-color: #1e90ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
 }
 
 .LoginPage QPushButton:hover {
-background-color: #0056b3;
+    background-color: #0066cc;
 }
 
 .LoginPage QPushButton:pressed {
-background-color: #003d80;
+    background-color: #004c99;
 }
-
 
 /*ajustes*/
 SettingsUser{
-    background-color: #e3e3e3;
+    background-color: black;
 }
 SettingsUser QLabel{
-    color: black;
+    color: #ddd;
+}
+.SettingsUser QMessageBox {
+    background-color: black; /* Fondo gris claro */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    border-radius: 10px;
 }
 
 EditProfilePage{
-    background-color: #e3e3e3;
+    background-color: #121212;
 }
 .EditProfilePage QLineEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
     font-weight: bold;
-    color: #333;
-    background-color: #f9f9f9;
+    color: #ddd;
+    background-color: #1e1e1e;
 }
 
 .EditProfilePage QLineEdit:focus {
-    border-color: #007bff;
-    background-color: #fff;
+    border-color: #1e90ff;
+    background-color: #333;
 }
 
-    /* QDateEdit - Campo de fecha */
+/* QDateEdit - Campo de fecha */
 .EditProfilePage QDateEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
-    color: #333;
-    background-color: #f9f9f9;
+    color: #ddd;
+    background-color: #1e1e1e;
 }
 
 .EditProfilePage QDateEdit::drop-down {
     border: none;
 }
 
-    /* QCalendarWidget - Estilo del calendario */
+/* QCalendarWidget - Estilo del calendario */
 .EditProfilePage QCalendarWidget QWidget {
     font-size: 14px;
 }
@@ -309,9 +304,9 @@ EditProfilePage{
     padding: 10px;
 }
 
-    /* QPushButton - Estilo para los botones */
+/* QPushButton - Estilo para los botones */
 .EditProfilePage QPushButton {
-    background-color: #007bff;
+    background-color: #1e90ff;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -320,89 +315,81 @@ EditProfilePage{
 }
 
 .EditProfilePage QPushButton:hover {
-    background-color: #0056b3;
+    background-color: #0066cc;
 }
 
 .EditProfilePage QPushButton:pressed {
-    background-color: #003d80;
+    background-color: #004c99;
 }
 
-    /* QLabel - Estilo para las etiquetas */
+/* QLabel - Estilo para las etiquetas */
 .EditProfilePage QLabel {
     font-size: 14px;
-    color: #333;
+    color: #ddd;
 }
 
-    /* Estilo para las etiquetas de error */
+/* Estilo para las etiquetas de error */
 .RegisterPage QLabel[error="true"] {
-    color: red;
+    color: #ff5555;
     font-size: 12px;
 }
 
-    /* Campos de entrada con errores */
+/* Campos de entrada con errores */
 .EditProfilePage QLineEdit[error="true"], QDateEdit[error="true"] {
-    border: 2px solid red;
-    background-color: #ffe6e6;
+    border: 2px solid #ff5555;
+    background-color: #4c1a1a;
 }
+
 /*ranking table*/
-/*rankingTable{
-    background-color: red;
-}*/
-/* Estilo general del rankingTable */
 rankingTable {
-    background-color: #e3e3e3;
-    border: 1px solid #ccc;
+    background-color: #121212;
+    border: 1px solid #555;
     border-radius: 10px;
     padding: 10px;
 }
 
-/* Estilo para la vista de la tabla */
 rankingTable QTableView {
-    background-color: #ffffff; /* Blanco puro */
-    border: 2px solid #ccc; /* Gris claro */
-    gridline-color: #ddd; /* Gris suave para las líneas */
+    background-color: #1e1e1e;
+    border: 2px solid #555;
+    gridline-color: #333;
     font-family: Arial, sans-serif;
     font-size: 14px;
+    color: #ddd;
 }
 
-/* Celdas seleccionadas */
 rankingTable QTableView::item:selected {
-    background-color: #007bff; /* Azul */
-    color: #fff; /* Texto blanco */
+    background-color: #1e90ff;
+    color: #fff;
 }
 
-/* Estilo para el campo de búsqueda */
 rankingTable QLineEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
-    background-color: #f9f9f9; /* Gris muy claro */
-    color: #333; /* Gris oscuro */
+    background-color: #1e1e1e;
+    color: #ddd;
 }
 
 rankingTable QLineEdit:focus {
-    border: 2px solid #007bff; /* Azul al enfocar */
-    background-color: #fff; /* Fondo blanco al enfocar */
+    border: 2px solid #1e90ff;
+    background-color: #333;
 }
 
-/* Estilo para las cabeceras de la tabla */
 rankingTable QHeaderView::section {
-    background-color: #007bff;
+    background-color: #1e90ff;
     color: white;
     font-weight: bold;
     padding: 5px;
     border: none;
 }
 
-/* Hover sobre las cabeceras */
 rankingTable QHeaderView::section:hover {
-    background-color: #0056b3; /* Azul oscuro */
+    background-color: #0066cc;
 }
 
-/* Botones dentro del rankingTable */
 rankingTable QPushButton {
-    background-color: #007bff;
+    background-color: #1e90ff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -411,70 +398,65 @@ rankingTable QPushButton {
 }
 
 rankingTable QPushButton:hover {
-    background-color: #0056b3;
+    background-color: #0066cc;
 }
 
 rankingTable QPushButton:pressed {
-    background-color: #003d80;
+    background-color: #004c99;
 }
-
 
 /* Estilo general de gameHistory */
 gameHistory {
-    background-color: #e3e3e3; /* Fondo gris claro */
-    border: 1px solid #ccc; /* Borde gris */
+    background-color: #121212;
+    border: 1px solid #555;
     border-radius: 10px;
     padding: 10px;
 }
 
-/* Estilo para los QDateEdit (selector de fecha) */
 gameHistory QDateEdit {
-    border: 2px solid #ccc; /* Borde gris claro */
+    border: 2px solid #555;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9; /* Fondo gris muy claro */
-    color: #333; /* Texto gris oscuro */
+    background-color: #1e1e1e;
+    color: #ddd;
 }
 
 gameHistory QDateEdit:focus {
-    border: 2px solid #007bff; /* Borde azul al enfocar */
-    background-color: #fff; /* Fondo blanco */
+    border: 2px solid #1e90ff;
+    background-color: #333;
 }
 
-/* Estilo para los QLineEdit (campo de texto) */
 gameHistory QLineEdit {
-    border: 2px solid #ccc;
+    border: 2px solid #555;
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9; /* Gris muy claro */
-    color: #333; /* Gris oscuro */
+    background-color: #1e1e1e;
+    color: #ddd;
 }
 
 gameHistory QLineEdit:focus {
-    border: 2px solid #007bff;
-    background-color: #fff;
+    border: 2px solid #1e90ff;
+    background-color: #333;
 }
 
-/* Estilo para los botones de selección (QCheckBox) */
 gameHistory QCheckBox {
     font-size: 14px;
     font-family: Arial, sans-serif;
-    color: #333; /* Gris oscuro */
+    color: #ddd;
     padding: 2px 5px;
 }
 
 gameHistory QCheckBox:checked {
-    color: #007bff; /* Azul para los elementos seleccionados */
+    color: #1e90ff;
     font-weight: bold;
 }
 
-/* Estilo para el botón de búsqueda (QPushButton) */
 gameHistory QPushButton {
-    background-color: #007bff; /* Azul */
+    background-color: #1e90ff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -486,33 +468,31 @@ gameHistory QPushButton {
 }
 
 gameHistory QPushButton:hover {
-    background-color: #0056b3; /* Azul más oscuro */
-    transform: scale(1.05); /* Efecto de agrandamiento al pasar el mouse */
+    background-color: #0066cc;
+    transform: scale(1.05);
 }
 
 gameHistory QPushButton:pressed {
-    background-color: #003d80; /* Azul aún más oscuro */
-    transform: scale(0.95); /* Efecto de reducción al presionar */
+    background-color: #004c99;
+    transform: scale(0.95);
 }
 
-/* Estilo para la tabla (QTableView) */
 gameHistory QTableView {
-    background-color: #ffffff; /* Fondo blanco */
-    border: 2px solid #ccc; /* Borde gris claro */
-    gridline-color: #ddd; /* Gris para las líneas divisorias */
+    background-color: #1e1e1e;
+    border: 2px solid #555;
+    gridline-color: #333;
     font-family: Arial, sans-serif;
     font-size: 14px;
-    color: #333; /* Texto gris oscuro */
+    color: #ddd;
 }
 
 gameHistory QTableView::item:selected {
-    background-color: #007bff; /* Azul para la selección */
-    color: #fff; /* Texto blanco */
+    background-color: #1e90ff;
+    color: #fff;
 }
 
-/* Cabeceras de la tabla */
 gameHistory QHeaderView::section {
-    background-color: #007bff; /* Azul */
+    background-color: #1e90ff;
     color: white;
     font-weight: bold;
     padding: 5px;
@@ -520,7 +500,5 @@ gameHistory QHeaderView::section {
 }
 
 gameHistory QHeaderView::section:hover {
-    background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+    background-color: #0066cc;
 }
-
-
