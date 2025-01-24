@@ -102,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //conectamos mainwindows con la señal de victoria de gameboard
     connect(&board, &GameBoard::emit_result, this, &MainWindow::receive_result);
+    connect(users, &usersWidget::emit_current_players, &board, &GameBoard::receive_current_players);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

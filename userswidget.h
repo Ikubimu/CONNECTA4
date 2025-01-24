@@ -32,6 +32,9 @@ public:
     usersWidget(QWidget *parent = nullptr);
     start_player get_who_starts();
     int get_players(Player* players[2]);
+
+signals:
+    void emit_current_players(int num);
 private:
 
     actual_situation actual;

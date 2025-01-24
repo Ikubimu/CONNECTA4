@@ -54,10 +54,20 @@ private:
     QTimer animationTimer;
     void startAnimation(int column, int player);
 
-    void set_cpu(bool state){ cpu_on = state; }
     bool cpu_on{true};
 
+    enum states{
+        disable=0,
+        player1,
+        player2
+    };
+
+    states curr_state{disable};
+
     QColor p1, p2;
+
+public slots:
+    void receive_current_players(int num);
 
 signals:
     void emit_result(results data);

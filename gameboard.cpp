@@ -72,6 +72,7 @@ void GameBoard::paintEvent(QPaintEvent *event)
         }
     }
 
+    if(curr_state == disable) return;
 
     //Pintado de columna donde apunta el ratón Para el uso de estos efectos se ha usado ChatGPT
     // Crear el gradiente radial
@@ -110,6 +111,8 @@ void GameBoard::paintEvent(QPaintEvent *event)
 
 void GameBoard::mouseMoveEvent(QMouseEvent *event)
 {
+    if(curr_state==disable) return;
+
     int x = event->pos().x();
     QRect geom = geometry();
     int with = geom.width();
@@ -121,6 +124,8 @@ void GameBoard::mouseMoveEvent(QMouseEvent *event)
 
 void GameBoard::mousePressEvent(QMouseEvent *event)
 {
+    if(curr_state==disable) return;
+
     if (event->button() == Qt::LeftButton) {
         int x = event->pos().x();
         QRect geom = geometry();
@@ -281,6 +286,25 @@ static QColor get_opposite_color(QColor color)
 }
 
 
+void GameBoard::receive_current_players(int num)
+{
+    switch(num)
+    {
+    case 0:
+        curr_state = disable;
+        break;
+    case 1:
+        curr_state = player1;
+        cpu_on = true;
+        break;
+    case 2:
+        curr_state = player2;
+        cpu_on = false;
+        break;
+    }
+
+    resetBoard();
+}
 
 
 

@@ -78,6 +78,8 @@ void usersWidget::handleLoginSuccess(Player *player){
         actual = actual_situation::One_player;
         players_playing[0] = player;
         updateWidget(actual);
+
+        emit emit_current_players(1);
     }else{ // actual situation deberia de estar en dos players
         if(players_playing[0]->getNickName() == player->getNickName()){
             QMessageBox::warning(this, "Error", "Este jugador ya ha iniciado sesión.", QMessageBox::Ok);
@@ -87,6 +89,8 @@ void usersWidget::handleLoginSuccess(Player *player){
         actual = actual_situation::Two_players;
         players_playing[1] = player;
         updateWidget(actual);
+
+        emit emit_current_players(2);
     }
 }
 
