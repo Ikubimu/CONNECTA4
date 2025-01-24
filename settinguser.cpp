@@ -13,8 +13,8 @@ SettingsUser::SettingsUser(QWidget *parent)
     // Crear los elementos de la interfaz
     languageLabel = new QLabel(Labels::select_language, this);
     languageComboBox = new QComboBox(this);
-    languageComboBox->addItem("English");
     languageComboBox->addItem("Español");
+    languageComboBox->addItem("English");
     languageComboBox->addItem("Français");
 
     darkModeLabel = new QLabel(Labels::enable_dark_mode, this);

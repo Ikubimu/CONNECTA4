@@ -26,7 +26,7 @@ GameBoard::GameBoard(QWidget *parent)
     setMinimumSize(cols * 40, rows * 40);
     setMouseTracking(true);
 
-    // Configurar el temporizador para la animación
+    // En el callback del temporizador de animación
     connect(&animationTimer, &QTimer::timeout, this, [this]() {
         animY += 5; // Incremento de posición
         if (animY >= animTargetRow * cellSize) {
@@ -51,6 +51,15 @@ GameBoard::GameBoard(QWidget *parent)
 
             // Cambiar de jugador
             currentPlayer = (currentPlayer == 1) ? 2 : 1;
+
+            // Emitir la señal de cambio de turno
+
+            if (!cpu_on){
+
+                emit turnChanged(currentPlayer-1); // <-- Aquí se emite la señal
+
+            }
+
 
             // Turno del CPU
             if (currentPlayer == 2 && cpu_on) {
@@ -284,6 +293,7 @@ static QColor get_opposite_color(QColor color)
 }
 
 
+
 void GameBoard::receive_current_players(int num)
 {
     switch(num)
@@ -294,6 +304,7 @@ void GameBoard::receive_current_players(int num)
     case 1:
         curr_state = player1;
         cpu_on = true;
+        emit turnChanged(0);
         break;
     case 2:
         curr_state = player2;

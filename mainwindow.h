@@ -35,6 +35,8 @@ protected:
     void resizeEvent(QResizeEvent *event) override; // Declaración del resizeEvent
     void updateSettingsWidgetPosition();
 
+    void onTurnChanged(int currentPlayerIndex);
+
 private:
     Ui::MainWindow *ui;
     GameBoard board;

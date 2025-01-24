@@ -11,5 +11,7 @@
         <file>fotos_avatar/robot.png</file>
         <file>fotos_avatar/maquina.jpg</file>
         <file>fotos_varias/settings.png</file>
+        <file>fotos_varias/changecolor.png</file>
+        
     </qresource>
 </RCC>
