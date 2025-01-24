@@ -523,3 +523,18 @@ gameHistory QHeaderView::section:hover {
     background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
 }
 
+usersWidget QLabel{
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    color: black; /*#4CAF50;*/
+    font-family: Arial, sans-serif;
+}
+usersWidget QLabel#versus{
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    color: black; /*#4CAF50;*/
+    font-family: Algerian, sans-serif;
+}
+
