@@ -43,7 +43,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     });
 
-    settingsButton = new QPushButton(Labels::open_settings, this);
+    QIcon icon(":/fotos_varias/settings.png");
+    settingsButton = new QPushButton("", this);
+    settingsButton->setIcon(icon);
+    settingsButton->setStyleSheet("QPushButton {"
+                         "border: none;"
+                         "background: transparent;"
+                         "}");
+    settingsButton->setIconSize(QSize(60, 60));
     connect(settingsButton, &QPushButton::clicked, [this]() {
         settingsWidget.setVisible(!settingsWidget.isVisible());
         updateSettingsWidgetPosition();  // Recalcular la posición cuando se muestra
