@@ -68,6 +68,8 @@ namespace Labels {
     inline QString nonvalid_email{};
     inline QString enable_dark_mode{};
     inline QString history{};
+    inline QString confirm_edit_profile{};
+    inline QString edit_profile{};
 };
 
 class Language : public QObject

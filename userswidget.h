@@ -14,6 +14,7 @@
 #include "Login.h"
 #include "Forgot_Password.h"
 #include "lib/connect4.h"
+#include "edit_profile.h"
 
 enum start_player{
     first_player,
@@ -66,6 +67,8 @@ private:
     void setupNoPlayersWidget();
     void setupOnePlayerWidget();
     void setupTwoPlayersWidget();
+    void openEditProfilePage(Player* player);
+    void handleEditProfilePage();
     QPixmap createCircularPixmap(const QImage &image); // hecho con IA
 
 };

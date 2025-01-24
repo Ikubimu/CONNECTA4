@@ -1,5 +1,5 @@
 #include "userswidget.h"
-#define CIRCLE 50
+#define CIRCLE 100
 usersWidget::usersWidget(QWidget *parent): QWidget(parent),actual(No_players){
     players_playing[0] = nullptr;
     Connect4& game = Connect4::getInstance();
@@ -64,6 +64,14 @@ QPixmap usersWidget::createCircularPixmap(const QImage &image)
     pixmap.setMask(mask);
     return pixmap;
 }
+void usersWidget::openEditProfilePage(Player* player){
+    EditProfilePage profileDialog(nullptr,player);
+    connect(&profileDialog,&EditProfilePage::Edit_Profile_succesful,this,&usersWidget::handleEditProfilePage);
+    profileDialog.exec();
+}
+void usersWidget::handleEditProfilePage(){
+    updateWidget(actual);
+}
 void usersWidget::openRegisterPage(){
     RegisterPage RegisterDialog;
     //conectada a la misma funcion ya que al final para el userwidget sigue siendo que alguien sea loggeado
@@ -98,9 +106,9 @@ void usersWidget::openForgotPasswordPage(){
 void usersWidget::openConfigureProfile(){
     QPushButton *buttonSender = qobject_cast<QPushButton *>(sender());
     if (buttonSender == leftEditprofile) {
-
-    } else if (buttonSender == rightEditprofile) {
-
+        openEditProfilePage(players_playing[0]);
+    } else if (buttonSender == rightEditprofile){
+        openEditProfilePage(players_playing[1]);
     }
 }
 void usersWidget::log_out(){
@@ -173,6 +181,7 @@ void usersWidget::setupNoPlayersWidget() {
     whoStarts ->addItem("Jugador 2");
     whoStarts ->addItem("Aleatorio");
     whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    whoStarts->setEnabled(false);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     middleLayout->addWidget(new QLabel("    VS   ", this));
@@ -232,6 +241,7 @@ void usersWidget::setupOnePlayerWidget() {
     whoStarts ->addItem("Jugador 2");
     whoStarts ->addItem("Aleatorio");
     whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    whoStarts->setEnabled(false);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     middleLayout->addWidget(new QLabel("    VS   ", this));

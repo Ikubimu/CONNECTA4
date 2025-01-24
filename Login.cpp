@@ -36,12 +36,12 @@ void LoginPage::handleLogin(){
 
     // bools para comprobar que esta fallando si algo falla
     bool usernameValid, passwordValid;
-    bool size, spaces, mayus, minus, digit, specialChar;
+    bool size_user, spaces, mayus, minus, digit, specialChar,size_password;
 
-    size = spaces = mayus = minus = digit = specialChar = false; // we suposse that everything is false and when we check if it's true will change
+    size_user = size_password = spaces = mayus = minus = digit = specialChar = false; // we suposse that everything is false and when we check if it's true will change
 
-    usernameValid = RegisterPage::check_username(username, size, spaces);
-    passwordValid = RegisterPage::check_password(password, size, mayus, minus, digit, specialChar);
+    usernameValid = RegisterPage::check_username(username, size_user, spaces);
+    passwordValid = RegisterPage::check_password(password, size_password, mayus, minus, digit, specialChar);
 
     // Eliminamos cualquier error que hayamos puesto antes y reseteamos los campos
     usernameField->setStyleSheet("");
@@ -59,7 +59,7 @@ void LoginPage::handleLogin(){
     if (!usernameValid || !passwordValid) {
         if (!usernameValid) {
             QString usernameErrors;
-            if (!size) usernameErrors += Labels::user_restriccion_character;
+            if (!size_user) usernameErrors += Labels::user_restriccion_character;
             if (spaces) usernameErrors += Labels::no_spacer;
 
             usernameErrorLabel = new QLabel(usernameErrors, this);
@@ -71,7 +71,7 @@ void LoginPage::handleLogin(){
 
         if (!passwordValid) {
             QString passwordErrors;
-            if (!size) passwordErrors += Labels::password_restriccion_character;
+            if (!size_password) passwordErrors += Labels::password_restriccion_character;
             if (!mayus) passwordErrors += Labels::password_mayus;
             if (!minus) passwordErrors += Labels::password_minus;
             if (!digit) passwordErrors += Labels::password_number;

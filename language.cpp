@@ -67,6 +67,8 @@ void Language::change_to_tortilla_patata(){
     Labels::nonvalid_email="El correo electrónico no es válido.\n";
     Labels::enable_dark_mode="Activar el modo óscuro";
     Labels::history="Historial";
+    Labels::confirm_edit_profile = "Guardar cambios";
+    Labels::edit_profile = "Editar Perfil";
 }
 void Language::change_to_fish_and_chips() {
     Labels::password = "Password";
@@ -132,6 +134,8 @@ void Language::change_to_fish_and_chips() {
     Labels::nonvalid_email = "The email address is not valid.\n";
     Labels::enable_dark_mode = "Enable dark mode";
     Labels::history="History";
+    Labels::confirm_edit_profile = "Save changes";
+    Labels::edit_profile = "Edit Profile";
 }
 void Language::change_to_Mbappe() {
     Labels::password = "Mot de passe";
@@ -197,4 +201,6 @@ void Language::change_to_Mbappe() {
     Labels::nonvalid_email = "L'adresse e-mail n'est pas valide.\n";
     Labels::enable_dark_mode = "Activer le mode sombre";
     Labels::history="Enregistrer";
+    Labels::confirm_edit_profile = "conserver changes";
+    Labels::edit_profile = "Edit Profile";
 }
