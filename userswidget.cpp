@@ -135,14 +135,17 @@ void usersWidget::log_out(){
         if(actual == actual_situation::Two_players){
             players_playing[0] = players_playing[1]; // cambiamos el players_playing1 a la izquierda
             actual = actual_situation::One_player;
+            emit emit_current_players(1);
             updateWidget(actual);
         }else{
             players_playing[0] = nullptr;
             actual = actual_situation::No_players;
+            emit emit_current_players(0);
             updateWidget(actual);
         }
     }else if (buttonSender == rightlog_out) {
         actual = actual_situation::One_player;
+        emit emit_current_players(1);
         updateWidget(actual);
     }
 }
