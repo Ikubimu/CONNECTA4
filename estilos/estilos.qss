@@ -219,6 +219,24 @@ MainWindow QPushButton:pressed {
 .LoginPage QLabel{
     color: black;
 }
+/* QPushButton - Estilo para los botones */
+.LoginPage QPushButton {
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+padding: 10px 15px;
+font-size: 16px;
+}
+
+.LoginPage QPushButton:hover {
+background-color: #0056b3;
+}
+
+.LoginPage QPushButton:pressed {
+background-color: #003d80;
+}
+
 
 /*ajustes*/
 SettingsUser{
@@ -228,11 +246,104 @@ SettingsUser QLabel{
     color: black;
 }
 
-usersWidget{
-    background-color: red;
-    color: green;
+EditProfilePage{
+    background-color: #e3e3e3;
+}
+.EditProfilePage QLineEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    background-color: #f9f9f9;
 }
 
+.EditProfilePage QLineEdit:focus {
+    border-color: #007bff;
+    background-color: #fff;
+}
+
+    /* QDateEdit - Campo de fecha */
+.EditProfilePage QDateEdit {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.EditProfilePage QDateEdit::drop-down {
+    border: none;
+}
+
+    /* QCalendarWidget - Estilo del calendario */
+.EditProfilePage QCalendarWidget QWidget {
+    font-size: 14px;
+}
+
+.EditProfilePage QCalendarWidget QAbstractItemView:enabled {
+    font-size: 14px;
+    padding: 10px;
+}
+
+.RegisterPage QCalendarWidget QToolButton {
+    font-size: 16px;
+    height: 30px;
+    width: 80px;
+}
+
+.EditProfilePage QCalendarWidget QToolButton#qt_calendar_yearbutton {
+    min-width: 100px;
+}
+
+.EditProfilePage QCalendarWidget QSpinBox {
+    font-size: 16px;
+    min-width: 100px;
+    padding: 5px;
+}
+
+.EditProfilePage QCalendarWidget QMenu {
+    font-size: 18px;
+    padding: 10px;
+}
+
+    /* QPushButton - Estilo para los botones */
+.EditProfilePage QPushButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+.EditProfilePage QPushButton:hover {
+    background-color: #0056b3;
+}
+
+.EditProfilePage QPushButton:pressed {
+    background-color: #003d80;
+}
+
+    /* QLabel - Estilo para las etiquetas */
+.EditProfilePage QLabel {
+    font-size: 14px;
+    color: #333;
+}
+
+    /* Estilo para las etiquetas de error */
+.RegisterPage QLabel[error="true"] {
+    color: red;
+    font-size: 12px;
+}
+
+    /* Campos de entrada con errores */
+.EditProfilePage QLineEdit[error="true"], QDateEdit[error="true"] {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
 /*ranking table*/
 rankingTable{
     background-color: red;
