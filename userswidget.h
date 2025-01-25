@@ -35,7 +35,7 @@ class usersWidget : public QWidget {
     Q_OBJECT
 public:
     usersWidget(QWidget *parent = nullptr);
-    start_player get_who_starts();
+
     int get_players(Player* players[2]);
 
     void updateWidget(actual_situation x);
@@ -52,8 +52,6 @@ private:
     Player *players_playing[2];
     Player *robot;
 
-    QComboBox *whoStarts;
-
     QImage AvatarRight;
     QImage AvatarLeft;
 
@@ -67,7 +65,7 @@ private:
     QPushButton *leftlog_out;
     QLabel *nickname;
     QLabel *CPU;
-    QLabel *versus, *start;
+    QLabel *versus;
     QVBoxLayout *mainLayout;
 
     QWidget *middleContainer;

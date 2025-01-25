@@ -38,15 +38,7 @@ void usersWidget::updateWidget(actual_situation x){
         break;
     }
 }
-start_player usersWidget::get_who_starts(){
-    int index = whoStarts->currentIndex();
-    switch (index){
-        case 0: return start_player::first_player;
-        case 1: return start_player::second_player;
-        case 2: return start_player::random;
-    }
-    return start_player::random;
-}
+
 void usersWidget::openLoginPage()
 {
     LoginPage loginDialog(nullptr,players_playing);
@@ -218,22 +210,12 @@ void usersWidget::setupNoPlayersWidget() {
 
     //crear el middle widget
     QWidget *middleContainer = new QWidget(this);
-    whoStarts = new QComboBox(this);
-    whoStarts ->addItem(Labels::player_1);
-    whoStarts ->addItem(Labels::player_2);
-    whoStarts ->addItem(Labels::random);
-    whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-    whoStarts->setEnabled(false);
 
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     versus = new QLabel("    VS   ",this);
     versus->setObjectName("VS");
     middleLayout->addWidget(versus);
-    start = new QLabel(Labels::starts,this);
-    start->setObjectName("VS");
-    middleLayout->addWidget(start);
-    middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);
     middleContainer->setFixedWidth(100);
 
@@ -289,21 +271,12 @@ void usersWidget::setupOnePlayerWidget() {
 
     // Crear el widget del medio (VS y selección de quién comienza)
     QWidget *middleContainer = new QWidget(this);
-    whoStarts = new QComboBox(this);
-    whoStarts->addItem(Labels::player_1);
-    whoStarts->addItem(Labels::player_2);
-    whoStarts->addItem(Labels::random);
-    whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-    whoStarts->setEnabled(false);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     versus = new QLabel("    VS   ",this);
     versus->setObjectName("VS");
     middleLayout->addWidget(versus);
-    QLabel *start = new QLabel(Labels::starts,this);
-    start->setObjectName("VS");
-    middleLayout->addWidget(start);
-    middleLayout->addWidget(whoStarts);
+
     middleContainer->setLayout(middleLayout);
     middleContainer->setFixedWidth(100);
 
@@ -369,20 +342,11 @@ void usersWidget::setupTwoPlayersWidget() {
 
     // Crear el widget del medio (VS y selección de quién comienza)
     QWidget *middleContainer = new QWidget(this);
-    whoStarts = new QComboBox(this);
-    whoStarts->addItem(Labels::player_1);
-    whoStarts->addItem(Labels::player_2);
-    whoStarts->addItem(Labels::random);
-    whoStarts->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
     QVBoxLayout *middleLayout = new QVBoxLayout(middleContainer);
     versus = new QLabel("    VS   ",this);
     versus->setObjectName("VS");
     middleLayout->addWidget(versus);
-    QLabel *whostart = new QLabel(Labels::who_starts,this);
-    whostart->setObjectName("VS");
-    middleLayout->addWidget(whostart);
-    middleLayout->addWidget(whoStarts);
     middleContainer->setLayout(middleLayout);
     middleContainer->setFixedWidth(120);
 
